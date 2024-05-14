@@ -77,8 +77,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 
 	private static final String UPDATE_STMT = 
 			"UPDATE user SET user_email=?,user_password=?,user_identity=?,user_company_name=?"
-			+ ",user_register_date=?,user_last_login=?,user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=?"
-			+ "WHERE user_id = ?";
+			+ ",user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=? WHERE user_id = ?";
 	@Override
 	public void update(Integer userId,UserVO userVO) {
 		// TODO Auto-generated method stub
@@ -93,13 +92,13 @@ public class UserJNDIDAO implements UserDAO_interface {
 			pstmt.setString(2, userVO.getUserPassword());
 			pstmt.setString(3, userVO.getUserIdentity().toString());
 			pstmt.setString(4, userVO.getUserCompanyName());
-			pstmt.setDate(5, userVO.getUserRegisterDate());
-			pstmt.setTimestamp(6, userVO.getUserLastLogin());
-			pstmt.setString(7, userVO.getUserLastIp());
-			pstmt.setString(8, userVO.getUserNickname());
-			pstmt.setString(9, userVO.getUserAvatar());
-			pstmt.setString(10, userVO.getUserIntro());
-			pstmt.setInt(11, userId);
+//			pstmt.setDate(5, userVO.getUserRegisterDate());
+//			pstmt.setTimestamp(6, userVO.getUserLastLogin());
+			pstmt.setString(5, "127.0.0.2");
+			pstmt.setString(6, userVO.getUserNickname());
+			pstmt.setString(7, userVO.getUserAvatar());
+			pstmt.setString(8, userVO.getUserIntro());
+			pstmt.setInt(9, userId);
 			
 			pstmt.executeUpdate();
 			

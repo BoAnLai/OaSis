@@ -11,4 +11,30 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
+	<!-- mike block -->
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.mike.user.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/list</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/update</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/updating</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/register</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/user/registering</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

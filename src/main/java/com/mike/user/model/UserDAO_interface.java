@@ -13,9 +13,6 @@ public interface UserDAO_interface {
           public List<UserVO> getByCompanyName(String userCompanyName);
           public List<UserVO> getByLastIp(String userLastIp);
           public List<UserVO> getByNickname(String userNickname);
-
-          public void updateLastLogin(Integer userId);
-          //萬用複合查詢(傳入參數型態Map)(回傳 List)
-//        public List<EmpVO> getAll(Map<String, String[]> map); 
-          
+          public void updateLastLogin(Integer userId);      
+//          public void updateLastIp(Integer userId);      
 }

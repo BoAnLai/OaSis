@@ -651,8 +651,8 @@ public class UserJDBCDAO implements UserDAO_interface {
 	public static void main(String[] args) {
 		UserJDBCDAO dao = new UserJDBCDAO();
 		
-		UserVO userAdd = new UserVO("11111@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
-		dao.insert(userAdd);
+//		UserVO userAdd = new UserVO("11111@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
+//		dao.insert(userAdd);
 //		
 //		UserVO userUpdate = new UserVO("test123@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
 //		dao.update(3,userUpdate);
