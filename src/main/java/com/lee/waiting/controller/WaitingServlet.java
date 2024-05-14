@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.lee.lobbychatter.model.WaitingService;
 import com.lee.waiting.model.WaitingVO;
-import com.lee.waiting.service.WaitingService;
 
 
 
@@ -39,7 +39,7 @@ public class WaitingServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs1);
-
+				System.out.println("getOne_For_Display");
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("waino");
 				

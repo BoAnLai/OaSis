@@ -11,4 +11,16 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
+	
+	<!-- ====================LEE==================== -->
+	
+	<servlet>
+		<servlet-name>WaitingServlet</servlet-name>
+		<servlet-class>com.lee.waiting.controller.WaitingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WaitingServlet</servlet-name>
+		<url-pattern>/WaitingServlet</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

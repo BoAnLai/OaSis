@@ -1,4 +1,4 @@
-package com.lee.waiting.service;
+package com.lee.lobbychatter.model;
 
 import java.sql.Timestamp;
 import java.util.List;

@@ -1,5 +1,5 @@
 <%@page import="com.lee.waiting.model.WaitingVO"%>
-<%@page import="com.lee.waiting.service.WaitingService"%>
+<%@page import="com.lee.lobbychatter.model.WaitingService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
