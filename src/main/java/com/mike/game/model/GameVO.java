@@ -2,6 +2,7 @@ package com.mike.game.model;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,6 +82,14 @@ public class GameVO implements java.io.Serializable{
 	
 	public void setGameCreatedTimestamp(Timestamp gameCreatedTimestamp) {
 		this.gameCreatedTimestamp = gameCreatedTimestamp;
+	}
+	
+	public List<LabelVO> getLabels(){
+		return labels;
+	}
+	
+	public void setLabels(List<LabelVO> labels) {
+		this.labels = labels;
 	}
 		
 	@Override

@@ -84,6 +84,7 @@ INSERT INTO label (label_genre_id,label_game_id) VALUES (10,13);
 INSERT INTO label (label_genre_id,label_game_id) VALUES (6,14);
 INSERT INTO label (label_genre_id,label_game_id) VALUES (11,15);
 
+SELECT * FROM genre;
 select * from game;
 SELECT game.game_name, genre.genre_name
 FROM game

@@ -1,27 +1,28 @@
 package com.mike.game.model;
 
-import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import com.mike.genre.model.GenreVO;
+import com.mike.label.model.LabelVO;
 import com.mike.tool.HibernateTool;
 
 public class TestHibernate {
 
 	public static void main(String[] args) {
 
-		try {	
-			Session session = HibernateTool.getSessionFactory().getCurrentSession();
-			session.beginTransaction();
 			
-			
-			
-			
-			session.getTransaction().commit();
-		}catch(Exception e) {
-			throw e;
-		}
+			GameService gameSvc = new GameService();
+			GameVO game;
+			try {
+				game = gameSvc.getGameByGameId(4);
+				System.out.println(game);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		
 	} //end main
 }

@@ -2,11 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.game.model.*"%>
+<%@ page import="com.mike.genre.model.*"%>
 
 <%
     GameService gameSvc = new GameService();
-    List<GameVO> list = gameSvc.listAll();
-    pageContext.setAttribute("list",list);
+	GameVO game = gameSvc.getGameByGameId(6);
+	List<GenreVO> genreList = gameSvc.getGenresByGameId(game.getGameId());
 %>
 
 <!DOCTYPE html>
@@ -29,23 +30,25 @@
 		    		<th>name</th>
 		    		<th>img</th>
 		    		<th>created timestamp</th>
+		    		<th>genre</th>
 		    	</tr>
 	    	</thead>
 			<tbody class="table-group-divider">
-		    	<%@ include file="pagination.file" %>
-				<c:forEach var="game" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 					
-					<tr class="">
-						<th>${game.gameId}</td>
-						<td>${game.gameName}</td>
-		 				<td class="imgContainer"><img class="listImg" src="${game.gameImg}"></td>
-						<td>${game.gameCreatedTimestamp}</td>
-					</tr>
-				</c:forEach>
+				<tr class="">
+					<th><%=game.getGameId()%></td>
+					<td><%=game.getGameName()%></td>
+	 				<td class="imgContainer"><img class="listImg" src="<%=game.getGameImg()%>"></td>
+					<td><%=game.getGameCreatedTimestamp()%></td>
+					<td>
+					<% for(GenreVO genre:genreList){ %>
+						<%=genre.getGenreName()%><br>
+					<% } %>
+					</td>
+				</tr>
 			</tbody>
     </table>
     </div>
-    <%@ include file="pageLink.file" %>
     <!-- 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

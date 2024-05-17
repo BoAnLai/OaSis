@@ -1,21 +1,35 @@
 package com.mike.game.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
+import com.mike.genre.model.GenreVO;
+import com.mike.label.model.LabelVO;
 import com.mike.tool.HibernateTool;
 
 public class GameService {
 	
+	public GameVO getGameByGameId(Integer gameId) throws Exception{
+		try {	
+			Session session = HibernateTool.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			
+			GameVO game = session.get(GameVO.class, gameId);
+			session.getTransaction().commit();
+			return game;
+		}catch(Exception e) {
+			throw e;
+		}				
+	}
+	
 	public List<GameVO> listAll() throws Exception{
 		try {	
 			Session session = HibernateTool.getSessionFactory().getCurrentSession();
-			Transaction tx = session.beginTransaction();
+			session.beginTransaction();
 			
 			List<GameVO> gameList = session.createQuery("SELECT g FROM GameVO g", GameVO.class).list();
-//			List<GameVO> gameList = session.createQuery("SELECT g FROM GameVO g", GameVO.class).getResultList();
 			session.getTransaction().commit();
 			return gameList;
 		}catch(Exception e) {
@@ -23,28 +37,21 @@ public class GameService {
 		}		
 	}
 	
-	public GameDetail getByGameId(Integer gameId) {
+	public List<GenreVO> getGenresByGameId(Integer gameId) throws Exception{
 		try {	
 			Session session = HibernateTool.getSessionFactory().getCurrentSession();
-			Transaction tx = session.beginTransaction();
+			session.beginTransaction();
 			
 			GameVO game = session.get(GameVO.class,gameId);
-			GameDetail gameDetail = new GameDetail(game);
+			List<GenreVO> genreList = new ArrayList<GenreVO>();
 			
-			String hql = "SELECT g.gameName, ge.genreName " +
-                    "FROM Label l " +
-                    "JOIN l.game g " +
-                    "JOIN l.genre ge " +
-                    "WHERE g.gameId = :gameId";
-			
-			List<Object[]> results = session.createQuery(hql)
-								.setParameter("gameId",2)
-								.getResultList();
-			System.out.println(results);
-			
+			for(LabelVO label:game.getLabels()) {
+				genreList.add(label.getGenre());
+			}
 			
 			session.getTransaction().commit();
-			return gameDetail;
+			
+			return genreList;
 		}catch(Exception e) {
 			throw e;
 		}

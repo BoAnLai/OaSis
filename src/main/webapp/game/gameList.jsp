@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.game.model.*"%>
+<%@ page import="com.mike.genre.model.*"%>
+<%@ page import="com.mike.label.model.*"%>
 
 <%
     GameService gameSvc = new GameService();
-    List<GameVO> list = gameSvc.listAll();
-    pageContext.setAttribute("list",list);
+    List<GameVO> gameList = gameSvc.listAll();
 %>
 
 
@@ -23,34 +23,46 @@
 
 <body>
     <div class="container">
-	    <table class="table table-striped align-middle table-bordered text-center">
+	    <table class="table table-striped align-middle table-bordered text-center" id="datatable">
 	    	<thead>
 		    	<tr class="text-center">
 		    		<th>id</th>
 		    		<th>name</th>
 		    		<th>img</th>
+		    		<th>genre</th>
 		    		<th>created timestamp</th>
 		    	</tr>
 	    	</thead>
 			<tbody class="table-group-divider">
-		    	<%@ include file="pagination.file" %>
-				<c:forEach var="game" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-					
-					<tr class="">
-						<th>${game.gameId}</td>
-						<td>${game.gameName}</td>
-		 				<td class="imgContainer"><img class="listImg" src="${game.gameImg}"></td>
-						<td>${game.gameCreatedTimestamp}</td>
-					</tr>
-				</c:forEach>
+				
+				<% for(GameVO game: gameList){ %>
+				<tr class="">
+					<th><%= game.getGameId() %></td>
+					<th><%= game.getGameName() %></td>
+	 				<td class="imgContainer"><img class="listImg" src="<%= game.getGameImg() %>"></td>
+					<td>
+						<% List<GenreVO> genreList = gameSvc.getGenresByGameId(game.getGameId()); %>
+						<% for(GenreVO genre: genreList){ %>
+           					<%= genre.getGenreName() %> <br>
+						<% } %>
+					</td>
+					<td><%= game.getGameCreatedTimestamp() %></td>
+				</tr>
+				<% }%>
 			</tbody>
     </table>
     </div>
-    <%@ include file="pageLink.file" %>
-    <!-- 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-     -->
+
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable();
+        });
+    </script>
 </body>
 
 </html>
