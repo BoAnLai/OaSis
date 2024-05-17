@@ -10,12 +10,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "genre")
 public class GenreVO implements java.io.Serializable{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "genre_id", insertable = true, updatable = false)
 	private Integer genreId;
+	
 	@Column(name = "genre_name", insertable = true, updatable = false, unique = true)
 	private String genreName;
+	
 	
 	public GenreVO() {
 		super();

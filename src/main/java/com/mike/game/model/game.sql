@@ -30,4 +30,4 @@ INSERT INTO game (game_name,game_img) VALUES ('決勝時刻','/oasis/game/resour
 INSERT INTO game (game_name,game_img) VALUES ('阿爾比恩','/oasis/game/resources/gameImg/阿爾比恩.jpg');
 INSERT INTO game (game_name,game_img) VALUES ('生死格鬥','/oasis/game/resources/gameImg/生死格鬥.jpg');
 
-SELECT * FROM game ORDER BY oasis.game_id;
+SELECT * FROM game;
