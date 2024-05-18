@@ -16,9 +16,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+    
     body{margin-top:20px;
     background-color:#eee;
     }
+    
+    
+    
     .project-list-table {
         border-collapse: separate;
         border-spacing: 0 12px
@@ -100,19 +104,10 @@
 </head>
 
 
-<%-- ¿ù»~ªí¦C --%>
-<c:if test="${not empty errorMsgs1}">
-	
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-		    
-		    <div class="alert alert-dark" role="alert">
-		    
-	  		${message}
-			</div>
-			</c:forEach>
-	</ul>
-</c:if>
+
+
+
+
 
 <table class="table project-list-table table-nowrap align-middle table-borderless">
 <FORM METHOD="post" ACTION="WaitingServlet" name="form1">
@@ -129,7 +124,7 @@
 	
 	<div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">MAXPEOP</span>
-  		<input type="text" class="form-control" name="max" placeholder="¦C¶¤¤W­­" aria-label="Username" aria-describedby="addon-wrapping">
+  		<input type="text" class="form-control" name="max" placeholder="¦C¶¤¤W­­" aria-label="Username" aria-describedby="addon-wrapping" >
 	</div>
 	
 	<div class="input-group flex-nowrap">

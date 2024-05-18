@@ -1,20 +1,24 @@
+USE oasis;
+
 DROP TABLE IF EXISTS waiting;
+DROP TABLE IF EXISTS WaitingPerson;
 
 CREATE TABLE waiting (
 waiting_id int AUTO_INCREMENT PRIMARY KEY,
 waiting_user_id int,
 waiting_reserve timestamp,
 waiting_maxpeople int,
-waiting_game_name varchar(20),
-constraint FOREIGN KEY(waiting_user_id) REFERENCES user_id(user_id)
+waiting_game_name varchar(20) NOT NULL
 );
 
 
-INSERT INTO waiting(
-waiting_user_id,waiting_reserve,waiting_maxpeople,waiting_game_name
-)values(
-2,'2024-05-30 21:00',5,"世紀帝國"
+CREATE TABLE WaitingPerson(
+waitingPerson_id int AUTO_INCREMENT PRIMARY KEY,
+waitingPerson_WaitingID int NOT NULL,
+waitingPerson_UserID int NOT NULL
 );
 
 
+DESC waitingPerson;
 SELECT * FROM waiting;
+SELECT * FROM waitingPerson;

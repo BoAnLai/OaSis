@@ -9,7 +9,7 @@
 <head>
 
 
-<title>IBM Emp: Home</title>
+<title>OASIS Room</title>
 
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,10 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <title>Bootstrap Example</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
 <style>
 
@@ -47,7 +51,7 @@
 </style>
 
 </head>
-<body bgcolor='white'>
+<body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
 
 <form method="post" action="<%=request.getContextPath()%>/WaitingServlet">
 
@@ -64,37 +68,91 @@
 		<ul>
 		    <c:forEach var="message" items="${errorMsgs}">
 		    
-		    <div class="alert alert-dark" role="alert">
+		    <div class="alert alert-danger" role="alert">
 	  		${message}
 			</div>
 			</c:forEach>
 		</ul>
 	</c:if>
+	<c:if test="${not empty successMsgs}">
+		<ul>
+		    <c:forEach var="message" items="${successMsgs}">	    
+		    <div class="alert alert-success" role="alert">
+	  		${successMsgs}
+			</div>
+			</c:forEach>
+		</ul>
+	</c:if>
 
-	<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
-	<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-	  <input type="button" name="sin" class="btn-check"  autocomplete="off">
-	  <input type="hidden" name="action" value="select_AllWait">
-	  <input type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="列隊查詢">
-	</div>
-	</form>
 	
-	<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
-	<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-	  <input type="button" name="sin" class="btn-check"  autocomplete="off">
-	  <input type="hidden" name="action" value="select_AddWait">
-	  <input type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="建立隊伍">
+	<div class="container text-center">
+	    <div class="row row-cols-auto">
+	    	<div>
+	    	
+		    	<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
+		  				<input type="hidden" name="action" value="select_AllWait">
+		  				<input type="submit" class="btn btn-danger" type="button" id="button-addon2" value="列隊查詢">
+					</div>
+				</form>
+	    	
+	    	</div>
+	    	<div>
+	    	
+		    	<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
+		  				<input type="hidden" name="action" value="select_AddWait">
+		  				<input type="submit" class="btn btn-warning" type="button" id="button-addon2" value="建立隊伍">
+					</div>
+				</form>
+	    	
+	    	</div>
+	    	<div>
+	    	
+	    		<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
+		  				<input type="hidden" name="action" value="select_MyRoom">
+		  				<input type="submit" class="btn btn-success" type="button" id="button-addon2" value="我的房間">
+					</div>
+				</form>
+	    	
+	    	</div>
+	    	<div>
+	    	
+	    		<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
+		  				<input type="hidden" name="action" value="select_AllWait">
+		  				<input type="submit" class="btn btn-primary" type="button" id="button-addon2" value="我的列隊">
+					</div>
+				</form>
+	    	
+	    	</div>
+	    </div>
 	</div>
-	</form>
+	
+	
+	
+	
+	
+	
 
 
-	<c:if test="${sin eq true || sin eq null}">
+	<c:if test="${sin eq 'A' || sin eq null}">
 	<jsp:include page="/lee/waiting/waitingAll.jsp" ></jsp:include> 	
 	</c:if>
 	
-	<c:if test="${sin eq false}">
+	<c:if test="${sin eq 'B'}">
 	<jsp:include page="/lee/waiting/waitAdd.jsp" ></jsp:include> 	
 	</c:if>
+	
+	<c:if test="${sin eq 'C'}">
+	<jsp:include page="/lee/waiting/myRoom.jsp" ></jsp:include> 	
+	</c:if>
+	
 	
 	
 	

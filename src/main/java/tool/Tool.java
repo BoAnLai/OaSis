@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class Tool {
 
 	public static final String DRIVER="com.mysql.cj.jdbc.Driver";
-	public static final String URL="jdbc:mysql://localhost:3306/OasisProject?serverTimezone=Asia/Taipei";
+	public static final String URL="jdbc:mysql://localhost:3306/oasis?serverTimezone=Asia/Taipei";
 	public static final String USERID="root";
 	public static final String PASSWORD="123456";
 	

@@ -1,18 +1,18 @@
 <%@page import="com.lee.waiting.model.WaitingVO"%>
-<%@page import="com.lee.lobbychatter.model.WaitingService"%>
+<%@page import="com.lee.waiting.model.WaitingService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 
-
-
-		<%-- 此頁練習採用 EL 的寫法取值 --%>
 		<%
 		WaitingService waiSvc = new WaitingService();
 	    List<WaitingVO> list = waiSvc.getAll();
 	    pageContext.setAttribute("list",list);
 		%>
+	
+		<%-- 此頁練習採用 EL 的寫法取值 --%>
+		
 
 		
 <html>
@@ -21,10 +21,17 @@
 <title>Wait list table - com.Wait</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <!-- 燈箱功能 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    
     <style type="text/css">
     body{margin-top:20px;
     background-color:#eee;
     }
+
     .project-list-table {
         border-collapse: separate;
         border-spacing: 0 12px
@@ -104,6 +111,9 @@
 </head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous">
+	
+
+
 
 
 <body>
@@ -137,8 +147,8 @@
     <th scope="col" style="text-align: center">出發時間</th>
     <th scope="col" style="text-align: center">人數上限</th>
     <th scope="col" style="text-align: center">遊戲類型</th>
-    <th scope="col" style="text-align: center">修改</th>
-    <th scope="col" style="text-align: center">刪除</th>
+    <th scope="col" style="text-align: center">加入</th>
+    <th scope="col" style="text-align: center">查看</th>
     </tr>
     
     
@@ -157,15 +167,23 @@
                 
                 <td  style="text-align: center ">
 			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
-			     	<input type="submit"  class="btn btn-secondary" value="修改">
+			     	<input type="submit"  class="btn btn-secondary" value="加入">
 			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">
-			     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			     	<input type="hidden" name="waimax"  value="${WaitingVO.waitingMaxPeople}">
+			     	<input type="hidden" name="action"	value="add_Person"></FORM>
 				</td>
+				
+				
 				<td  style="text-align: center ">
 			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
-			     	<input type="submit"  class="btn btn-secondary" value="修改">
+			     	
+			     	
+			     	<input type="submit" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" value="查看">
+  
+
+			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">
-			     	<input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			     	<input type="hidden" name="action"	value="select_waitingPerson"></FORM>
 				</td>
 				
           
@@ -179,15 +197,67 @@
     </tbody>
     </table>
     
+    
+    
     </div>
     </div>
     
     <%@ include file="page2.file" %>
    
+   
      
     <div class="float-sm-end">
-    <ul class="pagination mb-sm-0"> </ul>
+    <ul class="pagination mb-sm-0"> </ul>'
     </div>
+    
+    
+    
+    <!-- 模态框结构 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- 使用 modal-lg 类来增加模态框大小 -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">模态框标题</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- 这里嵌入一个 iframe 来显示网页内容 -->
+        <iframe src="https://www.youtube.com/" style="width: 100%; height: 400px; border: none;"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 引入jQuery和Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+	
+	<script>
+	    function waitingPerson(){
+	    	
+	        // 打開新的小視窗，這裡替換成你想要打開的頁面的 URL
+	        var newWindow = window.open('<%=request.getContextPath() %>/lee/waitingPerson/WaitingPersonAll.jsp');
+	        
+	        // 設置新視窗的大小和屬性
+	        if (newWindow) {
+	            newWindow.resizeTo(600, 400);
+	            newWindow.focus();
+	        } else {
+	            alert('無法打開新視窗，請檢查瀏覽器設置。');
+	        }
+	    }
+	    
+	</script>
+    
+    
     
     </body>
     </html>

@@ -15,5 +15,11 @@ public interface WaitingInterface {
 	void updateAll(WaitingVO wat);
 	
 	List<WaitingVO>getAll();
+	
+	List<WaitingVO>getTotal();
+	
+	List<WaitingVO>getMyRoom(Integer waitingUserID);
+	
+	
 
 }

@@ -14,7 +14,8 @@ public class MainTest {
 		
 //		getOne();
 //		Insert();
-		SelectAll();
+//		SelectAll();
+		selectMyRoom();
 //		UpdateMaxPeople();
 //		UpdateReserve();
 		
@@ -99,14 +100,14 @@ public class MainTest {
 	public static void SelectAll() {
 			
 			WaitingInterface wd=new WaitingDaoImpl();
-			List<WaitingVO> wtList=wd.getAll();
+			List<WaitingVO> wtList=wd.getTotal();
+			
 			
 			
 			for(WaitingVO w:wtList) {
-				if(w.getWaitingID()>5) {
+				
 					System.out.println(w);
-					
-				}
+
 			}
 			System.out.println("查詢完畢!");
 		}
@@ -123,7 +124,24 @@ public class MainTest {
 		WaitingVO waiVo= wd.getOne(waitingId);
 		System.out.println(waiVo);
 	}
+	
+	
+	public static void selectMyRoom() {
 		
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("請輸入玩家編號:");
+		int waitingUserId=sc.nextInt();
+		
+		
+		WaitingInterface wd=new WaitingDaoImpl();
+		List<WaitingVO> waiList= wd.getMyRoom(waitingUserId);
+		for(WaitingVO w:waiList) {
+			
+			System.out.println(w);
+
+	}
+	}
 		
 	
 

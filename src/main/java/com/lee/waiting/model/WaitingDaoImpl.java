@@ -15,10 +15,12 @@ public class WaitingDaoImpl implements WaitingInterface{
 	
 	public static final String WAITING_INSER="INSERT INTO waiting(waiting_user_id,waiting_reserve,waiting_maxpeople,waiting_game_name)values(?,?,?,?)";
 	public static final String WAITING_SELECTALL="SELECT * FROM waiting WHERE waiting_reserve>NOW() ORDER BY waiting_reserve";
+	public static final String WAITING_SELECTTOTAL="SELECT * FROM waiting ;";
 	public static final String WAITING_SELECTONE="SELECT * FROM waiting where waiting_id= ?";
 	public static final String WAITING_UPDATEMAXPEOPLE="UPDATE waiting SET waiting_maxpeople=? where waiting_id=?";
 	public static final String WAITING_UPDATERESERVE="UPDATE waiting SET waiting_reserve=? where waiting_id=?";
 	public static final String WAITING_UPDATEALL="UPDATE waiting SET waiting_user_id=?,waiting_reserve =?,waiting_maxpeople=?,waiting_game_name=? where waiting_id=?";
+	public static final String WAITING_SELECTMYROOM="SELECT * FROM waiting WHERE waiting_user_id =? AND waiting_reserve>NOW() ORDER BY waiting_reserve";
 	
 	static {
 		try {
@@ -197,5 +199,82 @@ public class WaitingDaoImpl implements WaitingInterface{
 		}
 		
 	}
+
+	@Override
+	public List<WaitingVO> getTotal() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		List<WaitingVO>wtList =new ArrayList<>();
+		
+		try {
+			con=DriverManager.getConnection(Tool.URL,Tool.USERID,Tool.PASSWORD);
+			pstmt=con.prepareStatement(WAITING_SELECTTOTAL);
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				WaitingVO wt=new WaitingVO();
+				wt.setWaitingID(rs.getInt(1));
+				wt.setWaitingUserId(rs.getInt(2));
+				Timestamp timestamp = rs.getTimestamp(3);
+				wt.setWaitingReserve(timestamp);
+				wt.setWaitingMaxPeople(rs.getInt(4));
+				wt.setWaitingGameName(rs.getString(5));
+				wtList.add(wt);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			Tool.closeResources(con, pstmt, rs);
+		}
+		
+		
+		return wtList;
+	}
+
+	@Override
+	public List<WaitingVO> getMyRoom(Integer waitingUserID) {
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<WaitingVO>wtList =new ArrayList<>();
+		
+		try {
+			con=DriverManager.getConnection(Tool.URL,Tool.USERID,Tool.PASSWORD);
+			pstmt=con.prepareStatement(WAITING_SELECTMYROOM);
+			
+			pstmt.setInt(1,waitingUserID );
+			rs=pstmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				WaitingVO wt=new WaitingVO();
+				
+				wt.setWaitingID(rs.getInt(1));
+				wt.setWaitingUserId(waitingUserID);
+				Timestamp timestamp = rs.getTimestamp(3);
+				wt.setWaitingReserve(timestamp);
+				wt.setWaitingMaxPeople(rs.getInt(4));
+				wt.setWaitingGameName(rs.getString(5));
+				wtList.add(wt);
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			Tool.closeResources(con, pstmt, rs);
+		}
+		
+		return wtList;
+	}
+
+	
 
 }

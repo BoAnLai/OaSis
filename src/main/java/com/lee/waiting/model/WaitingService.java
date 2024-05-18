@@ -1,11 +1,7 @@
-package com.lee.lobbychatter.model;
+package com.lee.waiting.model;
 
 import java.sql.Timestamp;
 import java.util.List;
-
-import com.lee.waiting.model.WaitingDaoImpl;
-import com.lee.waiting.model.WaitingInterface;
-import com.lee.waiting.model.WaitingVO;
 
 public class WaitingService {
 	
@@ -50,5 +46,10 @@ public class WaitingService {
 		
 		return waiVO;
 	}
-
+	
+	public List<WaitingVO> getMyRoom(Integer waitingRoomId) {
+		return dao.getMyRoom(waitingRoomId);
+	}
+	
+	
 }
