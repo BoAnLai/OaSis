@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.mike.game.model.GameVO;
 import com.mike.user.model.UserVO;
 
 @Entity
