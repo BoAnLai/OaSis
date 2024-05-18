@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.user.model.*"%>
@@ -111,7 +111,7 @@
 				<td>${user.userIntro}</td>
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/user/update" style="margin-bottom: 0px;">
-				     <input type="submit" value="­×§ï">
+				     <input type="submit" value="ä¿®æ”¹">
 				     <input type="hidden" name="userId"  value="${user.userId}">
 				     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 				</td>

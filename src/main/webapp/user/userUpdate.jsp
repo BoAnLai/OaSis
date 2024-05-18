@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.mike.user.model.*"%>
 
@@ -20,7 +20,7 @@
 	UserVO user = (UserVO) session.getAttribute("user");
 %>
 
-    <h1>≠◊ßÔ</h1>
+    <h1>‰øÆÊîπ</h1>
     <div class="register_input_div">
         <form action="updating" method="POST" enctype="multipart/form-data">
             <table>
@@ -32,31 +32,31 @@
                		</tr>
                     <tr id="register_input_email">
                         <th>
-                            <label for="email">´HΩc</label>
+                            <label for="email">‰ø°ÁÆ±</label>
                         </th>
                         <td>
-                            <input name="email" id="email" type="text" placeholder="•≤∂Ò" required value="<%=user.getUserEmail()%>" readonly>
+                            <input name="email" id="email" type="text" placeholder="ÂøÖÂ°´" required value="<%=user.getUserEmail()%>" readonly>
                         </td>
                     </tr>
                     <tr id="register_input_password">
                         <th>
-                            <label for="password">±KΩX</label>
+                            <label for="password">ÂØÜÁ¢º</label>
                         </th>
                         <td>
-                            <input name="password" id="password" type="password" placeholder="•≤∂Ò" value="<%=user.getUserPassword()%>">
+                            <input name="password" id="password" type="password" placeholder="ÂøÖÂ°´" value="<%=user.getUserPassword()%>">
                         </td>
                     </tr>
                     <tr id="register_input_confirm_password">
                         <th>
-                            <label for="confirm_password">ΩTª{∑s±KΩX</label>
+                            <label for="confirm_password">Á¢∫Ë™çÊñ∞ÂØÜÁ¢º</label>
                         </th>
                         <td>
-                            <input name="confirm_password" id="password" type="password" placeholder="•≤∂Ò" value="<%=user.getUserPassword()%>">
+                            <input name="confirm_password" id="password" type="password" placeholder="ÂøÖÂ°´" value="<%=user.getUserPassword()%>">
                         </td>
                     </tr>
                     <tr id="register_nickname">
                         <th>
-                            <label for="nickname">º ∫Ÿ</label>
+                            <label for="nickname">Êö±Á®±</label>
                         </th>
                         <td>
                             <input name="nickname" id="nickname" type="text" value="<%=user.getUserNickname()%>">
@@ -64,7 +64,7 @@
                     </tr>
                     <tr id="register_intro">
                         <th>
-                            <label for="intro">¶€ß⁄§∂≤–</label>
+                            <label for="intro">Ëá™Êàë‰ªãÁ¥π</label>
                         </th>
                         <td>
                             <textarea name="intro" id="intro" cols="30" rows="10"><%=user.getUserIntro()%></textarea>
@@ -72,7 +72,7 @@
                     </tr>
                     <tr id="register_avatar">
                         <th>
-                            <label for="avatar">πœ§˘(§j¿Y∑”)</label>
+                            <label for="avatar">ÂúñÁâá(Â§ßÈ†≠ÁÖß)</label>
                         </th>
                         <td>
                             <input name="avatar" id="avatar" type="file">
@@ -84,7 +84,7 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="≠◊ßÔ">
+            <input type="submit" value="‰øÆÊîπ">
         </form>
     </div>
     

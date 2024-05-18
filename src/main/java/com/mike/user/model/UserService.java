@@ -3,6 +3,8 @@ package com.mike.user.model;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.mike.user.model.exception.EmailNotFoundException;
+
 public class UserService {
 
 	private UserDAO_interface dao;
@@ -35,4 +37,34 @@ public class UserService {
 		return user;
 	}
 	
+	public boolean verification(String email, String password) throws Exception {
+		
+		if(!(emailExist(email))) {
+			throw new EmailNotFoundException();
+		}
+		
+		UserVO user = dao.findByEmail(email);
+		if(password == user.getUserPassword()) {
+			return true;			
+		}else {
+			return false;
+		}
+		
+	}
+	
+	public boolean emailExist(String email) {
+		
+		try {
+			if(dao.findByEmail(email) != null) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 }

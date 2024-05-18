@@ -13,6 +13,7 @@ public interface UserDAO_interface {
           public List<UserVO> getByCompanyName(String userCompanyName);
           public List<UserVO> getByLastIp(String userLastIp);
           public List<UserVO> getByNickname(String userNickname);
-          public void updateLastLogin(Integer userId);      
+          public void updateLastLogin(Integer userId);    
+          public UserVO findByEmail(String email) throws SQLException;
 //          public void updateLastIp(Integer userId);      
 }

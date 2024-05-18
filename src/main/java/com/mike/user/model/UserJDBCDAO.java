@@ -682,4 +682,10 @@ public class UserJDBCDAO implements UserDAO_interface {
 		
 		System.out.println("===main done===");
 	}
+
+	@Override
+	public UserVO findByEmail(String email) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

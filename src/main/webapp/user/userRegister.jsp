@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.mike.user.model.*"%>
 
@@ -15,38 +15,38 @@
 
 <body>
 
-    <h1>µ˘•U</h1>
+    <h1>Ë®ªÂÜä</h1>
     <div class="register_input_div">
         <form action="registering" method="POST" enctype="multipart/form-data">
             <table>
                 <tbody>
                     <tr id="register_input_email">
                         <th>
-                            <label for="email">øÈ§J´HΩc</label>
+                            <label for="email">Ëº∏ÂÖ•‰ø°ÁÆ±</label>
                         </th>
                         <td>
-                            <input name="email" id="email" type="text" placeholder="•≤∂Ò" required>
+                            <input name="email" id="email" type="text" placeholder="ÂøÖÂ°´" required>
                         </td>
                     </tr>
                     <tr id="register_input_password">
                         <th>
-                            <label for="password">øÈ§J±KΩX</label>
+                            <label for="password">Ëº∏ÂÖ•ÂØÜÁ¢º</label>
                         </th>
                         <td>
-                            <input name="password" id="password" type="password" placeholder="•≤∂Ò" required>
+                            <input name="password" id="password" type="password" placeholder="ÂøÖÂ°´" required>
                         </td>
                     </tr>
                     <tr id="register_input_confirm_password">
                         <th>
-                            <label for="confirm_password">¶A¶∏øÈ§J±KΩX</label>
+                            <label for="confirm_password">ÂÜçÊ¨°Ëº∏ÂÖ•ÂØÜÁ¢º</label>
                         </th>
                         <td>
-                            <input name="confirm_password" id="confirm_password" type="password" placeholder="•≤∂Ò" required>
+                            <input name="confirm_password" id="confirm_password" type="password" placeholder="ÂøÖÂ°´" required>
                         </td>
                     </tr>
                     <tr id="register_nickname">
                         <th>
-                            <label for="nickname">øÈ§Jº ∫Ÿ</label>
+                            <label for="nickname">Ëº∏ÂÖ•Êö±Á®±</label>
                         </th>
                         <td>
                             <input name="nickname" id="nickname" type="text">
@@ -54,7 +54,7 @@
                     </tr>
                     <tr id="register_intro">
                         <th>
-                            <label for="intro">¶€ß⁄§∂≤–</label>
+                            <label for="intro">Ëá™Êàë‰ªãÁ¥π</label>
                         </th>
                         <td>
                             <textarea name="intro" id="intro" cols="30" rows="10"></textarea>
@@ -62,7 +62,7 @@
                     </tr>
                     <tr id="register_avatar">
                         <th>
-                            <label for="avatar">§W∂«πœ§˘(§j¿Y∑”)</label>
+                            <label for="avatar">‰∏äÂÇ≥ÂúñÁâá(Â§ßÈ†≠ÁÖß)</label>
                         </th>
                         <td>
                             <input name="avatar" id="avatar" type="file">
@@ -74,8 +74,8 @@
                     </tr>
                 </tbody>
             </table>
-            <input type="submit" value="µ˘•U to user/registering">
-            <input type="reset" value="≤M∞£∏ÍÆ∆">
+            <input type="submit" value="Ë®ªÂÜä to user/registering">
+            <input type="reset" value="Ê∏ÖÈô§Ë≥áÊñô">
         </form>
     </div>
     
