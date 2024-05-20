@@ -108,29 +108,55 @@
 
 
 
-
 <table class="table project-list-table table-nowrap align-middle table-borderless">
 <FORM METHOD="post" ACTION="WaitingServlet" name="form1">
 
-	 <div class="input-group flex-nowrap">
+
+ <div class="container text-center">
+      <div class="row">
+        <div class="col-6" style="padding: 0px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        <div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">NUMBER</span>
-  		<input type="text" class="form-control" name="userid" placeholder="您的編號ID" aria-label="Username" aria-describedby="addon-wrapping">
-	</div>
-	
-	<div class="input-group flex-nowrap">
+  		<input type="text" class="form-control" name="userid" placeholder="您的編號ID" aria-label="Username" aria-describedby="addon-wrapping" required="required">
+		</div>     
+        </font></font></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-6" style="padding: 0px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        <div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">RESERVE</span>
   		<input type="text" id="f_date1" class="form-control" name="reserve" placeholder="預約出發時間" aria-label="Username" aria-describedby="addon-wrapping" required="required">
-	</div>
-	
-	<div class="input-group flex-nowrap">
+		</div>
+        </font></font></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-6" style="padding: 0px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        <div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">MAXPEOP</span>
-  		<input type="text" class="form-control" name="max" placeholder="列隊上限" aria-label="Username" aria-describedby="addon-wrapping" >
-	</div>
-	
-	<div class="input-group flex-nowrap">
+  		<input type="text" class="form-control" name="max" placeholder="列隊上限" aria-label="Username" aria-describedby="addon-wrapping" required="required">
+		</div>
+        </font></font></div>
+      </div>
+      
+      <div class="row">
+        <div class="col-6" style="padding: 0px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        <div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">GAME</span>
-  		<input type="text" class="form-control" name="game" placeholder="遊戲類型" aria-label="Username" aria-describedby="addon-wrapping">
-	</div>
+  		<input type="text" class="form-control" name="game" placeholder="遊戲類型" aria-label="Username" aria-describedby="addon-wrapping" required="required">
+		</div>
+        </font></font></div>
+      </div>
+    </div>
+
+	 
+	
+	
+	
+	
+	
+	
 	
 	
 

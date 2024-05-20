@@ -14,7 +14,9 @@ public class WaitingPersonDao implements WaitingPersonInterface{
 	public static final String SELECTALL="SELECT * FROM WaitingPerson Where waitingPerson_WaitingID=?";
 	public static final String SELECTTOTAL="SELECT * FROM WaitingPerson;";
 	public static final String DELECTROOMPEOPLE="DELETE FROM waitingPerson WHERE waitingPerson_WaitingID=? AND waitingPerson_UserID=?";
-
+	
+	
+	
 	static {
 		try {
 			Class.forName(Tool.DRIVER);
@@ -145,6 +147,8 @@ public class WaitingPersonDao implements WaitingPersonInterface{
 		
 		return wpList;//不要再忘記了!!!
 	}
+
+
 
 	
 

@@ -20,6 +20,8 @@ public interface WaitingInterface {
 	
 	List<WaitingVO>getMyRoom(Integer waitingUserID);
 	
+	List<WaitingVO>getInRoom(Integer waitingUserID);
+	
 	
 
 }

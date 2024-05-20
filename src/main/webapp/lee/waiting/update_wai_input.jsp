@@ -56,6 +56,9 @@
 			</c:forEach>
 		</ul>
 	</c:if>
+	
+	
+	
 
 <FORM METHOD="post" ACTION="WaitingServlet" name="form1">
 

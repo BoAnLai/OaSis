@@ -98,12 +98,6 @@
 <body>
 
 
-<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-  <button type="button" class="btn btn-danger"><a href="<%=request.getContextPath()%>/lee/waiting/waiting_select.jsp" style="color:white">回首頁</a></button>
-  <button type="button" class="btn btn-warning">我的房間</button>
-  <button type="button" class="btn btn-success">聊天大廳</button>
-</div>
-
     <div class="container">
     	<div class="row align-items-center">
     		
@@ -132,6 +126,8 @@
     <th scope="col" style="text-align: center">出發時間</th>
     <th scope="col" style="text-align: center">人數上限</th>
     <th scope="col" style="text-align: center">遊戲類型</th>
+    <th scope="col" style="text-align: center">加入</th>
+    <th scope="col" style="text-align: center">查看</th>
     
     </tr>
     
@@ -146,6 +142,25 @@
             <td style="text-align: center"><span class="badge badge-soft-success mb-0"><%=waiVO.getWaitingReserve() %></td>
             <td style="text-align: center"><%=waiVO.getWaitingMaxPeople() %></td>
             <td style="text-align: center"><%=waiVO.getWaitingGameName() %></td>
+            
+            
+            	<td  style="text-align: center ">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			     	<input type="submit"  class="btn btn-secondary" value="加入">
+			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">
+			     	<input type="hidden" name="waimax"  value="${waiVO.waitingMaxPeople}">
+			     	<input type="hidden" name="action"	value="add_Person"></FORM>
+				</td>
+				
+				
+				<td  style="text-align: center ">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+	     	
+			     	<input type="hidden" name="check"  value="No">
+			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">
+			     	<input type="hidden" name="action"	value="select_waitingPerson">
+			     	<input type="submit" class="btn btn-secondary"  value="查看"></FORM>
+				</td>
             
    
     

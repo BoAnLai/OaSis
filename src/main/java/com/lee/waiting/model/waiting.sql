@@ -15,10 +15,8 @@ waiting_game_name varchar(20) NOT NULL
 CREATE TABLE WaitingPerson(
 waitingPerson_id int AUTO_INCREMENT PRIMARY KEY,
 waitingPerson_WaitingID int NOT NULL,
-waitingPerson_UserID int NOT NULL
+waitingPerson_UserID int NOT NULL,
+CONSTRAINT fk_waitingPerson_WaitingID FOREIGN KEY (waitingPerson_WaitingID) REFERENCES waiting(waiting_id)
 );
 
 
-DESC waitingPerson;
-SELECT * FROM waiting;
-SELECT * FROM waitingPerson;

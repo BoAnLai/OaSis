@@ -51,5 +51,9 @@ public class WaitingService {
 		return dao.getMyRoom(waitingRoomId);
 	}
 	
+	public List<WaitingVO> getInRoom(Integer waitingRoomId) {
+		return dao.getInRoom(waitingRoomId);
+	}
+	
 	
 }

@@ -21,15 +21,14 @@ pageContext.setAttribute("list", list);
         <meta charset="utf-8">
         
         
-        <title>meet creative team with board directors - Bootdey.com</title>
+        <title>OASIS ROOM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <style type="text/css">
         body{margin-top:20px;
         background:rgb(238, 238, 238, 0.6);
         color: #9aa9c1;
-        width: 600px;
-        height: 400px;
+       
         
         }
         a{
@@ -188,6 +187,30 @@ pageContext.setAttribute("list", list);
             <section id="team" class="team_area section-padding">
             <div class="container">
             <h2 class="title_spectial">列隊內等待者</h2>
+            
+            
+			<c:if test="${not empty errorMsgs2}">
+				<ul>
+				    <c:forEach var="message" items="${errorMsgs2}">
+				   	
+				    <div class="alert alert-danger" role="alert">
+			  		${message}
+					</div>
+					</c:forEach>
+				</ul>
+			</c:if>
+			<c:if test="${not empty successMsgs2}">
+				<ul>
+				    <c:forEach var="message" items="${successMsgs}">	    
+				    <div class="alert alert-success" role="alert">
+			  		${successMsgs}
+					</div>
+					</c:forEach>
+				</ul>
+			</c:if>   
+            
+            
+            
             <div class="row text-center justify-content-center">
     <c:forEach var="waitingPersonVo" items="${list}" varStatus="loop">
         <div class="col-lg-2 col-sm-4 col-xs-6 wow fadeInUp">
@@ -217,8 +240,20 @@ pageContext.setAttribute("list", list);
         <c:if test="${loop.index == 4}"><div class="w-100"></div></c:if>
     </c:forEach>
 </div>
+
+					<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">	
+			  				<input type="hidden" name="action" value="select_AllWait">
+			  				<button type="submit" class="btn btn-info" aria-label="Close">回到首頁</button>
+						</div>
+					</form>
+			
+
             </div>
             </section>
+            
+            
+            
             
             <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>

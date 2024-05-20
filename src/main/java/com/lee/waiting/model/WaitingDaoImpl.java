@@ -21,6 +21,14 @@ public class WaitingDaoImpl implements WaitingInterface{
 	public static final String WAITING_UPDATERESERVE="UPDATE waiting SET waiting_reserve=? where waiting_id=?";
 	public static final String WAITING_UPDATEALL="UPDATE waiting SET waiting_user_id=?,waiting_reserve =?,waiting_maxpeople=?,waiting_game_name=? where waiting_id=?";
 	public static final String WAITING_SELECTMYROOM="SELECT * FROM waiting WHERE waiting_user_id =? AND waiting_reserve>NOW() ORDER BY waiting_reserve";
+	public static final String WAITING_GETINROOM="SELECT waiting.*\r\n"
+			+ "FROM waiting\r\n"
+			+ "INNER JOIN waitingPerson B ON waiting.waiting_id = B.waitingperson_waitingID\r\n"
+			+ "WHERE B.waitingperson_userID = ?\r\n"
+			+ "AND waiting.waiting_reserve > NOW()\r\n"
+			+ "ORDER BY waiting.waiting_reserve;\r\n"
+			+ "";
+	
 	
 	static {
 		try {
@@ -264,6 +272,45 @@ public class WaitingDaoImpl implements WaitingInterface{
 			}
 			
 			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			Tool.closeResources(con, pstmt, rs);
+		}
+		
+		return wtList;
+	}
+
+	@Override
+	public List<WaitingVO> getInRoom(Integer waitingUserID) {
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<WaitingVO>wtList =new ArrayList<>();
+
+		
+		try {
+			con=DriverManager.getConnection(Tool.URL,Tool.USERID,Tool.PASSWORD);
+			pstmt=con.prepareStatement(WAITING_GETINROOM);
+			
+			pstmt.setInt(1,waitingUserID );
+			rs=pstmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				WaitingVO wt=new WaitingVO();
+				
+				wt.setWaitingID(rs.getInt(1));
+				wt.setWaitingUserId(waitingUserID);
+				Timestamp timestamp = rs.getTimestamp(3);
+				wt.setWaitingReserve(timestamp);
+				wt.setWaitingMaxPeople(rs.getInt(4));
+				wt.setWaitingGameName(rs.getString(5));
+				wtList.add(wt);
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

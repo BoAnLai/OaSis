@@ -11,11 +11,24 @@
 
 <%Integer userID = (Integer)request.getAttribute("userID"); %>
 
+
+<c:if test="${situation eq 'my'}">
 <%
 	WaitingService waiSvc = new WaitingService();
 	List<WaitingVO> list = waiSvc.getMyRoom(userID);
 	pageContext.setAttribute("list", list);
 %>
+
+</c:if>
+
+<c:if test="${situation eq 'in'}">
+<%
+	WaitingService waiSvc = new WaitingService();
+	List<WaitingVO> list = waiSvc.getInRoom(userID);
+	pageContext.setAttribute("list", list);
+%>
+
+</c:if>
 
 
 
@@ -30,6 +43,7 @@
     body{margin-top:20px;
     background-color:#eee;
     }
+
     .project-list-table {
         border-collapse: separate;
         border-spacing: 0 12px
@@ -127,6 +141,7 @@
 
 
 <body>
+
 <c:if test="${not empty successMsgs1}">
 		<ul>
 		    <c:forEach var="message" items="${successMsgs1}">	    
@@ -141,17 +156,15 @@
     <div class="container">
     	<div class="row align-items-center">
     		
-	    			
-    			
-    		
-    
-    
+   
     
     <table class="table project-list-table table-nowrap align-middle table-borderless">
     <tbody>
     
     
-    
+    <c:if test="${list.size() != 0}">
+   
+   	<c:if test="${situation eq 'my'}">	
     <tr>
     <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
     </th>
@@ -164,7 +177,28 @@
     <th scope="col" style="text-align: center">查看玩家</th>
     
     </tr>
+    </c:if>
     
+    <c:if test="${situation eq 'in'}">	
+    <tr>
+    <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
+    </th>
+    <th scope="col" style="text-align: center">創建者</th>
+    <th scope="col" style="text-align: center">房間編號</th>
+    <th scope="col" style="text-align: center">出發時間</th>
+    <th scope="col" style="text-align: center">人數上限</th>
+    <th scope="col" style="text-align: center">遊戲類型</th>
+    <th scope="col" style="text-align: center">離開房間</th>
+    <th scope="col" style="text-align: center">查看玩家</th>
+    
+    </tr>
+    </c:if>
+    
+	</c:if>
+    <c:if test="${list.size() eq 0}">
+   
+   		<img src="lee/images/Empty.png" alt="Centered Image" width="500" height="500" >
+	</c:if>
     
     <c:forEach var="waitingVO" items="${list}" varStatus="loop">
     	<tr>
@@ -192,6 +226,7 @@
             <td style="text-align: center">${waitingVO.waitingMaxPeople}</td>
             <td style="text-align: center">${waitingVO.waitingGameName}</td>
             
+            <c:if test="${situation eq 'my'}">
    			<td  style="text-align: center ">
 			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="修改">
@@ -200,18 +235,44 @@
 			     	<input type="hidden" name="action"	value="myRoom_Revise"></FORM>
 			</td>
 			
+			
 			<td  style="text-align: center ">
 			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="查看">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="check"  value="Yes">
 			     	<input type="hidden" name="action"	value="select_waitingPerson"></FORM>
+			</td>
+			</c:if>
+			
+			
+			<c:if test="${situation eq 'in'}">
+			
+				<td  style="text-align: center ">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+	     	
+			     	<input type="hidden" name="check"  value="No">
+			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
+			     	<input type="hidden" name="action"	value="leave_waitingPerson">
+			     	<input type="submit" class="btn btn-secondary"  value="離開"></FORM>
 				</td>
-    
+			
+				<td  style="text-align: center ">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+	     	
+			     	<input type="hidden" name="check"  value="No">
+			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
+			     	<input type="hidden" name="action"	value="select_waitingPerson">
+			     	<input type="submit" class="btn btn-secondary"  value="查看"></FORM>
+				</td>
+    		</c:if>
                 
         </tr>
    </c:forEach>
+   
+   
     
+     
     
     </tbody>
     </table>
@@ -223,7 +284,6 @@
     <div class="float-sm-end">
     <ul class="pagination mb-sm-0"> </ul>
     </div>
-    
    
 
 </body>
