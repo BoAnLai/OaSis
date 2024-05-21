@@ -2,6 +2,8 @@ package com.mike.user.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.mike.tool.StringProcessor;
+
 public class UserVO implements java.io.Serializable{
 	
 	private Integer userId;
@@ -61,7 +63,7 @@ public class UserVO implements java.io.Serializable{
 		this.userIdentity = userIdentity;
 	}
 	public String getUserCompanyName() {
-		return userCompanyName;
+		return StringProcessor.nullDealer(userCompanyName);
 	}
 	public void setUserCompanyName(String userCompanyName) {
 		this.userCompanyName = userCompanyName;
@@ -87,20 +89,20 @@ public class UserVO implements java.io.Serializable{
 	}
 
 	public String getUserNickname() {
-		return userNickname;
+		return StringProcessor.nullDealer(userNickname);
 	}
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
 	public String getUserAvatar() {
-		return userAvatar;
+		return StringProcessor.nullDealer(userAvatar);
 	}
 	public void setUserAvatar(String userAvatar) {
 		this.userAvatar = userAvatar;
 	}
 	
 	public String getUserIntro() {
-		return userIntro;
+		return StringProcessor.nullDealer(userIntro);
 	}
 
 	public void setUserIntro(String userIntro) {
