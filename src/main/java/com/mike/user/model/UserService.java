@@ -50,24 +50,12 @@ public class UserService {
 			throw se;
 		}catch(EmailNotFoundException ee) {
 			throw ee;
-		}
-		
-		
+		}		
 	}
 	
-//	public boolean emailExist(String email) {
-//		
-//		try {
-//			if(dao.findByEmail(email) != null) {
-//				return true;
-//			}else {
-//				return false;
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return false;
-//		}
-//		
-//	}
+	public UserVO findByEmail(String email) throws SQLException {
+			UserVO user = dao.findByEmail(email);
+			return user;
+	}
+
 }
