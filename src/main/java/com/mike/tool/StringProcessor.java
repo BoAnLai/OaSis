@@ -29,5 +29,13 @@ public class StringProcessor {
 		
 		return filename; //"dog.jpg"
 	}
+	
+	public static String nullDealer(String input) {
+		if(input == null) {
+			return "";
+		}else {
+			return input;
+		}
+	}
 
 }
