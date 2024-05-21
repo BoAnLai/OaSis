@@ -60,7 +60,7 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="CommentSvc" scope="page" class="com.comment.jiahong.model.CommentService" />
+  <jsp:useBean id="CommentSvc" scope="page" class="com.jiahong.comment.model.CommentService" />
    
   <li>
      <FORM METHOD="post" ACTION="comment.do" >

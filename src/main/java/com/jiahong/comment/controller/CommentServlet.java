@@ -1,4 +1,4 @@
-package com.comment.controller;
+package com.jiahong.comment.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;

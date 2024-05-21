@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.comment.model.*"%>
+<%@ page import="com.jiahong.comment.model.*"%>
 
 <% //見com.comment.controller.CommentServlet.java第163行存入req的commentVO物件 (此為從資料庫取出的commentVO, 也可以是輸入格式有錯誤時的commentVO物件)
    CommentVO commentVO = (CommentVO) request.getAttribute("commentVO");
