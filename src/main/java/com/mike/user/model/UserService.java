@@ -37,34 +37,25 @@ public class UserService {
 		return user;
 	}
 	
-	public boolean verification(String email, String password) throws Exception {
+	public boolean identityConfirm(String email, String password) throws SQLException, EmailNotFoundException {
 		
-		if(!(emailExist(email))) {
-			throw new EmailNotFoundException();
-		}
-		
-		UserVO user = dao.findByEmail(email);
-		if(password == user.getUserPassword()) {
-			return true;			
-		}else {
-			return false;
-		}
-		
-	}
-	
-	public boolean emailExist(String email) {
-		
-		try {
-			if(dao.findByEmail(email) != null) {
-				return true;
+		try {			
+			UserVO user = dao.findByEmail(email);
+			if(password.equals(user.getUserPassword())) {
+				return true;			
 			}else {
 				return false;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
+		}catch(SQLException se){
+			throw se;
+		}catch(EmailNotFoundException ee) {
+			throw ee;
+		}		
 	}
+	
+	public UserVO findByEmail(String email) throws SQLException {
+			UserVO user = dao.findByEmail(email);
+			return user;
+	}
+
 }

@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.mike.user.model.UserVO.Identity;
+import com.mike.user.model.exception.EmailNotFoundException;
 
 public class UserJNDIDAO implements UserDAO_interface {
 
@@ -607,7 +608,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 	}
 	
 	private String FIND_BY_EMAIL_STMT = "SELECT * FROM user WHERE user_email = ?";
-	public UserVO findByEmail(String email) throws SQLException {
+	public UserVO findByEmail(String email) throws SQLException, EmailNotFoundException {
 		
 		UserVO userVO = new UserVO();
 		Connection con = null;
@@ -621,20 +622,25 @@ public class UserJNDIDAO implements UserDAO_interface {
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 
-			rs.next();
-			userVO.setUserId(rs.getInt(1));
-			userVO.setUserEmail(rs.getString(2));
-			userVO.setUserPassword(rs.getString(3));
-			userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
-			userVO.setUserCompanyName(rs.getString(5));
-			userVO.setUserRegisterDate(rs.getDate(6));
-			userVO.setUserLastLogin(rs.getTimestamp(7));
-			userVO.setUserLastIp(rs.getString(8));
-			userVO.setUserNickname(rs.getString(9));
-			userVO.setUserAvatar(rs.getString(10));
-			userVO.setUserIntro(rs.getString(11));
 			
-			return userVO;
+			if(rs.next()) {
+				userVO.setUserId(rs.getInt(1));
+				userVO.setUserEmail(rs.getString(2));
+				userVO.setUserPassword(rs.getString(3));
+				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
+				userVO.setUserCompanyName(rs.getString(5));
+				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserLastLogin(rs.getTimestamp(7));
+				userVO.setUserLastIp(rs.getString(8));
+				userVO.setUserNickname(rs.getString(9));
+				userVO.setUserAvatar(rs.getString(10));
+				userVO.setUserIntro(rs.getString(11));
+				
+				return userVO;				
+			}else {
+				throw new EmailNotFoundException();
+			}
+			
 			
 		} catch (SQLException se) {
 			throw se;

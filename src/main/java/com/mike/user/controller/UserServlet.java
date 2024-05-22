@@ -3,6 +3,7 @@ package com.mike.user.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,23 +42,41 @@ public class UserServlet extends HttpServlet {
 		}
 		
 		HttpSession session = req.getSession();
+		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");
+		
+		
 		
 		if(req.getServletPath().equals("/user/list")) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/user/userList.jsp");
 			dispatcher.forward(req,res);
 		}
 		
+		
+		
+		
 		if (req.getServletPath().equals("/user/update")) {
+			System.out.println("in to if /user/update section");
+			
+			Enumeration<String> params = req.getParameterNames();
+			
+	        while (params.hasMoreElements()) {
+	            String element = params.nextElement();
+	            System.out.println(element);
+	        }
+			
 			Integer userId = Integer.valueOf(req.getParameter("userId"));
 			UserJNDIDAO userDAO = new UserJNDIDAO();
 			UserVO user = userDAO.findById(userId);
-//			req.setAttribute("user", user);
 			session.setAttribute("user", user);
 			
 			String url = "/user/userUpdate.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		} //if(user/update)
+		
+		
+		
 		
 		if(req.getServletPath().equals("/user/updating")) {
 			UserVO user = (UserVO) session.getAttribute("user");
@@ -96,15 +115,17 @@ public class UserServlet extends HttpServlet {
 		} //if(user/updating)
 
 		
+		
+		
 		if(req.getServletPath().equals("/user/register")) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/user/userRegister.jsp");
 			dispatcher.forward(req,res);
 		}  //if(user/register)
 		
 		
+		
+		
 		if(req.getServletPath().equals("/user/registering")) {
-			
-			res.setContentType("text/html; charset=Big5");
 			
 			//新增資料(不包含圖片) ============================
 			UserVO user = new UserVO();
