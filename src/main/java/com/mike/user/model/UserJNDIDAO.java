@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.mike.user.model.UserVO.Identity;
+import com.mike.user.model.exception.EmailNotFoundException;
 
 public class UserJNDIDAO implements UserDAO_interface {
 
@@ -77,8 +78,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 
 	private static final String UPDATE_STMT = 
 			"UPDATE user SET user_email=?,user_password=?,user_identity=?,user_company_name=?"
-			+ ",user_register_date=?,user_last_login=?,user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=?"
-			+ "WHERE user_id = ?";
+			+ ",user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=? WHERE user_id = ?";
 	@Override
 	public void update(Integer userId,UserVO userVO) {
 		// TODO Auto-generated method stub
@@ -93,13 +93,13 @@ public class UserJNDIDAO implements UserDAO_interface {
 			pstmt.setString(2, userVO.getUserPassword());
 			pstmt.setString(3, userVO.getUserIdentity().toString());
 			pstmt.setString(4, userVO.getUserCompanyName());
-			pstmt.setDate(5, userVO.getUserRegisterDate());
-			pstmt.setTimestamp(6, userVO.getUserLastLogin());
-			pstmt.setString(7, userVO.getUserLastIp());
-			pstmt.setString(8, userVO.getUserNickname());
-			pstmt.setString(9, userVO.getUserAvatar());
-			pstmt.setString(10, userVO.getUserIntro());
-			pstmt.setInt(11, userId);
+//			pstmt.setDate(5, userVO.getUserRegisterDate());
+//			pstmt.setTimestamp(6, userVO.getUserLastLogin());
+			pstmt.setString(5, "127.0.0.2");
+			pstmt.setString(6, userVO.getUserNickname());
+			pstmt.setString(7, userVO.getUserAvatar());
+			pstmt.setString(8, userVO.getUserIntro());
+			pstmt.setInt(9, userId);
 			
 			pstmt.executeUpdate();
 			
@@ -606,6 +606,69 @@ public class UserJNDIDAO implements UserDAO_interface {
 			}
 		}
 	}
+	
+	private String FIND_BY_EMAIL_STMT = "SELECT * FROM user WHERE user_email = ?";
+	public UserVO findByEmail(String email) throws SQLException, EmailNotFoundException {
+		
+		UserVO userVO = new UserVO();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_EMAIL_STMT);
+
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			
+			if(rs.next()) {
+				userVO.setUserId(rs.getInt(1));
+				userVO.setUserEmail(rs.getString(2));
+				userVO.setUserPassword(rs.getString(3));
+				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
+				userVO.setUserCompanyName(rs.getString(5));
+				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserLastLogin(rs.getTimestamp(7));
+				userVO.setUserLastIp(rs.getString(8));
+				userVO.setUserNickname(rs.getString(9));
+				userVO.setUserAvatar(rs.getString(10));
+				userVO.setUserIntro(rs.getString(11));
+				
+				return userVO;				
+			}else {
+				throw new EmailNotFoundException();
+			}
+			
+			
+		} catch (SQLException se) {
+			throw se;
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		UserJNDIDAO dao = new UserJNDIDAO();
 //		

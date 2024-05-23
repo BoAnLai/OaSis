@@ -1,10 +1,12 @@
 package com.mike.user.model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -648,7 +650,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 	
 	public static void main(String[] args) {
 		UserJDBCDAO dao = new UserJDBCDAO();
-//		
+		
 //		UserVO userAdd = new UserVO("11111@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
 //		dao.insert(userAdd);
 //		
@@ -676,8 +678,14 @@ public class UserJDBCDAO implements UserDAO_interface {
 //		List<UserVO> userListNickname = dao.getByNickname("genius");
 //		System.out.println(userListNickname);
 //	
-		dao.updateLastLogin(5);
+//		dao.updateLastLogin(5);
 		
 		System.out.println("===main done===");
+	}
+
+	@Override
+	public UserVO findByEmail(String email) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
