@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +37,8 @@ public class GameVO implements java.io.Serializable{
 	@Column(name = "game_created_timestamp")
 	private Timestamp gameCreatedTimestamp;
 	
-	@OneToMany(mappedBy = "game")
-	private List<LabelVO> labels;
+	@OneToMany(mappedBy = "game", fetch=FetchType.EAGER)
+	private transient List<LabelVO> labels;
 	
 	
 	public GameVO() {

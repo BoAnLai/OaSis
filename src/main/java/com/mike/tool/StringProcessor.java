@@ -30,6 +30,12 @@ public class StringProcessor {
 		return filename; //"dog.jpg"
 	}
 	
+	public static String getUrlLastSegment(String url) {
+		
+		String lastSegment = getFilename(url);
+		return lastSegment;
+	}
+	
 	public static String nullDealer(String input) {
 		if(input == null) {
 			return "";
