@@ -109,7 +109,7 @@
 
 
 <table class="table project-list-table table-nowrap align-middle table-borderless">
-<FORM METHOD="post" ACTION="WaitingServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/WaitingServlet" name="form1">
 
 
  <div class="container text-center">
@@ -151,12 +151,6 @@
     </div>
 
 	 
-	
-	
-	
-	
-	
-	
 	
 	
 

@@ -199,8 +199,7 @@ public class WaitingServlet extends HttpServlet {
 				waipVO=waipSvc.addPerson(waipTotal,userid);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				HttpSession session=req.getSession();
-				session.setAttribute("sin", true);
+				
 				WaitingInterface wai=new WaitingDaoImpl();
 				List<WaitingVO> waiList=wai.getTotal();
 				int roomNum=waiList.size();

@@ -165,7 +165,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg"><!-- Modal的大小改變在這邊 -->
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -177,7 +177,7 @@
       </div>
       <!-- ===================表單內容===================== -->
       <table class="table project-list-table table-nowrap align-middle table-borderless">
-	<FORM METHOD="post" ACTION="WaitingServlet" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/WaitingServlet" name="form1">
 	
 	
 	 <div class="container text-center">
