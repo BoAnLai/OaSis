@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS game;
 DROP TABLE IF EXISTS genre;
 
 set auto_increment_offset=1;
-set auto_increment_increment=1; 
+set auto_increment_increment=1;
 
 -- game table ------------------------
 CREATE TABLE game (
