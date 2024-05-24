@@ -86,9 +86,6 @@
                 </div>
             </nav>
         </header>
-        <div id="content">
-
-        </div>
 
     </div>
 	<script>

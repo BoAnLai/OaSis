@@ -11,7 +11,7 @@ import com.mike.tool.HibernateTool;
 
 public class GameService {
 	
-	public GameVO getGameByGameId(Integer gameId) throws Exception{
+	public static GameVO getGameByGameId(Integer gameId) throws Exception{
 		try {	
 			Session session = HibernateTool.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
@@ -24,7 +24,7 @@ public class GameService {
 		}				
 	}
 	
-	public List<GameVO> listAll() throws Exception{
+	public static List<GameVO> listAll() throws Exception{
 		try {	
 			Session session = HibernateTool.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
@@ -37,7 +37,7 @@ public class GameService {
 		}		
 	}
 	
-	public List<GenreVO> getGenresByGameId(Integer gameId) throws Exception{
+	public static List<GenreVO> getGenresByGameId(Integer gameId) throws Exception{
 		try {	
 			Session session = HibernateTool.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
