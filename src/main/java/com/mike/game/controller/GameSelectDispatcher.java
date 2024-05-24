@@ -15,8 +15,8 @@ import com.mike.game.model.GameService;
 import com.mike.game.model.GameVO;
 
 @MultipartConfig
-@WebServlet(name = "GameServlet", urlPatterns = {"/game/list"})
-public class GameServlet extends HttpServlet {
+@WebServlet(name = "gameServlet", urlPatterns = {"/game/gameInfo"})
+public class GameSelectDispatcher extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req,res);
@@ -27,12 +27,20 @@ public class GameServlet extends HttpServlet {
 	
 		HttpSession session = req.getSession();
 		
-		if(req.getServletPath().equals("/game/list")) {
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/game/gameList.jsp");
-			dispatcher.forward(req,res);
+		// for testing gameDropdown
+		if(req.getServletPath().equals("/game/gameInfo")) {			
+			Integer gameId = Integer.parseInt(req.getParameter("gameId"));
+			String forwardPath = req.getParameter("forwardPath");			
+			
+			GameVO game = null;
+			try {
+				game = GameService.getGameByGameId(gameId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			session.setAttribute("game", game);
+			req.getRequestDispatcher(forwardPath).forward(req, res);
 		}
-		
-
 		
 	} //doPost
 	
