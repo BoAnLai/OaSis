@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.mike.genre.model.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.mike.game.model.*"%>
 	
 <% List<GenreVO> genreList = GenreService.listAll(); %>
 
@@ -36,8 +36,8 @@
 
         <div class="dropdown mx-5">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false" id="genre-dropdown" style="width: 200px; text-align: center;">
-                - Select Genre -
+                aria-expanded="false" id="genre-dropdown-btn" style="width: 200px; text-align: center;">
+                -- Select Genre --
             </button>
             <ul class="dropdown-menu select-genre">
             <% for(GenreVO genre:genreList){ %>            
@@ -48,12 +48,22 @@
 
         <div class="dropdown mx-5">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false" style="width: 200px; text-align: center;">
-                - Select Game -
+                aria-expanded="false" id="game-dropdown-btn" style="width: 200px; text-align: center;">
+                -- Select Game --
             </button>
-            <ul class="dropdown-menu select-game">
-                <li><button class="dropdown-item" type="button">Game 1</button></li>
-            </ul>
+            
+	            <ul class="dropdown-menu select-game">
+				<% for(GenreVO genre:genreList){ %>
+					<% 	List<GameVO> gameList = GenreService.getGameListByGenreId(genre.getGenreId()); %>            
+	        	    <div class="game-dropdown-container" data-from-genre-id="<%= genre.getGenreId() %>">
+            			<% for(GameVO game:gameList){ %>
+                			<li><button class="dropdown-item" type="button" data-game-id="<%= game.getGameId() %>"><%= game.getGameName() %></button></li>
+		            	<% } %>
+		            </div>
+	            <% } %>
+	            </ul>
+            
+            
         </div>
 
 
@@ -71,15 +81,27 @@
     </div>
     <script>
     $(document).ready(function() {
-    	  $('.select-genre').on('click', '.dropdown-item', function() {
-    	    let name = $(this).text();
-    	    $('#genre-dropdown').text(name);
-    	    
-    	    $.get("ajax/get-data", function(response) {
-                $("#data-container").html(response);
-            });
-    	  });
+    	
+    	$('.game-dropdown-container').hide();
+    	
+   		$('.select-genre').on('click', '.dropdown-item', function() {
+        	$('.game-dropdown-container').hide(); 
+        	$('#game-dropdown-btn').text("-- Select Game -- ");
+        	
+        	let name = $(this).text();
+    	    $('#genre-dropdown-btn').text(name);
+
+        	
+    	    let genreId = $(this).attr('data-genre-id');
+    	    let selector = `[data-from-genre-id="` + genreId + `"]`;
+    	    $(selector).show();
     	});
+   		
+   		$('.select-game').on('click', '.dropdown-item', function() {
+   			let name = $(this).text();
+    	    $('#game-dropdown-btn').text(name);
+   		});
+    });
     
     /*
     $(document).ready(function() {
