@@ -38,7 +38,7 @@ public class GameVO implements java.io.Serializable{
 	private Timestamp gameCreatedTimestamp;
 	
 	@OneToMany(mappedBy = "game", fetch=FetchType.EAGER)
-	private transient List<LabelVO> labels;
+	private List<LabelVO> labels;
 	
 	
 	public GameVO() {
