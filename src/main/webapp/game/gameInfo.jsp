@@ -14,8 +14,12 @@
 </head>
 <body>
 
-	<h1>this gameInfo.jsp is for testing gameDropdown selection</h1>
-	<h1><%= game.getGameName() %></h1>
+	<h1>this is gameInfo.jsp</h1>
+	<p>This is forwarded page</p>
+	<hr>
+	<h3>Below show your selection</h3>
+	<p>GameId: <%= game.getGameId() %></p>
+	<p>GameName: <%= game.getGameName() %></p>
 	<img src="<%= game.getGameImg() %>">
 </body>
 </html>
