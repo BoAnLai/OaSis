@@ -21,49 +21,10 @@ public class MainTest {
 		
 	}
 	
-	public static void UpdateReserve() throws ParseException {
+
 		
-		Scanner sc=new Scanner(System.in);
-		System.out.println("請輸入您的房間編號:");
-		Integer waitingId=sc.nextInt();
-		System.out.println("請輸入您想更新的時間 格式:yyyy-MM-dd/HH:mm");
-		String inputTime=sc.next();
-		
-		Timestamp waitingReserve=null;
-		SimpleDateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd/HH:mm");
-		
-		java.util.Date parsedDate = dateFormat.parse(inputTime);
-		waitingReserve = new Timestamp(parsedDate.getTime());
-		
-//		WaitingVO wt=new WaitingVO(waitingId, waitingReserve);
-		
-		WaitingInterface wd= new WaitingDaoImpl();
-//		wd.updateReserve(wt);
-		
-		System.out.println("更新完成!");
-		
-		sc.close();
-	}
 	
 	
-	
-	
-	public static void UpdateMaxPeople() {
-		
-		Scanner sc=new Scanner(System.in);
-		System.out.println("請輸入您的房間編號:");
-		Integer waitingId=sc.nextInt();
-		System.out.println("請輸入您想更新的房間上限人數:");
-		Integer waitingMaxPeople=sc.nextInt();
-		
-		WaitingVO wt=new WaitingVO(waitingId, waitingMaxPeople);
-		WaitingInterface wtd=new WaitingDaoImpl();
-		wtd.updateMaxPeople(wt);
-		
-		System.out.println("更新完成!");
-		sc.close();
-		
-	}
 	
 	public static void Insert() throws ParseException {
 		

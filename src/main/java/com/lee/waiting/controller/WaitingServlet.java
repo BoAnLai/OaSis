@@ -24,9 +24,6 @@ import com.lee.waitingperson.model.WaitingPersonService;
 import com.lee.waitingperson.model.WaitingPersonVO;
 
 
-
-
-
 public class WaitingServlet extends HttpServlet {
 	
 	
@@ -48,24 +45,19 @@ public class WaitingServlet extends HttpServlet {
 		//以下為單一搜尋
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 			System.out.println("執行於此");
-			List<String> errorMsgs1 = new LinkedList<String>();
+			List<String> errorMsgs = new LinkedList<String>();
 			
-			
-			
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs1);
-				System.out.println("getOne_For_Display");
+				
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("waino");
 				
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs1.add("請輸入組隊編號");
+					errorMsgs.add("請輸入組隊編號");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher(url); //把錯誤字串秀到指定頁面上
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("errorMsgs", errorMsgs);
+					RequestDispatcher failureView = req.getRequestDispatcher(url); //把錯誤字串秀到指定頁面上
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -74,12 +66,12 @@ public class WaitingServlet extends HttpServlet {
 				try {
 					waino = Integer.valueOf(str); //把抓到的值丟給此變數
 				} catch (Exception e) {
-					errorMsgs1.add("編號格式不正確");
+					errorMsgs.add("編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher(url); //把錯誤字串秀到指定頁面上
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("errorMsgs", errorMsgs);
+					RequestDispatcher failureView = req.getRequestDispatcher(url); //把錯誤字串秀到指定頁面上
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -88,19 +80,18 @@ public class WaitingServlet extends HttpServlet {
 				WaitingService waiSvc = new WaitingService();
 				WaitingVO waiVO = waiSvc.getOneEmp(waino);
 				if (waiVO == null) {
-					errorMsgs1.add("查無資料");
+					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
-				if (!errorMsgs1.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher(url);
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("errorMsgs", errorMsgs);
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("waiVO", waiVO); // 資料庫取出的empVO物件,存入req
-				String url1 = "lee/waiting/waiting_selectOne.jsp";
 				req.setAttribute("sin", "D");
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
@@ -115,10 +106,9 @@ public class WaitingServlet extends HttpServlet {
 			System.out.println("新增部分");
 			List<String> errorMsgs = new LinkedList<String>();
 			List<String> successMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			
 			int userid = 0;
-			req.setAttribute("errorMsgs", errorMsgs);
+			
 
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String ename = req.getParameter("userid");
@@ -140,18 +130,14 @@ public class WaitingServlet extends HttpServlet {
 					try {
 						java.util.Date parsedDate = sdf.parse(reserveParam);
 						waitingReserve = new Timestamp(parsedDate.getTime());
-//						System.out.println(waitingReserve);
+//						
 					} catch (IllegalArgumentException e) {
 						e.printStackTrace();
-//						reserve=new java.sql.Timestamp(System.currentTimeMillis());
 						errorMsgs.add("請輸入日期!");
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-								
-				
+				}	
 				int max ;
 				try {
 					max = Integer.valueOf(req.getParameter("max").trim());
@@ -160,53 +146,35 @@ public class WaitingServlet extends HttpServlet {
 					errorMsgs.add("請輸入列隊人數上限");
 				}
 				String waitingGame=req.getParameter("game");
-//				/*******************把值丟入VO*************************************/
-				
-				WaitingVO waiVO = new WaitingVO();
-				waiVO.setWaitingUserId(userid);
-				waiVO.setWaitingReserve(waitingReserve);
-				waiVO.setWaitingMaxPeople(max);
-				waiVO.setWaitingGameName(waitingGame);
-				
-				//**************************抓到Person的最後自增主鍵值********************
-				WaitingInterface wt=new WaitingDaoImpl();
-				List<WaitingVO> wList=wt.getTotal();
-				Integer waipTotal=(wList.size()+1);
-				
-				WaitingPersonVO waipVO=new WaitingPersonVO();
-				waipVO.setWaitingPersonWaitingID(waipTotal);
-				waipVO.setWaitingPersonUserID(userid);
-				
 
 //				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("waiVO", waiVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				if (!errorMsgs.isEmpty()) {	
 					req.setAttribute("errorMsgs", errorMsgs);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return;
 				}
-//				
+				
+//				/**************************抓到Person的最後自增主鍵值********************
+				WaitingInterface wt=new WaitingDaoImpl();
+				Integer waiTotal=wt.getTotal().size()+1;//用於Person的房號		
+
+							
 //				/***************************2.開始新增資料***************************************/
 				WaitingService waiSvc = new WaitingService();
-				waiVO = waiSvc.addEmp(userid,waitingReserve,max,waitingGame);
-				System.out.println(waitingGame);
+				WaitingVO waiVO = waiSvc.addEmp(userid,waitingReserve,max,waitingGame);
 				
 				
-//				/***************************這邊做WaitingPerson連結加入**************************/
+				/***************************這邊做WaitingPerson連結加入**************************/
 				WaitingPersonService waipSvc=new WaitingPersonService();
-				waipVO=waipSvc.addPerson(waipTotal,userid);
+				WaitingPersonVO waipVO=waipSvc.addPerson(waiTotal,userid);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				
-				WaitingInterface wai=new WaitingDaoImpl();
-				List<WaitingVO> waiList=wai.getTotal();
-				int roomNum=waiList.size();
-				
-				successMsgs.add("創建完成!房間編號為:"+roomNum);
+							
+				successMsgs.add("創建完成!房間編號為:"+waiTotal);
 				req.setAttribute("successMsgs", successMsgs);
-				req.setAttribute("sin", "A");
+				
 				RequestDispatcher successView = req.getRequestDispatcher(url);		
 				successView.forward(req, res);	
 		}
@@ -369,13 +337,14 @@ public class WaitingServlet extends HttpServlet {
 					
 						/***************************1.接收請求參數****************************************/
 						Integer waino = Integer.valueOf(req.getParameter("waino"));//--拿對房間編號
+						
 						System.out.println(waino);
 						
 						
 										
 						/***************************2.準備轉交(Send the Success view)************/
 						String check=req.getParameter("check");//-------只有開房者能拿到YES
-						HttpSession session=req.getSession();
+						
 						        // 資料庫取出的empVO物件,存入req
 						String url = "lee/waitingPerson/WaitingPersonAll.jsp";
 						
@@ -500,7 +469,7 @@ public class WaitingServlet extends HttpServlet {
 					successMsgs1.add("完成刪除"+waitingId+"號列隊");
 					req.setAttribute("successMsgs1", successMsgs1);
 					req.setAttribute("userID", 3);//放入當前使用者編號
-					req.setAttribute("userID", 3);//放入當前使用者編號
+					
 					req.setAttribute("sin", "C");
 					
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
@@ -509,14 +478,17 @@ public class WaitingServlet extends HttpServlet {
 				//踢除房內使用者
 				if ("delect_roomPeople".equals(action)) {
 					List<String> errorMsgs2 = new LinkedList<String>();
-					List<String> successMsgs = new LinkedList<String>();
+					List<String> successMsgs2 = new LinkedList<String>();
+					
 					
 					
 					Integer waitId=Integer.valueOf(req.getParameter("waitId"));//為房間編號---------
 					Integer userno=Integer.valueOf(req.getParameter("userno"));//為使用者----------
+					Integer waipno=Integer.valueOf(req.getParameter("waitpId"));//為PK----------
 					
 					System.out.println(waitId);
 					System.out.println(userno);
+					System.out.println("房間ID-----------"+waipno);
 					System.out.println("以上為剔除");
 					if(userno==3/*這邊要抓使用者*/) {
 						errorMsgs2.add("不可以剔除開房者");
@@ -535,11 +507,15 @@ public class WaitingServlet extends HttpServlet {
 					waipVO.setWaitingPersonUserID(userno);
 					
 					WaitingPersonService waipSvc=new WaitingPersonService();
-					waipVO=waipSvc.delectRoomPerson(waitId,userno);
+					waipSvc.delectRoomPerson(waipno);
 					
-					System.out.println("已經刪除房間內使用者");
+				
+					successMsgs2.add("刪除"+userno+"號玩家成功");
+					req.setAttribute("waiVO", waitId);
+					req.setAttribute("check", "Yes");
+					req.setAttribute("successMsgs2",successMsgs2);
 					
-					RequestDispatcher successView = req.getRequestDispatcher("lee/waiting/myRoom.jsp"); 
+					RequestDispatcher successView = req.getRequestDispatcher("lee/waitingPerson/WaitingPersonAll.jsp"); 
 					successView.forward(req, res);
 				
 				}
@@ -551,16 +527,15 @@ public class WaitingServlet extends HttpServlet {
 					
 						/***************************1.接收請求參數****************************************/
 						Integer waino = Integer.valueOf(req.getParameter("waino"));//--拿對房間編號
-						System.out.println(waino);
-						
-						
-										
-						WaitingPersonVO waipVO=new WaitingPersonVO();
-						waipVO.setWaitingPersonWaitingID(waino);
-						waipVO.setWaitingPersonUserID(3);//這邊要改  抓使用者編號
+									
 						
 						WaitingPersonService waipSvc=new WaitingPersonService();
-						waipVO=waipSvc.delectRoomPerson(waino,3);
+						//要做尋找---wiatingPerson表格:waitingID=? WaitingUserID=?拿到PK 丟進去
+						Integer PK/*拿到Person的PK*/=waipSvc.serchPK(waino,3);//這邊要放進使用者編號;
+						
+						if(PK!=-1) {							
+							waipSvc.delectRoomPerson(PK);
+						}
 						
 						System.out.println("已經離開此房間");
 						
@@ -571,8 +546,7 @@ public class WaitingServlet extends HttpServlet {
 						successView.forward(req, res);
 						
 				}
-				
-	
+
 				
 		}
 	}

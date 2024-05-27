@@ -27,4 +27,10 @@ waitingPerson_UserID int NOT NULL,
 CONSTRAINT fk_waitingPerson_WaitingID FOREIGN KEY (waitingPerson_WaitingID) REFERENCES waiting(waiting_id)
 );
 
+INSERT INTO WaitingPerson(
+waitingPerson_WaitingID,waitingPerson_UserID
+)values(
+1,3),(2,2
+);
+
 

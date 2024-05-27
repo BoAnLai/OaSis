@@ -59,14 +59,6 @@
 </head>
 <body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
 
-<form method="post" action="<%=request.getContextPath()%>/WaitingServlet">
-
-<div class="input-group mb-3">
-  <input type="text" name="waino" class="form-control" placeholder="查詢組隊編號:" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <input type="hidden" name="action" value="getOne_For_Display">
-  <input type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="送出">
-</div>
-</form>
 
 <%-- 錯誤表列 --%>
 
@@ -90,6 +82,14 @@
 		</ul>
 	</c:if>
 
+<form method="post" action="<%=request.getContextPath()%>/WaitingServlet">
+
+<div class="input-group mb-3">
+  <input type="text" name="waino" class="form-control" placeholder="查詢組隊編號:" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <input type="hidden" name="action" value="getOne_For_Display">
+  <input type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="送出">
+</div>
+</form>
 	
 	<div class="container text-center">
 	    <div class="row row-cols-auto">

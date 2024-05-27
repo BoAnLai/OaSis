@@ -16,8 +16,7 @@ public class WaitingPersonService {
 		WaitingPersonVO waipVO=new WaitingPersonVO();
 		waipVO.setWaitingPersonWaitingID(waitingPersonWaitingID);
 		waipVO.setWaitingPersonUserID(waitingPersonUserID);
-		
-		
+	
 		dao.insert(waipVO);
 		
 		return waipVO;
@@ -28,14 +27,15 @@ public class WaitingPersonService {
 		return dao.getAll(waitingPersonWaitingID);
 	}
 	
-	public WaitingPersonVO delectRoomPerson(int waitingPersonWaitingID,int waitingPersonUserID) {
+	public void delectRoomPerson(Integer waitingPersonID) {
+	
+		dao.delect(waitingPersonID);
 		
-		WaitingPersonVO waipVO=new WaitingPersonVO();
-		waipVO.setWaitingPersonWaitingID(waitingPersonWaitingID);
-		waipVO.setWaitingPersonUserID(waitingPersonUserID);
+	}
+	
+	public int serchPK(Integer waitingPersonWaitingId,Integer WaitingPersonUserId) {
 		
-		dao.delect(waipVO);
-		return waipVO;
+		return dao.serchPK(waitingPersonWaitingId, WaitingPersonUserId);
 	}
 
 }

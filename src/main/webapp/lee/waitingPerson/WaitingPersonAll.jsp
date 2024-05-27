@@ -9,7 +9,6 @@
 <%Integer roomnum=(Integer)request.getAttribute("waiVO");%>
 
 
-
 <%
 WaitingPersonService wapSvc = new WaitingPersonService();
 List<WaitingPersonVO> list = wapSvc.getAll(roomnum);
@@ -201,9 +200,9 @@ pageContext.setAttribute("list", list);
 			</c:if>
 			<c:if test="${not empty successMsgs2}">
 				<ul>
-				    <c:forEach var="message" items="${successMsgs}">	    
+				    <c:forEach var="message" items="${successMsgs2}">	    
 				    <div class="alert alert-success" role="alert">
-			  		${successMsgs}
+			  		${successMsgs2}
 					</div>
 					</c:forEach>
 				</ul>
@@ -228,6 +227,9 @@ pageContext.setAttribute("list", list);
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">	
 		  				<input type="hidden" name="userno"  value="${waitingPersonVo.waitingPersonUserID}">
 		  				<input type="hidden" name="waitId"  value="${waitingPersonVo.waitingPersonWaitingID}">
+		  				<input type="hidden" name="waitpId"  value="${waitingPersonVo.waitingPersonID}">
+		  				
+		  				 				
 		  				<input type="hidden" name="action" value="delect_roomPeople">
 		  				<button type="submit" class="btn btn-secondary" aria-label="Close">踢出</button>
 					</div>

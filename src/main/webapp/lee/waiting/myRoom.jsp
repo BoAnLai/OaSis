@@ -19,6 +19,7 @@
 	pageContext.setAttribute("list", list);
 %>
 
+
 </c:if>
 
 <c:if test="${situation eq 'in'}">
@@ -215,7 +216,9 @@
 		  				<input type="hidden" name="waiMax"  value="${waitingVO.waitingMaxPeople}">
 		  				<input type="hidden" name="waiGame"  value="${waitingVO.waitingGameName}">
 		  				<input type="hidden" name="action" value="delect_Allroom">
+		  				<c:if test="${situation eq 'my'}">	
 		  				<button type="submit" class="btn-close" aria-label="Close"></button>
+		  				</c:if>
 					</div>
 				</form>	 
               

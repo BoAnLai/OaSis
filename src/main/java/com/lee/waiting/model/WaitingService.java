@@ -14,7 +14,6 @@ public class WaitingService {
 	public WaitingVO addEmp(int userId,java.sql.Timestamp reserve,Integer maxPeople,String gameName) {
 
 		WaitingVO waiVO = new WaitingVO();
-
 		waiVO.setWaitingUserId(userId);
 		waiVO.setWaitingReserve(reserve);
 		waiVO.setWaitingMaxPeople(maxPeople);

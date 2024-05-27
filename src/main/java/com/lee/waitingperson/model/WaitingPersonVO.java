@@ -1,9 +1,25 @@
 package com.lee.waitingperson.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="waitingPerson")
 public class WaitingPersonVO {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="waitingPerson_id",insertable = false)
 	private Integer waitingPersonID;
+	
+	@Column(name="waitingPerson_WaitingID")
 	private Integer waitingPersonWaitingID;
+	
+	@Column(name="waitingPerson_UserID")
 	private Integer waitingPersonUserID;
 	
 	public WaitingPersonVO() {}
@@ -28,6 +44,14 @@ public class WaitingPersonVO {
 	}
 
 	public void setWaitingPersonId(Integer waitingPersonId) {
+		this.waitingPersonID = waitingPersonId;
+	}
+	
+	public Integer getWaitingPersonID() {
+		return waitingPersonID;
+	}
+
+	public void setWaitingPersonID(Integer waitingPersonId) {
 		this.waitingPersonID = waitingPersonId;
 	}
 
