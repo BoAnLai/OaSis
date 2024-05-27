@@ -20,13 +20,16 @@
             padding-bottom: 0;
             background-color: #e3f2fd;
         }
+        div.blocking-nav{
+        	margin-top: 150px;
+        }
     </style>
 </head>
 
 <body>
     <div class="root">
         <header>
-            <nav class="navbar navbar-expand-lg sticky-top">
+            <nav class="navbar navbar-expand-lg fixed-top">
                 <div class="container-fluid fs-4">
                     <a class="navbar-brand" href="<%=request.getContextPath()%>">
                         <img src="/oasis/home/resources/oasis.png"
@@ -86,8 +89,10 @@
                 </div>
             </nav>
         </header>
-
     </div>
+    
+    <div class="blocking-nav"></div>
+    
 	<script>
 		if($("#user-email").text().trim()){
 			$("#login-btn").hide();

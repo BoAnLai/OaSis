@@ -40,6 +40,8 @@ public class UserServlet extends HttpServlet {
 		if (!fsaveDirectory.exists()) {				
 			fsaveDirectory.mkdirs();
 		}
+	
+		UserJNDIDAO userDAO = new UserJNDIDAO();
 		
 		HttpSession session = req.getSession();
 		req.setCharacterEncoding("UTF-8");
@@ -66,9 +68,9 @@ public class UserServlet extends HttpServlet {
 	        }
 			
 			Integer userId = Integer.valueOf(req.getParameter("userId"));
-			UserJNDIDAO userDAO = new UserJNDIDAO();
+			
 			UserVO user = userDAO.findById(userId);
-			session.setAttribute("user", user);
+			session.setAttribute("userDisplayed", user);
 			
 			String url = "/user/userUpdate.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -79,26 +81,26 @@ public class UserServlet extends HttpServlet {
 		
 		
 		if(req.getServletPath().equals("/user/updating")) {
-			UserVO user = (UserVO) session.getAttribute("user");
-			user.setUserPassword(req.getParameter("password"));
-			user.setUserNickname(req.getParameter("nickname"));
-			user.setUserIntro(req.getParameter("intro"));
+			UserVO userDisplayed = (UserVO) session.getAttribute("userDisplayed");
+			userDisplayed.setUserPassword(req.getParameter("password"));
+			userDisplayed.setUserNickname(req.getParameter("nickname"));
+			userDisplayed.setUserIntro(req.getParameter("intro"));
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			UserService userService = new UserService();
-			userService.userUpdate(user.getUserId(),user);
+			userService.userUpdate(userDisplayed.getUserId(),userDisplayed);
 			
 			Part part = req.getPart("avatar");
 			if(part.getSize()!=0) {
 				String filename;
-				if(user.getUserAvatar()!=null) {				
-					filename = StringProcessor.getFilename(user.getUserAvatar());
+				if(userDisplayed.getUserAvatar()!=null) {				
+					filename = StringProcessor.getFilename(userDisplayed.getUserAvatar());
 				}else {
 					String submittedFilename = part.getSubmittedFileName();
 					String submittedFileExtension = StringProcessor.getFileExtension(submittedFilename);
-					filename = user.getUserId() +"."+ submittedFileExtension;
+					filename = userDisplayed.getUserId() +"."+ submittedFileExtension;
 				}
 
 				String imgSrcPath = null;
@@ -108,8 +110,8 @@ public class UserServlet extends HttpServlet {
 					part.write(f.toString());
 					imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
 				}
-				user.setUserAvatar(imgSrcPath);
-				userService.userUpdate(user.getUserId(),user);				
+				userDisplayed.setUserAvatar(imgSrcPath);
+				userService.userUpdate(userDisplayed.getUserId(),userDisplayed);				
 			}
 			res.sendRedirect("userList.jsp");
 		} //if(user/updating)

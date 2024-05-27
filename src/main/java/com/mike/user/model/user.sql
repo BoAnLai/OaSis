@@ -17,12 +17,15 @@ CREATE TABLE user (
     user_nickname VARCHAR(20),
     user_avatar TINYTEXT,
     user_intro TINYTEXT,
+    user_real_name VARCHAR(255),
+    user_cellphone VARCHAR(20),
+    user_address VARCHAR(255),
     
     CONSTRAINT user_primary_key PRIMARY KEY (user_id)
 );
 
-INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('mlaitw@gmail.com','1234','ADMINISTRATOR', null, '127.0.0.1', 'Mike', '/oasis/user/resources/avatarUploaded/1.jpg', 'Hi, I play video game since 12. I love Slay the Spire from Mega Crit and Hollow Knight from Team Cherry!');
+INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro, user_real_name, user_cellphone, user_address)  
+	VALUES ('mlaitw@gmail.com','1234','ADMINISTRATOR', null, '127.0.0.1', 'Mike', '/oasis/user/resources/avatarUploaded/1.jpg', 'Hi, I play video game since 12. I love Slay the Spire from Mega Crit and Hollow Knight from Team Cherry!', '賴柏安', '0963929616', '台北市文山區溪洲街');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('qaswedfr0308@gmail.com','123','ADMINISTRATOR', null, '127.0.0.1', 'qaswedfr0308', '/oasis/user/resources/avatarUploaded/2.jpg', 'admin no.2');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
@@ -38,8 +41,8 @@ INSERT INTO user (user_email, user_password, user_identity, user_company_name, u
 	VALUES ('stranger@gmail.com','2222','REGULAR', null, '127.0.0.1', '路人', '/oasis/user/resources/avatarUploaded/7.jpg', 'main character in "Mob Psyco 100" a Japanese manga');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('ironman@gmail.com','2222','REGULAR', null, '127.0.0.1', null, '/oasis/user/resources/avatarUploaded/8.jpg', null);
-INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('spiderman@gmail.com','2222','REGULAR', null, '127.0.0.1', '蜘蛛人', null, null);
+INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro, user_real_name, user_cellphone, user_address)  
+	VALUES ('spiderman@gmail.com','2222','REGULAR', null, '127.0.0.1', '蜘蛛人', null, null, 'Peter Parker', '0987654321', '美國紐約市皇后區');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('batman@gmail.com','2222','REGULAR', null, '127.0.0.1', '蝙蝠俠', null, null);
 

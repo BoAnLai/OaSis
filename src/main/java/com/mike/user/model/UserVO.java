@@ -17,13 +17,19 @@ public class UserVO implements java.io.Serializable{
 	private String userNickname;
 	private String userAvatar;
 	private String userIntro;
+	private String userRealName;
+	private String userCellphone;
+	private String userAddress;
 	
 	public UserVO() {
 		super();
 	}
 	
+
 	public UserVO(String userEmail, String userPassword, Identity userIdentity, String userCompanyName
-			, Date userRegisterDate, Timestamp userLastLogin, String userLastIp, String userNickname, String userAvatar, String userIntro) {
+			, Date userRegisterDate, Timestamp userLastLogin, String userLastIp, String userNickname
+			, String userAvatar, String userIntro, String userRealName, String userCellphone
+			, String userAdress) {
 		
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
@@ -108,11 +114,29 @@ public class UserVO implements java.io.Serializable{
 	public void setUserIntro(String userIntro) {
 		this.userIntro = userIntro;
 	}
-
-	public enum Identity{
-		REGULAR,
-		COMPANY,
-		ADMINISTRATOR
+	
+	public String getUserRealName() {
+		return userRealName;
+	}
+	
+	public void setUserRealName(String userRealName) {
+		this.userRealName = userRealName;
+	}
+	
+	public String getUserCellphone() {
+		return userCellphone;
+	}
+	
+	public void setUserCellphone(String userCellphone) {
+		this.userCellphone = userCellphone;
+	}
+	
+	public String getUserAddress() {
+		return userAddress;
+	}
+	
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
 	}
 	
 	@Override
@@ -130,6 +154,9 @@ public class UserVO implements java.io.Serializable{
 		outputStr += "\r userNickname="+ this.getUserNickname();
 		outputStr += "\r userAvatar="+ this.getUserAvatar();
 		outputStr += "\r userIntro="+ this.getUserIntro();
+		outputStr += "\r userRealName="+ this.getUserRealName();
+		outputStr += "\r userCellphone="+ this.getUserCellphone();
+		outputStr += "\r userAddress="+ this.getUserAddress();
 		outputStr += "]\r\r";
 		
 		

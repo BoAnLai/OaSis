@@ -12,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mike.user.model.UserVO.Identity;
 import com.mike.user.model.exception.EmailNotFoundException;
 
 public class UserJNDIDAO implements UserDAO_interface {
@@ -153,6 +152,9 @@ public class UserJNDIDAO implements UserDAO_interface {
 			userVO.setUserNickname(rs.getString(9));
 			userVO.setUserAvatar(rs.getString(10));
 			userVO.setUserIntro(rs.getString(11));
+			userVO.setUserRealName(rs.getString(12));
+			userVO.setUserCellphone(rs.getString(13));
+			userVO.setUserAddress(rs.getString(14));
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
