@@ -159,7 +159,7 @@ public class WaitingServlet extends HttpServlet {
 //				/**************************抓到Person的最後自增主鍵值********************
 				WaitingInterface wt=new WaitingDaoImpl();
 				Integer waiTotal=wt.getTotal().size()+1;//用於Person的房號		
-
+				System.out.println("-+-=-=-=-=-=-=-=-=-=-"+waiTotal);
 							
 //				/***************************2.開始新增資料***************************************/
 				WaitingService waiSvc = new WaitingService();
