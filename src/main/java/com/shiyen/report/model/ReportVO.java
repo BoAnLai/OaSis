@@ -23,9 +23,11 @@ public class ReportVO implements java.io.Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer reportId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "report_user_id", referencedColumnName = "user_id")
-	private UserVO userVO ;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "report_user_id", referencedColumnName = "user_id")
+//	private UserVO userVO ;
+	@Column(name ="report_user_id")
+	private Integer reportUserId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "report_art_id", referencedColumnName = "art_id")
@@ -51,16 +53,25 @@ public class ReportVO implements java.io.Serializable {
 		this.reportId = reportId;
 	}
 
-	public UserVO getUserVO() {
-		return userVO;
-	}
-
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
-	}
+//	public UserVO getUserVO() {
+//		return userVO;
+//	}
+//
+//	public void setUserVO(UserVO userVO) {
+//		this.userVO = userVO;
+//	}
+	
 
 	public ArtVO getArtVO() {
 		return artVO;
+	}
+
+	public Integer getReportUserId() {
+		return reportUserId;
+	}
+
+	public void setReportUserId(Integer reportUserId) {
+		this.reportUserId = reportUserId;
 	}
 
 	public void setArtVO(ArtVO artVO) {

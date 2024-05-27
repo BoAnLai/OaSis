@@ -46,4 +46,12 @@
 		<url-pattern>/game/list</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ForumServlet</servlet-name>
+		<servlet-class>com.shiyen.forum.controller.ForumServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForumServlet</servlet-name>
+		<url-pattern>/forum</url-pattern>
+	</servlet-mapping>
 </web-app>

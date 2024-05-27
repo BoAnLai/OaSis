@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.mike.game.model.GameVO;
-import com.mike.user.model.UserVO;
 
 @Entity
 @Table(name = "art")
@@ -34,26 +37,34 @@ public class ArtVO implements java.io.Serializable {
 	private Integer artFavor;
 	@Column(name ="art_view")
 	private Integer artView;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "art_user_id", referencedColumnName = "user_id")
-	private UserVO userVO;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "art_game_id", referencedColumnName = "game_id")
-	private GameVO gameVO;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "art_user_id", referencedColumnName = "user_id")
+//	private UserVO userVO;
+	@Column(name ="art_user_id")
+	private Integer artUserId;
+	
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "art_game_id", referencedColumnName = "game_id")
+//	@Fetch(FetchMode.JOIN)
+//	private GameVO gameVO;
+	@Column(name ="art_game_id")
+	private Integer artGameId;
 	
 	
-	public UserVO getUserVO() {
-		return userVO;
-	}
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
-	}
-	public GameVO getGameVO() {
-		return gameVO;
-	}
-	public void setGameVO(GameVO gameVO) {
-		this.gameVO = gameVO;
-	}
+	
+	
+//	public UserVO getUserVO() {
+//		return userVO;
+//	}
+//	public void setUserVO(UserVO userVO) {
+//		this.userVO = userVO;
+//	}
+//	public GameVO getGameVO() {
+//		return gameVO;
+//	}
+//	public void setGameVO(GameVO gameVO) {
+//		this.gameVO = gameVO;
+//	}
 	public Integer getArtId() {
 		return artId;
 	}
@@ -96,6 +107,20 @@ public class ArtVO implements java.io.Serializable {
 	}
 	public void setArtView(Integer artView) {
 		this.artView = artView;
+	}
+	public Integer getArtUserId() {
+		return artUserId;
+	}
+	public void setArtUserId(Integer artUserId) {
+		this.artUserId = artUserId;
+	}
+	
+	
+	public Integer getArtGameId() {
+		return artGameId;
+	}
+	public void setArtGameId(Integer artGameId) {
+		this.artGameId = artGameId;
 	}
 	@Override
 	public String toString() {

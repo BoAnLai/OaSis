@@ -23,9 +23,11 @@ public class MessageVO implements java.io.Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer messageId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "message_user_id", referencedColumnName = "user_id")
-	private UserVO userVO ;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "message_user_id", referencedColumnName = "user_id")
+//	private UserVO userVO ;
+	@Column(name ="message_user_id")
+	private Integer messageUserId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "message_art_id", referencedColumnName = "art_id")
@@ -45,16 +47,24 @@ public class MessageVO implements java.io.Serializable {
 		this.messageId = messageId;
 	}
 
-	public UserVO getUserVO() {
-		return userVO;
-	}
-
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
-	}
-
+//	public UserVO getUserVO() {
+//		return userVO;
+//	}
+//
+//	public void setUserVO(UserVO userVO) {
+//		this.userVO = userVO;
+//	}
+	
 	public ArtVO getArtVO() {
 		return artVO;
+	}
+
+	public Integer getMessageUserId() {
+		return messageUserId;
+	}
+
+	public void setMessageUserId(Integer messageUserId) {
+		this.messageUserId = messageUserId;
 	}
 
 	public void setArtVO(ArtVO artVO) {
