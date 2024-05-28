@@ -1,5 +1,7 @@
 package com.mike.tool;
 
+import java.util.Random;
+
 public class StringProcessor {
 
 	public static String getFileExtension(String filename) throws IllegalArgumentException{
@@ -36,12 +38,37 @@ public class StringProcessor {
 		return lastSegment;
 	}
 	
-	public static String nullDealer(String input) {
+	public static String nullToEmpty(String input) {
 		if(input == null) {
 			return "";
 		}else {
 			return input;
 		}
+	}
+	
+	public static String EmptyToNull(String input) {
+		if(input.isEmpty()) {
+			return null;
+		}else {
+			return input;
+		}
+	}
+	
+	public static String getUserNameFromEmail(String email) {
+		String username;
+		int atIndex = email.lastIndexOf('@');
+		if (!(atIndex == -1)) {
+		  username = email.substring(0,atIndex);
+		} else {
+		  throw new IllegalArgumentException("email format is not correct");
+		}
+		return username;
+	}
+	
+	public static String pathAddRandomQueryParams(String path) {
+		
+		String output = path.concat("?").concat(Integer.toString(new Random().nextInt()));
+		return output;
 	}
 
 }

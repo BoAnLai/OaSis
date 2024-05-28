@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mike.user.model.UserForClient;
-import com.mike.user.model.UserService;
-import com.mike.user.model.UserVO;
+import com.mike.user.model.UserDTO;
+import com.mike.user.model.entity.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
+import com.mike.user.model.service.UserService;
 
 @MultipartConfig
 @WebServlet(name = "userLogin", urlPatterns = {"/login","/logging","/loggingout"})
@@ -60,9 +60,9 @@ public class UserLogin extends HttpServlet {
 				if(userSvc.identityConfirm(inputEmail, inputPassword)) {
 					
 					UserVO user = userSvc.findByEmail(inputEmail);
-					UserForClient userForClient = new UserForClient(user);
+					UserDTO userDTO = new UserDTO(user);
 					
-					session.setAttribute("user",userForClient);
+					session.setAttribute("user",userDTO);
 					
 					res.sendRedirect("/oasis");
 				}else {
