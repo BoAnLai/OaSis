@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.mike.user.model.*"%>
+<%@ page import="java.net.InetAddress"%>
+<%@ page import="java.net.UnknownHostException"%>
+<%@ page import="com.mike.user.model.entity.*"%>
+<%@ page import="com.mike.user.model.service.*"%>
 <%@ page import="com.mike.tool.*"%>
 
 <%
@@ -99,22 +102,22 @@
 						<td><%= listedUser.getUserPassword() %></td>
 						<td><%= listedUser.getUserIdentity() %></td>
 						<td><%= listedUser.getUserCompanyName() %></td>
-						<td><%= listedUser.getUserRegisterDate() %></td>
+						<td><%= listedUser.getUserRegisterTimestamp() %></td>
 						<td><%= listedUser.getUserLastLogin() %></td>
 						<td><%= listedUser.getUserLastIp() %></td>
 						<td><%= listedUser.getUserNickname() %></td>
 						
 						<td>
 							<div class="">
-						<% if(listedUser.getUserAvatar()==null || listedUser.getUserAvatar().trim()== ""){ %>
+						<% if(listedUser.getUserAvatar()==null || listedUser.getUserAvatar().trim().isEmpty()){ %>
 		 					<img src="/oasis/user/resources/avatarUploaded/unknown.jpg" width="200px" height="200px" style="object-fit: cover;">
 						<% }else{ %>
-		 					<img src="<%= listedUser.getUserAvatar() %>" width="200px" height="200px" style="object-fit: cover;">
+		 					<img src="<%= StringProcessor.pathAddRandomQueryParams(listedUser.getUserAvatar()) %>" width="200px" height="200px" style="object-fit: cover;">
 						<% } %>
 							</div>
 						</td>
 						
-						<td><%= StringProcessor.nullDealer(listedUser.getUserIntro()) %></td>
+						<td><%=StringProcessor.nullToEmpty(listedUser.getUserIntro())%></td>
 						<td>
 						  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/user/update" style="margin-bottom: 0px;">
 						     <input type="submit" value="修改">

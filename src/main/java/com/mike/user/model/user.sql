@@ -13,7 +13,7 @@ CREATE TABLE user (
     user_company_name VARCHAR(50) ,
     user_register_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    user_last_ip VARCHAR(39) NOT NULL,
+    user_last_ip VARCHAR(45) NOT NULL,
     user_nickname VARCHAR(20),
     user_avatar TINYTEXT,
     user_intro TINYTEXT,
@@ -42,7 +42,7 @@ INSERT INTO user (user_email, user_password, user_identity, user_company_name, u
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('ironman@gmail.com','2222','REGULAR', null, '127.0.0.1', null, '/oasis/user/resources/avatarUploaded/8.jpg', null);
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro, user_real_name, user_cellphone, user_address)  
-	VALUES ('spiderman@gmail.com','2222','REGULAR', null, '127.0.0.1', '蜘蛛人', null, null, 'Peter Parker', '0987654321', '美國紐約市皇后區');
+	VALUES ('spiderman@gmail.com','2222','REGULAR', null, '::1', '蜘蛛人', null, null, 'Peter Parker', '0987654321', '美國紐約市皇后區');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('batman@gmail.com','2222','REGULAR', null, '127.0.0.1', '蝙蝠俠', null, null);
 
@@ -51,13 +51,12 @@ INSERT INTO user (user_email, user_password, user_identity, user_company_name, u
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
 	VALUES ('beanfun@gmail.com','4444','COMPANY', 'gamania', '127.0.0.1', 'klei', '/oasis/user/resources/avatarUploaded/12.jpg', null);
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('teamcherry@gmail.com','5555','COMPANY', 'Team Cherry','127.0.0.1', 'cherry', '/oasis/user/resources/avatarUploaded/13.jpg', 'a game studio from Australia, about to release Hollow Knight: Silksong, a sequel to Hollow Knight');
+	VALUES ('teamcherry@gmail.com','5555','COMPANY', 'Team Cherry', '127.0.0.1', 'cherry', '/oasis/user/resources/avatarUploaded/13.jpg', 'a game studio from Australia, about to release Hollow Knight: Silksong, a sequel to Hollow Knight');
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('thebattlecat@ponos.com','5555','COMPANY', 'PONOS','127.0.0.1', '貓咪大戰爭', '/oasis/user/resources/avatarUploaded/14.jpg', null);
+	VALUES ('thebattlecat@ponos.com','5555','COMPANY', 'PONOS', '127.0.0.1', '貓咪大戰爭', '/oasis/user/resources/avatarUploaded/14.jpg', null);
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('service@nintendo.com','5555','COMPANY', 'Nintendo','127.0.0.1', '任天堂', '/oasis/user/resources/avatarUploaded/15.jpg', null);
+	VALUES ('service@nintendo.com','5555','COMPANY', 'Nintendo', '127.0.0.1', '任天堂', '/oasis/user/resources/avatarUploaded/15.jpg', null);
 INSERT INTO user (user_email, user_password, user_identity, user_company_name, user_last_ip, user_nickname, user_avatar, user_intro)  
-	VALUES ('service@blizzard.com','5555','COMPANY', 'Blizzard','127.0.0.1', '暴雪', '/oasis/user/resources/avatarUploaded/16.jpg', 'video game developer and publisher, well known for his product: World of Warcraft, Starcraft, Diablo, Overwatch and more');
-
+	VALUES ('service@blizzard.com','5555','COMPANY', 'Blizzard', '127.0.0.1', '暴雪', '/oasis/user/resources/avatarUploaded/16.jpg', 'video game developer and publisher, well known for his product: World of Warcraft, Starcraft, Diablo, Overwatch and more');
 
 SELECT * FROM oasis.user;
