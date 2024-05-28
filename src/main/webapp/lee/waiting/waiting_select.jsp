@@ -99,7 +99,7 @@
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
 		  				<input type="hidden" name="action" value="select_AllWait">
-		  				<input type="submit" class="btn btn-danger" type="button" id="button-addon2" value="所有列隊">
+		  				<input type="submit" class="btn btn-danger" id="button-addon2" value="所有列隊">
 					</div>
 				</form>
 	    	
@@ -120,7 +120,7 @@
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
 		  				<input type="hidden" name="action" value="select_MyRoom">
-		  				<input type="submit" class="btn btn-success" type="button" id="button-addon2" value="我的隊伍">
+		  				<input type="submit" class="btn btn-success" id="button-addon2" value="我的隊伍">
 					</div>
 				</form>
 	    	
@@ -131,18 +131,20 @@
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 		  				<input type="button" name="sin" class="btn-check"  autocomplete="off">
 		  				<input type="hidden" name="action" value="select_InRoom">
-		  				<input type="submit" class="btn btn-primary" type="button" id="button-addon2" value="已加入的隊伍">
+		  				<input type="submit" class="btn btn-primary" id="button-addon2" value="已加入的隊伍">
 					</div>
 				</form>
+	    	
+	    	</div>    	
+	    	<div>
+	    	
+	    		<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#chatter">
+				  聊天大廳
+				</button>
 	    	
 	    	</div>
 	    </div>
 	</div>
-	
-	
-	
-	
-	
 	
 
 
@@ -163,7 +165,7 @@
 	
 
 
-<!-- Modal -->
+<!-- INSERT Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg"><!-- Modal的大小改變在這邊 -->
     <div class="modal-content">
@@ -229,7 +231,7 @@
 	
 	</table>
 	
-	
+		
 	
 	<% 
 	  Timestamp reserve = null;
@@ -278,11 +280,159 @@
     </div>
   </div>
 </div>
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+<!--  LOBBYCHATTER Modal -->
+<div class="modal fade" id="chatter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="chatterLabel" aria-hidden="true">
+  
+		<style>
+        /* 自定義模態框背景顏色和字體顏色 */
+        .modal-content {
+            background-color: #2c2c2c; /* 黑灰色背景 */
+            color: #ffffff; /* 白色字體 */
+        }
+        .modal-header, .modal-footer {
+            border-color: #444444; /* 黑灰色邊框 */
+        }
+        .btn-secondary, .btn-primary {
+            color: #ffffff; /* 白色字體 */
+        }
+    	</style>
+
+  
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="chatterLabel">聊天公約</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-dialog modal-dialog-scrollable">
+       <body class="p-3 m-0 border-0 bd-example m-0 border-0">
+    <!-- Example Code -->
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >歡迎來到我們的聊天室！為了營造一個友好、安全和愉快的交流環境，請遵守以下規章：</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">1.尊重他人：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >在聊天中保持禮貌和尊重，不使用冒犯或侮辱性的語言。<br />
+          不進行人身攻擊、歧視或騷擾行為。</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">2.合法行為：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >不分享非法內容，包括但不限於盜版軟件、成人內容或其他違法信息。<br />
+          遵守當地法律和聊天室所在平台的使用條款。</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">3.隱私保護：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >不分享他人的私人信息，如電話號碼、地址或個人身份信息。<br />保護自己的隱私，不輕易向他人透露個人敏感信息。</font
+        ></font
+      >
+    </p>
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">4.避免垃圾信息：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >不進行垃圾郵件、廣告或過度重複信息的行為。<br />不惡意刷屏或故意干擾他人正常交流。</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">5.有建設性：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >鼓勵有意義和建設性的討論，避免無意義的爭吵或引戰行為。<br />尊重管理員和版主的決定，若有異議，可以通過適當渠道提出。</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit">6.語言使用：</font></font
+      >
+    </p>
+
+    <p class="fw-normal">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >儘量使用聊天室主要使用的語言，以便所有人都能理解和參與討論。<br />避免使用粗俗或不雅的詞語。</font
+        ></font
+      >
+    </p>
+
+    <p class="fw-bolder">
+      <font style="vertical-align: inherit"
+        ><font style="vertical-align: inherit"
+          >違反上述規章的用戶可能會被警告、禁言或移出聊天室。我們希望每個人都能享受這個愉快的交流平台，謝謝你的合作！</font
+        ></font
+      >
+    </p>
+
+    <!-- End Example Code -->
+  </body>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">算了</button>
+        
+        <form method="post" action="<%=request.getContextPath() %>/ChatterServlet">
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  				<input type="hidden" name="action" value="chatter">
+		  				<input type="submit" class="btn btn-primary" id="button-addon2" value="確定進入">
+					</div>
+		</form>
+        
+      </div>
+    </div>
+  </div>
+</div>
 	
 
 

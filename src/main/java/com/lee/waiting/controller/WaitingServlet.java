@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -130,7 +131,15 @@ public class WaitingServlet extends HttpServlet {
 					try {
 						java.util.Date parsedDate = sdf.parse(reserveParam);
 						waitingReserve = new Timestamp(parsedDate.getTime());
-//						
+						
+						Instant now = Instant.now();
+						Timestamp nowTimestamp = Timestamp.from(now);
+						
+						if(waitingReserve.before(nowTimestamp)) {
+							errorMsgs.add("預約時間請大於現在時間!");
+						}
+						
+						
 					} catch (IllegalArgumentException e) {
 						e.printStackTrace();
 						errorMsgs.add("請輸入日期!");
@@ -159,7 +168,6 @@ public class WaitingServlet extends HttpServlet {
 //				/**************************抓到Person的最後自增主鍵值********************
 				WaitingInterface wt=new WaitingDaoImpl();
 				Integer waiTotal=wt.getTotal().size()+1;//用於Person的房號		
-				System.out.println("-+-=-=-=-=-=-=-=-=-=-"+waiTotal);
 							
 //				/***************************2.開始新增資料***************************************/
 				WaitingService waiSvc = new WaitingService();
@@ -230,6 +238,14 @@ public class WaitingServlet extends HttpServlet {
 					try {
 						java.util.Date parsedDate = sdf.parse(reserveParam);
 						waitingReserve = new Timestamp(parsedDate.getTime());
+						
+						
+						Instant now = Instant.now();
+						Timestamp nowTimestamp = Timestamp.from(now);
+						
+						if(waitingReserve.before(nowTimestamp)) {
+							errorMsgs.add("預約時間請大於現在時間!");
+						}
 				}catch(IllegalArgumentException e){
 					waitingReserve=new Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
@@ -481,15 +497,10 @@ public class WaitingServlet extends HttpServlet {
 					List<String> successMsgs2 = new LinkedList<String>();
 					
 					
-					
 					Integer waitId=Integer.valueOf(req.getParameter("waitId"));//為房間編號---------
 					Integer userno=Integer.valueOf(req.getParameter("userno"));//為使用者----------
 					Integer waipno=Integer.valueOf(req.getParameter("waitpId"));//為PK----------
 					
-					System.out.println(waitId);
-					System.out.println(userno);
-					System.out.println("房間ID-----------"+waipno);
-					System.out.println("以上為剔除");
 					if(userno==3/*這邊要抓使用者*/) {
 						errorMsgs2.add("不可以剔除開房者");
 						
@@ -522,7 +533,9 @@ public class WaitingServlet extends HttpServlet {
 				
 				//以下為隊伍內成員離開
 				if ("leave_waitingPerson".equals(action)) { // 來自listAllEmp.jsp的請求
-					System.out.println("離開隊伍");
+					
+					List<String> errorMsgs = new LinkedList<String>();
+					List<String> successMsgs = new LinkedList<String>();
 					
 					
 						/***************************1.接收請求參數****************************************/
@@ -534,14 +547,30 @@ public class WaitingServlet extends HttpServlet {
 						Integer PK/*拿到Person的PK*/=waipSvc.serchPK(waino,3);//這邊要放進使用者編號;
 						
 						if(PK!=-1) {							
+							WaitingService waiSVC=new WaitingService();
+							Integer User= waiSVC.getOneEmp(waino).getWaitingUserId();//拿到房間創始人編號	
+							if(3==User) {
+								errorMsgs.add("離開自創隊伍，請用刪除");
+								req.setAttribute("errorMsgs", errorMsgs);
+								req.setAttribute("situation","in");//--藉由丟狀態 讓接的jsp知道是要哪個資料 不用寫兩分jsp
+								req.setAttribute("userID", 3);
+								req.setAttribute("sin", "C");
+								RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+								successView.forward(req, res);
+								
+								return;
+							}
+							
 							waipSvc.delectRoomPerson(PK);
+							successMsgs.add("您已成功離開"+waino+"號房間");		
+							
 						}
 						
-						System.out.println("已經離開此房間");
 						
 						req.setAttribute("situation","in");//--藉由丟狀態 讓接的jsp知道是要哪個資料 不用寫兩分jsp
 						req.setAttribute("userID", 3);
 						req.setAttribute("sin", "C");
+						req.setAttribute("successMsgs", successMsgs);
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 						successView.forward(req, res);
 						

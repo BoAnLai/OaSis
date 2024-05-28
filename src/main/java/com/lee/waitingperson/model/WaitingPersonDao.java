@@ -22,7 +22,7 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();
-		} 
+		}
 
 	}
 
@@ -101,7 +101,7 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
-		} 
+		}
 
 		return waitingPersonPK;
 	}
