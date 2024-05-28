@@ -2,7 +2,6 @@ package com.jiahong.product.model;
 
 import java.sql.Timestamp;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,9 +30,9 @@ public class ProductVO implements java.io.Serializable {
     @Column(name = "product_created_timestamp")
     private Timestamp productCreatedTimestamp;
 
-    // 一個產品可能有多個明細
+    // 一個產品有多個明細
     @OneToMany(mappedBy = "product")
-    private List<ItemVO> items;
+    private List<ordersVO> items;
 
     public ProductVO() {
         super();
@@ -81,23 +80,23 @@ public class ProductVO implements java.io.Serializable {
         this.productCreatedTimestamp = productCreatedTimestamp;
     }
 
-    public List<ItemVO> getItems() {
+    public List<ordersVO> getItems() {
         return items;
     }
 
-    public void setLabels(List<ItemlVO> items) {
-        this.Items = items;
+    public void setItems(List<ordersVO> items) {
+        this.items = items;
     }
 
     @Override
     public String toString() {
         String outputStr = "Product: [";
 
-        outputStr += "\r productId=" + this.getProductId();
-        outputStr += "\r productName=" + this.getProductName();
-        outputStr += "\r productImg=" + this.getProductImg();
-        outputStr += "\r productCreatedTimestamp=" + this.getProductCreatedTimestamp();
-        outputStr += "]\r\r";
+        outputStr += "\n productId=" + this.getProductId();
+        outputStr += "\n productName=" + this.getProductName();
+        outputStr += "\n productImg=" + this.getProductImg();
+        outputStr += "\n productCreatedTimestamp=" + this.getProductCreatedTimestamp();
+        outputStr += "]\n\n";
 
         return outputStr;
     }
