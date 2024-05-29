@@ -1,8 +1,6 @@
 package com.mike.user.model;
 
 import com.mike.tool.StringProcessor;
-import com.mike.user.model.entity.UserVO;
-import com.mike.user.model.enumeration.Identity;
 
 public class UserDTO {
 	

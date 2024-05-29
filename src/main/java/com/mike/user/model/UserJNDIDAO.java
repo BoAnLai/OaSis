@@ -1,4 +1,4 @@
-package com.mike.user.model.repository;
+package com.mike.user.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +12,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mike.user.model.entity.UserVO;
-import com.mike.user.model.enumeration.Identity;
 import com.mike.user.model.exception.EmailNotFoundException;
 
 public class UserJNDIDAO implements UserDAO_interface {
