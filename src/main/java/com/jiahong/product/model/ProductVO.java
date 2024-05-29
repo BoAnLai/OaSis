@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.mike.label.model.LabelVO;
+import com.jiahong.item.model.ItemVO;
 
 @Entity
 @Table(name = "product")
@@ -20,19 +20,22 @@ public class ProductVO implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Integer productId;
+    
+    @Column(name = "item_user_company_name", insertable = true, updatable = true)
+    private String itemUserCompanyName;
+    
+    @Column(name = "item_game_name", insertable = true, updatable = true)
+    private String itemGameName;
+    
+    @Column(name = "product_img", insertable = true, updatable = true)
+    private String productImg;
 
     @Column(name = "product_name", insertable = true, updatable = true, unique = true)
     private String productName;
 
-    @Column(name = "product_img", insertable = true, updatable = true)
-    private String productImg;
-
-    @Column(name = "product_created_timestamp")
-    private Timestamp productCreatedTimestamp;
-
     // 一個產品有多個明細
     @OneToMany(mappedBy = "product")
-    private List<ordersVO> items;
+    private List<ItemVO> items;
 
     public ProductVO() {
         super();
@@ -47,7 +50,7 @@ public class ProductVO implements java.io.Serializable {
         this.productName = productName;
         this.productImg = productImg;
     }
-
+    
     public Integer getProductId() {
         return productId;
     }
@@ -72,22 +75,22 @@ public class ProductVO implements java.io.Serializable {
         this.productImg = productImg;
     }
 
-    public Timestamp getProductCreatedTimestamp() {
-        return productCreatedTimestamp;
-    }
-
-    public void setProductCreatedTimestamp(Timestamp productCreatedTimestamp) {
-        this.productCreatedTimestamp = productCreatedTimestamp;
-    }
-
-    public List<ordersVO> getItems() {
+    public List<ItemVO> getItems() {
         return items;
     }
 
-    public void setItems(List<ordersVO> items) {
+    public void setItems(List<ItemVO> items) {
         this.items = items;
     }
+    
+    public String getItemUserCompanyName() {
+		return itemUserCompanyName;
+	}
 
+	public void setItemUserCompanyName(String itemUserCompanyName) {
+		this.itemUserCompanyName = itemUserCompanyName;
+	}
+    
     @Override
     public String toString() {
         String outputStr = "Product: [";
@@ -95,8 +98,6 @@ public class ProductVO implements java.io.Serializable {
         outputStr += "\n productId=" + this.getProductId();
         outputStr += "\n productName=" + this.getProductName();
         outputStr += "\n productImg=" + this.getProductImg();
-        outputStr += "\n productCreatedTimestamp=" + this.getProductCreatedTimestamp();
-        outputStr += "]\n\n";
 
         return outputStr;
     }

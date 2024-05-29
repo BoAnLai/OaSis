@@ -1,4 +1,4 @@
-package com.jiahong.orders.model.copy;
+package com.jiahong.orders.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import com.mike.genre.model.GenreVO;
 import com.mike.label.model.LabelVO;
 import com.mike.tool.HibernateTool;
 
-public class ordersService {
+public class OrdersService {
 	
 	public ordersVO getGameByGameId(Integer gameId) throws Exception{
 		try {	
