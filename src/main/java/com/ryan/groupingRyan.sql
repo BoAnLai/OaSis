@@ -21,7 +21,7 @@ INSERT INTO subs (subs_user_id, subs_game_id, subs_art_id, subs_status) VALUES
 (3, NULL, 4, FALSE),
 (2, 5, 5, TRUE),
 (4, 6, NULL, FALSE),
-(3, 7, 7, TRUE),
-(1, NULL, 8, FALSE),
-(2, 9, 9, TRUE),
-(4, 10, 10, FALSE);
+(3, 7, 2, TRUE),
+(1, NULL, 3, FALSE),
+(2, 9, NULL, TRUE),
+(4, 10, NULL, FALSE);
