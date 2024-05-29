@@ -1,9 +1,7 @@
-package com.mike.user.model.repository;
+package com.mike.user.model;
 
 import java.sql.SQLException;
 import java.util.*;
-
-import com.mike.user.model.entity.UserVO;
 
 public interface UserDAO_interface {
           public void insert(UserVO userVO) throws SQLException;

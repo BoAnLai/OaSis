@@ -1,10 +1,9 @@
-package com.mike.user.model.entity;
+package com.mike.user.model;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
 import com.mike.tool.StringProcessor;
-import com.mike.user.model.enumeration.Identity;
 
 public class UserVO implements java.io.Serializable{
 	

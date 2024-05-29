@@ -18,9 +18,9 @@ import javax.servlet.http.Part;
 
 import com.mike.tool.StringProcessor;
 import com.mike.user.model.UserDTO;
-import com.mike.user.model.entity.UserVO;
-import com.mike.user.model.repository.UserJNDIDAO;
-import com.mike.user.model.service.UserService;
+import com.mike.user.model.UserJNDIDAO;
+import com.mike.user.model.UserService;
+import com.mike.user.model.UserVO;
 
 @MultipartConfig
 public class UserServlet extends HttpServlet {

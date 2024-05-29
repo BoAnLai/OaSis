@@ -1,12 +1,7 @@
-package com.mike.user.model.service;
+package com.mike.user.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mike.user.model.UserDTO;
-import com.mike.user.model.entity.UserVO;
-import com.mike.user.model.repository.UserDAO_interface;
-import com.mike.user.model.repository.UserJNDIDAO;
 
 public class UserClientService {
 

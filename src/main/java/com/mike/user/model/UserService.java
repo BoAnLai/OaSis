@@ -1,14 +1,11 @@
-package com.mike.user.model.service;
+package com.mike.user.model;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.mike.tool.StringProcessor;
-import com.mike.user.model.entity.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
-import com.mike.user.model.repository.UserDAO_interface;
-import com.mike.user.model.repository.UserJNDIDAO;
 
 public class UserService {
 

@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mike.user.model.UserDTO;
-import com.mike.user.model.entity.UserVO;
+import com.mike.user.model.UserService;
+import com.mike.user.model.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
-import com.mike.user.model.service.UserService;
 
 @MultipartConfig
 @WebServlet(name = "userLogin", urlPatterns = {"/login","/logging","/loggingout"})
