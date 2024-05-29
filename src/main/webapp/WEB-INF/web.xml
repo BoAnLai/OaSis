@@ -13,7 +13,6 @@
 	
 	
 	<!-- ====================LEE==================== -->
-	
 	<servlet>
 		<servlet-name>WaitingServlet</servlet-name>
 		<servlet-class>com.lee.waiting.controller.WaitingServlet</servlet-class>
@@ -22,7 +21,9 @@
 		<servlet-name>WaitingServlet</servlet-name>
 		<url-pattern>/WaitingServlet</url-pattern>
 	</servlet-mapping>
-	<!-- mike block -->
+	
+	
+	<!-- ====================mike==================== -->
 	<servlet>
 		<servlet-name>UserServlet</servlet-name>
 		<servlet-class>com.mike.user.controller.UserServlet</servlet-class>
@@ -47,8 +48,18 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/registering</url-pattern>
 	</servlet-mapping>
+	<filter>
+	  <filter-name>LoginFilter</filter-name>
+	  <filter-class>com.mike.user.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/lee/chatter/index.jsp</url-pattern>
+	</filter-mapping>
 	
 	
+	
+	<!-- ===================shiyen===================== -->
 	<servlet>
 		<servlet-name>ForumServlet</servlet-name>
 		<servlet-class>com.shiyen.forum.controller.ForumServlet</servlet-class>
