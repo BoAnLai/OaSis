@@ -1,55 +1,64 @@
-package com.mike.user.model;
+package com.mike.user.model.repository;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mike.user.model.UserVO.Identity;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class UserJDBCDAO implements UserDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/oasis?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String password = "123456";
+import com.mike.user.model.entity.UserVO;
+import com.mike.user.model.enumeration.Identity;
+import com.mike.user.model.exception.EmailNotFoundException;
+
+public class UserJNDIDAO implements UserDAO_interface {
+
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/oasis");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO user (user_email,user_password,user_identity,user_company_name"
-			+ ",user_register_date,user_last_login,user_last_ip,user_nickname,user_avatar,user_intro) "
-			+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+			+ ",user_last_ip,user_nickname,user_avatar,user_intro) "
+			+ "VALUES (?,?,?,?,?,?,?,?)";
 	@Override
-	public void insert(UserVO userVO) {
+	public void insert(UserVO userVO) throws SQLException {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,userid,password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, userVO.getUserEmail());
 			pstmt.setString(2, userVO.getUserPassword());
-			pstmt.setString(3, userVO.getUserIdentity().toString());
+			
+			if(userVO.getUserIdentity() != null) {
+				pstmt.setString(3, userVO.getUserIdentity().toString());
+			}else {
+				pstmt.setString(3, Identity.REGULAR.toString());
+			}
+			
 			pstmt.setString(4, userVO.getUserCompanyName());
-			pstmt.setDate(5, userVO.getUserRegisterDate());
-			pstmt.setTimestamp(6, userVO.getUserLastLogin());
-			pstmt.setString(7, userVO.getUserLastIp());
-			pstmt.setString(8, userVO.getUserNickname());
-			pstmt.setString(9, userVO.getUserAvatar());
-			pstmt.setString(10, userVO.getUserIntro());
+			pstmt.setString(5, "127.0.0.1");
+			pstmt.setString(6, (userVO.getUserNickname()).isBlank()?null:userVO.getUserNickname());
+			pstmt.setString(7, userVO.getUserAvatar());
+			pstmt.setString(8, userVO.getUserIntro().isBlank()?null:userVO.getUserIntro());
 			
 			pstmt.executeUpdate();
 			
-		}catch(ClassNotFoundException e) {
-			System.out.println(e);
-		}catch(SQLException e) {
-			System.out.println(e);
 		}finally{
 			if (pstmt != null) {
 				try {
@@ -69,8 +78,20 @@ public class UserJDBCDAO implements UserDAO_interface {
 	}
 
 	private static final String UPDATE_STMT = 
-			"UPDATE user SET user_email=?,user_password=?,user_identity=?,user_company_name=?"
-			+ ",user_register_date=?,user_last_login=?,user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=?"
+			"UPDATE user SET "
+			+ "user_email=?"
+			+ ", user_password=?"
+			+ ", user_identity=?"
+			+ ", user_company_name=?"
+			+ ", user_register_timestamp=?"
+			+ ", user_last_login=?"
+			+ ", user_last_ip=?"
+			+ ", user_nickname=?"
+			+ ", user_avatar=?"
+			+ ", user_intro=?"
+			+ ", user_real_name=?"
+			+ ", user_cellphone=?"
+			+ ", user_address=? "
 			+ "WHERE user_id = ?";
 	@Override
 	public void update(Integer userId,UserVO userVO) {
@@ -79,26 +100,30 @@ public class UserJDBCDAO implements UserDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,userid,password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			
 			pstmt.setString(1, userVO.getUserEmail());
 			pstmt.setString(2, userVO.getUserPassword());
 			pstmt.setString(3, userVO.getUserIdentity().toString());
 			pstmt.setString(4, userVO.getUserCompanyName());
-			pstmt.setDate(5, userVO.getUserRegisterDate());
+			pstmt.setTimestamp(5, userVO.getUserRegisterTimestamp());
 			pstmt.setTimestamp(6, userVO.getUserLastLogin());
 			pstmt.setString(7, userVO.getUserLastIp());
+			
 			pstmt.setString(8, userVO.getUserNickname());
 			pstmt.setString(9, userVO.getUserAvatar());
-			pstmt.setString(10, userVO.getUserIntro());
-			pstmt.setInt(11, userId);
+
+//			pstmt.setString(10, userVO.getUserIntro());
+			pstmt.setString(10, null);
+			
+			pstmt.setString(11, userVO.getUserRealName());
+			pstmt.setString(12, userVO.getUserCellphone());
+			pstmt.setString(13, userVO.getUserAddress());
+			pstmt.setInt(14, userId);
 			
 			pstmt.executeUpdate();
 			
-		}catch(ClassNotFoundException e) {
-			System.out.println(e);
 		}catch(SQLException e) {
 			System.out.println(e);
 		}finally{
@@ -131,9 +156,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_USER_ID_STMT);
 
 			pstmt.setInt(1, userId);
@@ -145,17 +168,16 @@ public class UserJDBCDAO implements UserDAO_interface {
 			userVO.setUserPassword(rs.getString(3));
 			userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 			userVO.setUserCompanyName(rs.getString(5));
-			userVO.setUserRegisterDate(rs.getDate(6));
+			userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 			userVO.setUserLastLogin(rs.getTimestamp(7));
 			userVO.setUserLastIp(rs.getString(8));
 			userVO.setUserNickname(rs.getString(9));
 			userVO.setUserAvatar(rs.getString(10));
 			userVO.setUserIntro(rs.getString(11));
+			userVO.setUserRealName(rs.getString(12));
+			userVO.setUserCellphone(rs.getString(13));
+			userVO.setUserAddress(rs.getString(14));
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -197,9 +219,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_USER_EMAIL_STMT);
 
 			String likeTerm = "%" + userEmail + "%";
@@ -215,7 +235,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -225,10 +245,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -270,9 +286,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -284,7 +298,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -294,10 +308,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -340,9 +350,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_USER_IDENTITY_STMT);
 			pstmt.setString(1,identity);
 			rs = pstmt.executeQuery();
@@ -355,7 +363,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -365,10 +373,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -409,9 +413,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_USER_COMPANY_NAME_STMT);
 			
 			String likeTerm = "%"+userCompanyName+"%";
@@ -426,7 +428,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -436,10 +438,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -480,9 +478,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_USER_LAST_IP_STMT);
 			
 			String likeTerm = "%"+userLastIp+"%";
@@ -497,7 +493,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -507,10 +503,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -551,9 +543,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_USER_NICKNAME_STMT);
 			
 			String likeTerm = "%"+userNickname+"%";
@@ -568,7 +558,7 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -578,10 +568,6 @@ public class UserJDBCDAO implements UserDAO_interface {
 				userList.add(userVO);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -619,15 +605,12 @@ public class UserJDBCDAO implements UserDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url,userid,password);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_LAST_LOGIN_STMT);
 			
 			pstmt.setInt(1,userId);
 			pstmt.executeUpdate();
 			
-		}catch(ClassNotFoundException e) {
-			System.out.println(e);
 		}catch(SQLException e) {
 			System.out.println(e);
 		}finally{
@@ -648,44 +631,66 @@ public class UserJDBCDAO implements UserDAO_interface {
 		}
 	}
 	
-	public static void main(String[] args) {
-		UserJDBCDAO dao = new UserJDBCDAO();
+	private String FIND_BY_EMAIL_STMT = "SELECT * FROM user WHERE user_email = ?";
+	public UserVO findByEmail(String email) throws SQLException, EmailNotFoundException {
 		
-//		UserVO userAdd = new UserVO("11111@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
-//		dao.insert(userAdd);
-//		
-//		UserVO userUpdate = new UserVO("test123@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
-//		dao.update(3,userUpdate);
-//		
-//		UserVO userFoundById = dao.findByUserId(1);
-//		System.out.println(userFoundById);
-//
-//		List<UserVO> userFoundByEmail = dao.getByEmail("yahoo");
-//		System.out.println(userFoundByEmail);
-//		
-//		List<UserVO> userList = dao.getAll();
-//		System.out.println(userList);
-//		
-//		List<UserVO> userListRegular = dao.getUserIdentity("REGULAR");
-//		System.out.println(userListRegular);
-//		
-//		List<UserVO> userListCompanyName = dao.getUserCompanyName("ga C");
-//		System.out.println(userListCompanyName);
-//
-//		List<UserVO> userListLastIp = dao.getUserLastIp(".0.1");
-//		System.out.println(userListLastIp);
-//		
-//		List<UserVO> userListNickname = dao.getByNickname("genius");
-//		System.out.println(userListNickname);
-//	
-//		dao.updateLastLogin(5);
+		UserVO userVO = new UserVO();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		System.out.println("===main done===");
-	}
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(FIND_BY_EMAIL_STMT);
 
-	@Override
-	public UserVO findByEmail(String email) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			
+			if(rs.next()) {
+				userVO.setUserId(rs.getInt(1));
+				userVO.setUserEmail(rs.getString(2));
+				userVO.setUserPassword(rs.getString(3));
+				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
+				userVO.setUserCompanyName(rs.getString(5));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
+				userVO.setUserLastLogin(rs.getTimestamp(7));
+				userVO.setUserLastIp(rs.getString(8));
+				userVO.setUserNickname(rs.getString(9));
+				userVO.setUserAvatar(rs.getString(10));
+				userVO.setUserIntro(rs.getString(11));
+				
+				return userVO;				
+			}else {
+				throw new EmailNotFoundException();
+			}
+			
+			
+		} catch (SQLException se) {
+			throw se;
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
+	
 }

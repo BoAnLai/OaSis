@@ -1,6 +1,10 @@
 package com.mike.user.model;
 
-public class UserForClient extends UserVO {
+import com.mike.tool.StringProcessor;
+import com.mike.user.model.entity.UserVO;
+import com.mike.user.model.enumeration.Identity;
+
+public class UserDTO {
 	
 	private Integer userId;
 	private String userEmail;
@@ -9,8 +13,11 @@ public class UserForClient extends UserVO {
 	private String userNickname;
 	private String userAvatar;
 	private String userIntro;
+	private String userRealName;
+	private String userCellphone;
+	private String userAddress;
 	
-	public UserForClient(UserVO userVO) {		
+	public UserDTO(UserVO userVO) {		
 		this.userId = userVO.getUserId();
 		this.userEmail = userVO.getUserEmail();
 		this.userIdentity = userVO.getUserIdentity();
@@ -18,6 +25,17 @@ public class UserForClient extends UserVO {
 		this.userNickname = userVO.getUserNickname();
 		this.userAvatar = userVO.getUserAvatar();
 		this.userIntro = userVO.getUserIntro();
+		this.userRealName = userVO.getUserRealName();
+		this.userCellphone = userVO.getUserCellphone();
+		this.userAddress = userVO.getUserAddress();
+	}
+	
+	public String getUserName() {
+		if(!(userNickname == null || userNickname == "")) {
+			return userNickname;
+		}else {
+			return StringProcessor.getUserNameFromEmail(userEmail);
+		}
 	}
 
 	public Integer getUserId() {
@@ -74,6 +92,30 @@ public class UserForClient extends UserVO {
 
 	public void setUserIntro(String userIntro) {
 		this.userIntro = userIntro;
+	}
+
+	public String getUserRealName() {
+		return userRealName;
+	}
+
+	public void setUserRealName(String userRealName) {
+		this.userRealName = userRealName;
+	}
+
+	public String getUserCellphone() {
+		return userCellphone;
+	}
+
+	public void setUserCellphone(String userCellphone) {
+		this.userCellphone = userCellphone;
+	}
+
+	public String getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
 	}
 	
 }

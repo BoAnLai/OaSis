@@ -1,9 +1,10 @@
 package com.mike.genre.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ public class GenreVO implements java.io.Serializable{
 	@Column(name = "genre_name", insertable = true, updatable = false, unique = true)
 	private String genreName;
 	
-	@OneToMany(mappedBy = "genre")
-	private Set<LabelVO> labels;
+	@OneToMany(mappedBy = "genre", fetch=FetchType.EAGER)
+	private List<LabelVO> labels;
 	
 	
 	public GenreVO() {
@@ -57,11 +58,11 @@ public class GenreVO implements java.io.Serializable{
 		this.genreName = genreName;
 	}
 	
-	public Set<LabelVO> getLabels(){
+	public List<LabelVO> getLabels(){
 		return labels;
 	}
 	
-	public void setLabels(Set<LabelVO> labels) {
+	public void setLabels(List<LabelVO> labels) {
 		this.labels = labels;
 	}
 		

@@ -1,8 +1,10 @@
-package com.mike.user.model;
-import java.sql.Date;
+package com.mike.user.model.entity;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 
 import com.mike.tool.StringProcessor;
+import com.mike.user.model.enumeration.Identity;
 
 public class UserVO implements java.io.Serializable{
 	
@@ -11,31 +13,18 @@ public class UserVO implements java.io.Serializable{
 	private String userPassword;
 	private Identity userIdentity;
 	private String userCompanyName;
-	private Date userRegisterDate;
+	private Timestamp userRegisterTimestamp;
 	private Timestamp userLastLogin;
 	private String userLastIp;
 	private String userNickname;
 	private String userAvatar;
 	private String userIntro;
+	private String userRealName;
+	private String userCellphone;
+	private String userAddress;
 	
 	public UserVO() {
 		super();
-	}
-	
-	public UserVO(String userEmail, String userPassword, Identity userIdentity, String userCompanyName
-			, Date userRegisterDate, Timestamp userLastLogin, String userLastIp, String userNickname, String userAvatar, String userIntro) {
-		
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-		this.userIdentity = userIdentity;
-		this.userCompanyName = userCompanyName;
-		this.userRegisterDate = userRegisterDate;
-		this.userLastLogin = userLastLogin;
-		this.userLastIp = userLastIp;
-		this.userNickname = userNickname;
-		this.userAvatar = userAvatar;
-		this.userIntro = userIntro;
-		
 	}
 	
 	public Integer getUserId() {
@@ -63,16 +52,16 @@ public class UserVO implements java.io.Serializable{
 		this.userIdentity = userIdentity;
 	}
 	public String getUserCompanyName() {
-		return StringProcessor.nullDealer(userCompanyName);
+		return StringProcessor.nullToEmpty(userCompanyName);
 	}
 	public void setUserCompanyName(String userCompanyName) {
 		this.userCompanyName = userCompanyName;
 	}
-	public Date getUserRegisterDate() {
-		return userRegisterDate;
+	public Timestamp getUserRegisterTimestamp() {
+		return userRegisterTimestamp;
 	}
-	public void setUserRegisterDate(Date userRegisterDate) {
-		this.userRegisterDate = userRegisterDate;
+	public void setUserRegisterTimestamp(Timestamp userRegisterTimestamp) {
+		this.userRegisterTimestamp = userRegisterTimestamp;
 	}
 	public Timestamp getUserLastLogin() {
 		return userLastLogin;
@@ -89,30 +78,48 @@ public class UserVO implements java.io.Serializable{
 	}
 
 	public String getUserNickname() {
-		return StringProcessor.nullDealer(userNickname);
+		return StringProcessor.nullToEmpty(userNickname);
 	}
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
 	public String getUserAvatar() {
-		return StringProcessor.nullDealer(userAvatar);
+		return StringProcessor.nullToEmpty(userAvatar);
 	}
 	public void setUserAvatar(String userAvatar) {
 		this.userAvatar = userAvatar;
 	}
 	
 	public String getUserIntro() {
-		return StringProcessor.nullDealer(userIntro);
+		return StringProcessor.nullToEmpty(userIntro);
 	}
 
 	public void setUserIntro(String userIntro) {
 		this.userIntro = userIntro;
 	}
-
-	public enum Identity{
-		REGULAR,
-		COMPANY,
-		ADMINISTRATOR
+	
+	public String getUserRealName() {
+		return userRealName;
+	}
+	
+	public void setUserRealName(String userRealName) {
+		this.userRealName = userRealName;
+	}
+	
+	public String getUserCellphone() {
+		return userCellphone;
+	}
+	
+	public void setUserCellphone(String userCellphone) {
+		this.userCellphone = userCellphone;
+	}
+	
+	public String getUserAddress() {
+		return userAddress;
+	}
+	
+	public void setUserAddress(String userAddress) {
+		this.userAddress = userAddress;
 	}
 	
 	@Override
@@ -124,12 +131,15 @@ public class UserVO implements java.io.Serializable{
 		outputStr += "\r userPassword="+ this.getUserPassword();
 		outputStr += "\r userIdentity="+ this.getUserIdentity();
 		outputStr += "\r userCompanyName="+ this.getUserCompanyName();
-		outputStr += "\r userRegisterDate="+ this.getUserRegisterDate();
+		outputStr += "\r userRegisterTimestamp="+ this.getUserRegisterTimestamp();
 		outputStr += "\r userLastLogin="+ this.getUserLastLogin();
 		outputStr += "\r userLastIp="+ this.getUserLastIp();
 		outputStr += "\r userNickname="+ this.getUserNickname();
 		outputStr += "\r userAvatar="+ this.getUserAvatar();
 		outputStr += "\r userIntro="+ this.getUserIntro();
+		outputStr += "\r userRealName="+ this.getUserRealName();
+		outputStr += "\r userCellphone="+ this.getUserCellphone();
+		outputStr += "\r userAddress="+ this.getUserAddress();
 		outputStr += "]\r\r";
 		
 		
