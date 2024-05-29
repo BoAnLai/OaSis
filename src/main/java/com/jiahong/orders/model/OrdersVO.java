@@ -2,7 +2,6 @@ package com.jiahong.orders.model;
 
 import java.sql.Timestamp;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,8 +33,8 @@ public class OrdersVO implements java.io.Serializable {
     @Column(name = "orders_user_address", insertable = true, updatable = true)
     private String ordersUserAddress;
 
-    @Column(name = "orders_datetime", insertable = false, updatable = false)
-    private Timestamp ordersDatetime;
+    @Column(name = "orders_timestamp", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Timestamp ordersTimestamp;
 
     @Column(name = "orders_total", insertable = true, updatable = true)
     private Integer ordersTotal;
@@ -96,8 +95,8 @@ public class OrdersVO implements java.io.Serializable {
         this.ordersUserAddress = ordersUserAddress;
     }
 
-    public Timestamp getOrdersDatetime() {
-        return ordersDatetime;
+    public Timestamp getOrdersTimestamp() {
+        return ordersTimestamp;
     }
 
     public Integer getOrdersTotal() {
@@ -125,7 +124,7 @@ public class OrdersVO implements java.io.Serializable {
         outputStr += "\n ordersUserRealName=" + this.getOrdersUserRealName();
         outputStr += "\n ordersUserCellphone=" + this.getOrdersUserCellphone();
         outputStr += "\n ordersUserAddress=" + this.getOrdersUserAddress();
-        outputStr += "\n ordersDatetime=" + this.getOrdersDatetime();
+        outputStr += "\n ordersTimestamp=" + this.getOrdersTimestamp();
         outputStr += "\n ordersTotal=" + this.getOrdersTotal();
         outputStr += "]\n\n";
 
