@@ -2,8 +2,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.InetAddress"%>
 <%@ page import="java.net.UnknownHostException"%>
-<%@ page import="com.mike.user.model.entity.*"%>
-<%@ page import="com.mike.user.model.service.*"%>
+<%@ page import="com.mike.user.model.*"%>
 <%@ page import="com.mike.tool.*"%>
 
 <%
