@@ -59,15 +59,21 @@ public class UserServlet extends HttpServlet {
 		
 		
 		if (req.getServletPath().equals("/user/update")) {
-			Enumeration<String> params = req.getParameterNames();
 			
-	        while (params.hasMoreElements()) {
-	            String element = params.nextElement();
-	        }
 			
-			Integer userId = Integer.valueOf(req.getParameter("userId"));
+			System.out.println(req.getParameter("updateUserId"));
+			System.out.println(session.getAttribute("updateUserId"));
 			
-			UserDTO user = new UserDTO(userDAO.findById(userId));
+			UserDTO user = null;
+			
+			if(req.getParameter("updateUserId")==null) {
+				
+				user = new UserDTO(userDAO.findById(Integer.valueOf((String)session.getAttribute("updateUserId"))));
+			}else {
+				user = new UserDTO(userDAO.findById(Integer.valueOf((String)req.getParameter("updateUserId"))));				
+				session.setAttribute("updateUserId",req.getParameter("updateUserId"));
+			}
+			
 			session.setAttribute("userDisplayed", user);
 			
 			String url = "/user/userUpdate.jsp";
@@ -79,20 +85,54 @@ public class UserServlet extends HttpServlet {
 		
 		
 		if(req.getServletPath().equals("/user/updating")) {
+			
 			UserVO userUpdating = new UserVO();
 			userUpdating.setUserId(((UserDTO)session.getAttribute("userDisplayed")).getUserId());
-			userUpdating.setUserEmail(req.getParameter("email"));			
-			if(StringProcessor.EmptyToNull(req.getParameter("password"))!= null) {
-				userUpdating.setUserPassword(req.getParameter("password"));
+			
+			userUpdating.setUserEmail(req.getParameter("email"));
+			
+			
+//			System.out.print("password: ");
+//			System.out.println(req.getParameter("password"));
+//			System.out.println(req.getParameter("password").isBlank());
+//			System.out.println(req.getParameter("password")==null);
+//			System.out.print("confirm password: ");
+//			System.out.println(req.getParameter("confirmPassword"));
+//			System.out.println(req.getParameter("confirmPassword").isBlank());
+//			System.out.println(req.getParameter("confirmPassword")==null);
+			
+			String password = req.getParameter("password").trim();
+			String confirmPassword = req.getParameter("confirmPassword").trim();
+			boolean bothBlank = password.isBlank() && confirmPassword.isBlank();
+			boolean bothContain = (!password.isBlank()) && (!confirmPassword.isBlank());
+			
+			if(bothContain) {
+				
+				if(password.equals(confirmPassword)) {
+					userUpdating.setUserPassword(password);
+				}else {
+					req.setAttribute("errorMsg", "兩次密碼不相符");
+					req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
+				}
+				System.out.println("password both contain");
+			}else if(bothBlank) {
+				System.out.println("password both blank");
+			}else {
+				
+				req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");
+				req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
+//				res.sendRedirect("/user/update");
+				System.out.println("one contain one blank");
 			}
+			
+			
+			
+			
 			userUpdating.setUserNickname(StringProcessor.EmptyToNull(req.getParameter("nickname")));
 			userUpdating.setUserIntro(StringProcessor.EmptyToNull(req.getParameter("intro")));
 			userUpdating.setUserRealName(StringProcessor.EmptyToNull(req.getParameter("realName")));
 			userUpdating.setUserCellphone(StringProcessor.EmptyToNull(req.getParameter("cellphone")));
 			userUpdating.setUserAddress(StringProcessor.EmptyToNull(req.getParameter("address")));
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
 			
 			UserService userService = new UserService();
 			userService.userUpdate(userUpdating.getUserId(),userUpdating);
@@ -118,7 +158,8 @@ public class UserServlet extends HttpServlet {
 				userUpdating.setUserAvatar(imgSrcPath);
 				userService.userUpdate(userUpdating.getUserId(),userUpdating);				
 			}
-			res.sendRedirect("userList.jsp");
+//			req.getRequestDispatcher("userList.jsp").forward(req, res);
+			res.sendRedirect("/oasis/user/list");
 		} //if(user/updating)
 
 		

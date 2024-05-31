@@ -61,6 +61,10 @@
 	  <filter-name>LoginFilter</filter-name>
 	  <url-pattern>/user/list</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/user/userList.jsp</url-pattern>
+	</filter-mapping>
 	
 	<filter>
 	  <filter-name>AdminFilter</filter-name>
@@ -69,6 +73,10 @@
 	<filter-mapping>
 	  <filter-name>AdminFilter</filter-name>
 	  <url-pattern>/user/list</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>AdminFilter</filter-name>
+	  <url-pattern>/user/userList.jsp</url-pattern>
 	</filter-mapping>
 	
 	
