@@ -20,6 +20,7 @@ CREATE TABLE product (
     product_description VARCHAR(255),    
     product_price INT NOT NULL,
     CONSTRAINT product_primary_key PRIMARY KEY (product_id) 
+
 );
 
 INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
@@ -79,7 +80,10 @@ CREATE TABLE item (
     item_count INT NOT NULL,
     item_price INT NOT NULL, 
     item_total INT NOT NULL,
-    CONSTRAINT item_primary_key PRIMARY KEY (item_id)
+    CONSTRAINT item_primary_key PRIMARY KEY (item_id),
+    FOREIGN KEY (item_purchase_id) REFERENCES purchase (purchase_id),
+    FOREIGN KEY (item_product_id) REFERENCES product (product_id)
+    
 );
 
 INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
