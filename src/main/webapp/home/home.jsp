@@ -68,15 +68,6 @@
 		</div>
 		
 		
-		<!-- 
-		<% if(user != null){ %>
-			<h2><%= user.getUserIdentity() %></h2>
-		<% }else{ %>
-			<h2>not login yet</h2>
-		<% } %>
-		 -->
-			
-		
       </div>
   </div>
   

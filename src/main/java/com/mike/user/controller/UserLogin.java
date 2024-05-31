@@ -64,23 +64,55 @@ public class UserLogin extends HttpServlet {
 					
 					session.setAttribute("user",userDTO);
 					
-					res.sendRedirect("/oasis");
+					
+					String headingPath = null;
+					headingPath = (String)session.getAttribute("headingPath");
+					session.removeAttribute("headingPath");
+					
+					
+					if(headingPath != null) {
+						
+						res.sendRedirect(headingPath);
+						
+					}else {	
+						try {
+							req.getRequestDispatcher("/").forward(req, res);
+						} catch (ServletException e) {
+							e.printStackTrace();
+						}
+					}
+					
+					
+					
+					
+					
 				}else {
-					req.setAttribute("errorMsg", new String("the password is wrong"));
-					System.out.println("password is wrong");
-					res.sendRedirect("login");
+					req.setAttribute("errorMsg", new String("密碼錯誤，請重新輸入"));
+					try {
+						req.getRequestDispatcher("login").forward(req,res);
+					} catch (ServletException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			} catch (EmailNotFoundException e) {
-				req.setAttribute("errorMsg", new String("this email is not register yet"));
-				System.out.println("email not found exception");
+				req.setAttribute("errorMsg", new String("此信箱尚未註冊，請註冊或重新輸入"));
 				try {
-					res.sendRedirect("login");
+					req.getRequestDispatcher("login").forward(req,res);
+				} catch (ServletException e1) {
+					e1.printStackTrace();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			} catch (SQLException e) {
-				req.setAttribute("errorMsg", new String("something error when connect to database, try again later"));
-				System.out.println("sql exception");
+				req.setAttribute("errorMsg", new String("資料庫連線異常"));
+				try {
+					req.getRequestDispatcher("login").forward(req,res);
+				} catch (ServletException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

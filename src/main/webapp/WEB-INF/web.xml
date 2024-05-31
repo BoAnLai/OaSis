@@ -48,6 +48,7 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/registering</url-pattern>
 	</servlet-mapping>
+	
 	<filter>
 	  <filter-name>LoginFilter</filter-name>
 	  <filter-class>com.mike.user.filter.LoginFilter</filter-class>
@@ -56,7 +57,19 @@
 	  <filter-name>LoginFilter</filter-name>
 	  <url-pattern>/lee/chatter/index.jsp</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/user/list</url-pattern>
+	</filter-mapping>
 	
+	<filter>
+	  <filter-name>AdminFilter</filter-name>
+	  <filter-class>com.mike.user.filter.AdminFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>AdminFilter</filter-name>
+	  <url-pattern>/user/list</url-pattern>
+	</filter-mapping>
 	
 	
 	<!-- ===================shiyen===================== -->

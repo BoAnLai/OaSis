@@ -78,8 +78,29 @@
 								    <% } %>
 								  </a>
 								
-								  <ul class="dropdown-menu">
-								    <li><a class="dropdown-item" href="#">會員中心</a></li>
+								  <ul class="dropdown-menu dropdown-menu-end">
+								    <li><a class="dropdown-item" href="#">修改個人資料</a></li>
+								    
+								    <%
+								    String identity = "REGULAR";
+								    if(user!=null){							    	
+									    identity = user.getUserIdentity().toString(); 
+								    }
+								    switch(identity) { 
+								     	case "ADMINISTRATOR": 
+								    %>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/user/list">會員列表</a></li>
+								    <%
+								    		break; 
+								     	case "COMPANY":	
+								    		break; 
+								     	case "REGULAR": 
+								    %>
+								    <li><a class="dropdown-item" href="">申請廠商身份</a></li>
+								    <% 
+								    		break; 
+								    } 
+								    %>
 								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/loggingout">登出</a></li>
 								  </ul>
 								</div>
