@@ -4,18 +4,23 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.password">123456</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/oasis</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/oasis?serverTimezone=Asia/Taipei</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        
+
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">validate</property><!-- 起動時檢查永續類別是否正確，有錯直接例外，不執行SQL指令開發時期適用 -->
         <property name="hibernate.current_session_context_class">thread</property><!-- factory.getCurrentSession()才能正常執行 -->
         <property name="hibernate.c3p0.timeout">700</property>
-        
+  
+        <mapping class="com.shiyen.art.model.ArtVO"/>
+    	  <mapping class="com.shiyen.favor.model.FavorVO"/>
+    	  <mapping class="com.shiyen.message.model.MessageVO"/>
+    	  <mapping class="com.shiyen.report.model.ReportVO"/>
         
         <mapping class="com.lee.waiting.model.WaitingVO"/>
         <mapping class="com.lee.waitingperson.model.WaitingPersonVO"/>
@@ -23,7 +28,6 @@
         <mapping class="com.mike.game.model.GameVO"/>
         <mapping class="com.mike.genre.model.GenreVO"/>
         <mapping class="com.mike.label.model.LabelVO"/>
-        
-        
+
     </session-factory>
 </hibernate-configuration>

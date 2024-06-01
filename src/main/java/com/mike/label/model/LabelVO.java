@@ -2,6 +2,7 @@ package com.mike.label.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,22 +22,17 @@ public class LabelVO implements java.io.Serializable{
 	@Column(name = "label_id", insertable = true, updatable = false)
 	private Integer labelId;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="label_genre_id",referencedColumnName="genre_id")
 	private GenreVO genre;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="label_game_id", referencedColumnName="game_id")
 	private GameVO game;
 	
 	public LabelVO() {
 		super();
 	}
-//	public LabelVO(Integer labelId, Integer labelGenreId, Integer labelGameId) {
-//		this.labelId = labelId;
-//		this.labelGenreId = labelGenreId;
-//		this.labelGameId = labelGameId;
-//	}
 	
 	public Integer getLabelId() {
 		return labelId;
