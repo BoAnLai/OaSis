@@ -117,7 +117,7 @@
         <div class="col-6" style="padding: 0px"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
         <div class="input-group flex-nowrap">
   		<span class="input-group-text" id="inputGroup-sizing-lg">NUMBER</span>
-  		<input type="text" class="form-control" name="userid" placeholder="您的編號ID" aria-label="Username" aria-describedby="addon-wrapping" required="required">
+  		<input type="text" class="form-control" name="userid" placeholder="您的編號ID" aria-label="Username" aria-describedby="addon-wrapping" readonly="readonly" value=${user.getUserId()}>
 		</div>     
         </font></font></div>
       </div>

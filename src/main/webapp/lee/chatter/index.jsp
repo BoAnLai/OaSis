@@ -108,7 +108,7 @@
 		
 		
 		function sendMessage(){
-			let userName="使用者一號";//對使用者的輸入方塊，取值
+			let userName="${user.getUserNickname()}";//對使用者的輸入方塊，取值
 			
 			
 			let inputMessage=document.getElementById("message");

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +24,8 @@ import com.lee.waitingperson.model.WaitingPersonDao;
 import com.lee.waitingperson.model.WaitingPersonInterface;
 import com.lee.waitingperson.model.WaitingPersonService;
 import com.lee.waitingperson.model.WaitingPersonVO;
+import com.mike.user.model.UserClientService;
+import com.mike.user.model.UserDTO;
 
 
 public class WaitingServlet extends HttpServlet {
@@ -47,7 +50,7 @@ public class WaitingServlet extends HttpServlet {
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 			System.out.println("執行於此");
 			List<String> errorMsgs = new LinkedList<String>();
-			
+			List<UserDTO> userList = new ArrayList<>();
 				
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String str = req.getParameter("waino");
@@ -66,8 +69,9 @@ public class WaitingServlet extends HttpServlet {
 				Integer waino = null;
 				try {
 					waino = Integer.valueOf(str); //把抓到的值丟給此變數
+					
 				} catch (Exception e) {
-					errorMsgs.add("編號格式不正確");
+					errorMsgs.add("輸入格式不正確!");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -90,8 +94,17 @@ public class WaitingServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
-				
+				HttpSession session=req.getSession();
+				UserDTO user = (UserDTO) session.getAttribute("user");
+				System.out.println("**********************************"+user);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				WaitingInterface dao=new WaitingDaoImpl();
+				WaitingVO w= dao.getOne(waino);
+				UserDTO userdao= UserClientService.getUserById(w.getWaitingUserId());
+				userList.add(userdao);
+				//*********************************以上為查詢USERDTO******************************/
+				
+				req.setAttribute("userList", userList);
 				req.setAttribute("waiVO", waiVO); // 資料庫取出的empVO物件,存入req
 				req.setAttribute("sin", "D");
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp

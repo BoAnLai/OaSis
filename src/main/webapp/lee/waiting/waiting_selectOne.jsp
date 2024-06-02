@@ -1,3 +1,5 @@
+<%@page import="com.mike.user.model.UserDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 
@@ -5,7 +7,11 @@
 
 <%
 	WaitingVO waiVO = (WaitingVO) request.getAttribute("waiVO"); //WaitingServlet.java(Concroller), 存入req的waiVO物件
-%>
+	List<UserDTO> userList = (List<UserDTO>) request.getAttribute("userList");
+	
+    %>
+
+
 
 <html>
 <head>
@@ -134,10 +140,14 @@
     
    
     	<tr>
+    	<% for (int i = 0; i < userList.size(); i++) {
+                   
+                    UserDTO userDTO = userList.get(i);
+                %>
             <th scope="row" class="ps-4">
                 <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" for="contacusercheck7"></label></div>
             </th>
-            <td style="text-align: center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body"><%=waiVO.getWaitingUserId() %></a></td>
+            <td style="text-align: center"><img src="<%=userDTO.getUserAvatar() %>" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body"><%=userDTO.getUserNickname() %></a></td>
             <td style="text-align: center"><%=waiVO.getWaitingID() %></td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0"><%=waiVO.getWaitingReserve() %></td>
             <td style="text-align: center"><%=waiVO.getWaitingMaxPeople() %></td>
@@ -167,6 +177,7 @@
                 </ul>
             </td>
         </tr>
+        	<% } %>
    
     
     
