@@ -11,6 +11,17 @@
 		<welcome-file>/home/home.jsp</welcome-file>
 	</welcome-file-list>
 	
+	
+	<!-- ====================LEE==================== -->
+	
+	<servlet>
+		<servlet-name>WaitingServlet</servlet-name>
+		<servlet-class>com.lee.waiting.controller.WaitingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WaitingServlet</servlet-name>
+		<url-pattern>/WaitingServlet</url-pattern>
+	</servlet-mapping>
 	<!-- mike block -->
 	<servlet>
 		<servlet-name>UserServlet</servlet-name>
@@ -37,13 +48,13 @@
 		<url-pattern>/user/registering</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
-		<servlet-name>GameServlet</servlet-name>
-		<servlet-class>com.mike.game.controller.GameServlet</servlet-class>
+		<servlet-name>ForumServlet</servlet-name>
+		<servlet-class>com.shiyen.forum.controller.ForumServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GameServlet</servlet-name>
-		<url-pattern>/game/list</url-pattern>
+		<servlet-name>ForumServlet</servlet-name>
+		<url-pattern>/forum</url-pattern>
 	</servlet-mapping>
-	
 </web-app>

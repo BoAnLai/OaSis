@@ -7,17 +7,17 @@ public class UserClientService {
 
 	public static UserDAO_interface dao = new UserJNDIDAO();
 	
-	public static UserForClient getUserById(Integer userId) {
-		UserForClient user = new UserForClient(dao.findById(userId));
+	public static UserDTO getUserById(Integer userId) {
+		UserDTO user = new UserDTO(dao.findById(userId));
 		return user;
 	}
 	
-	public static List<UserForClient> getAll(){
+	public static List<UserDTO> getAll(){
 		List<UserVO> originUserList = dao.getAll();
-		List<UserForClient> clientUserList = new ArrayList<UserForClient>();
+		List<UserDTO> clientUserList = new ArrayList<UserDTO>();
 		
 		for(UserVO user:originUserList) {
-			clientUserList.add(new UserForClient(user));
+			clientUserList.add(new UserDTO(user));
 		}
 		return clientUserList;
 	}
