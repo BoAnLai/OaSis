@@ -1,12 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.game.model.*"%>
 <%@ page import="com.mike.genre.model.*"%>
 <%@ page import="com.mike.label.model.*"%>
 
 <%
-    GameService gameSvc = new GameService();
-    List<GameVO> gameList = gameSvc.listAll();
+    List<GameVO> gameList = GameService.listAll();
 %>
 
 
@@ -45,7 +44,7 @@
 					<th><%= game.getGameName() %></td>
 	 				<td class="imgContainer"><img class="listImg" src="<%= game.getGameImg() %>"></td>
 					<td>
-						<% List<GenreVO> genreList = gameSvc.getGenresByGameId(game.getGameId()); %>
+						<% List<GenreVO> genreList = GameService.getGenresByGameId(game.getGameId()); %>
 						<% for(GenreVO genre: genreList){ %>
            					<%= genre.getGenreName() %> <br>
 						<% } %>

@@ -12,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.mike.user.model.UserVO.Identity;
 import com.mike.user.model.exception.EmailNotFoundException;
 
 public class UserJNDIDAO implements UserDAO_interface {
@@ -77,8 +76,21 @@ public class UserJNDIDAO implements UserDAO_interface {
 	}
 
 	private static final String UPDATE_STMT = 
-			"UPDATE user SET user_email=?,user_password=?,user_identity=?,user_company_name=?"
-			+ ",user_last_ip=?,user_nickname=?,user_avatar=?,user_intro=? WHERE user_id = ?";
+			"UPDATE user SET "
+			+ "user_email=?"
+			+ ", user_password=?"
+			+ ", user_identity=?"
+			+ ", user_company_name=?"
+			+ ", user_register_timestamp=?"
+			+ ", user_last_login=?"
+			+ ", user_last_ip=?"
+			+ ", user_nickname=?"
+			+ ", user_avatar=?"
+			+ ", user_intro=?"
+			+ ", user_real_name=?"
+			+ ", user_cellphone=?"
+			+ ", user_address=? "
+			+ "WHERE user_id = ?";
 	@Override
 	public void update(Integer userId,UserVO userVO) {
 		// TODO Auto-generated method stub
@@ -93,13 +105,16 @@ public class UserJNDIDAO implements UserDAO_interface {
 			pstmt.setString(2, userVO.getUserPassword());
 			pstmt.setString(3, userVO.getUserIdentity().toString());
 			pstmt.setString(4, userVO.getUserCompanyName());
-//			pstmt.setDate(5, userVO.getUserRegisterDate());
-//			pstmt.setTimestamp(6, userVO.getUserLastLogin());
-			pstmt.setString(5, "127.0.0.2");
-			pstmt.setString(6, userVO.getUserNickname());
-			pstmt.setString(7, userVO.getUserAvatar());
-			pstmt.setString(8, userVO.getUserIntro());
-			pstmt.setInt(9, userId);
+			pstmt.setTimestamp(5, userVO.getUserRegisterTimestamp());
+			pstmt.setTimestamp(6, userVO.getUserLastLogin());
+			pstmt.setString(7, userVO.getUserLastIp());
+			pstmt.setString(8, userVO.getUserNickname());
+			pstmt.setString(9, userVO.getUserAvatar());
+			pstmt.setString(10, userVO.getUserIntro());
+			pstmt.setString(11, userVO.getUserRealName());
+			pstmt.setString(12, userVO.getUserCellphone());
+			pstmt.setString(13, userVO.getUserAddress());
+			pstmt.setInt(14, userId);
 			
 			pstmt.executeUpdate();
 			
@@ -147,12 +162,15 @@ public class UserJNDIDAO implements UserDAO_interface {
 			userVO.setUserPassword(rs.getString(3));
 			userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 			userVO.setUserCompanyName(rs.getString(5));
-			userVO.setUserRegisterDate(rs.getDate(6));
+			userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 			userVO.setUserLastLogin(rs.getTimestamp(7));
 			userVO.setUserLastIp(rs.getString(8));
 			userVO.setUserNickname(rs.getString(9));
 			userVO.setUserAvatar(rs.getString(10));
 			userVO.setUserIntro(rs.getString(11));
+			userVO.setUserRealName(rs.getString(12));
+			userVO.setUserCellphone(rs.getString(13));
+			userVO.setUserAddress(rs.getString(14));
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -211,7 +229,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -274,7 +292,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -339,7 +357,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -404,7 +422,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -469,7 +487,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -534,7 +552,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -629,7 +647,7 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserPassword(rs.getString(3));
 				userVO.setUserIdentity(Identity.valueOf(rs.getString(4)));
 				userVO.setUserCompanyName(rs.getString(5));
-				userVO.setUserRegisterDate(rs.getDate(6));
+				userVO.setUserRegisterTimestamp(rs.getTimestamp(6));
 				userVO.setUserLastLogin(rs.getTimestamp(7));
 				userVO.setUserLastIp(rs.getString(8));
 				userVO.setUserNickname(rs.getString(9));
@@ -669,40 +687,4 @@ public class UserJNDIDAO implements UserDAO_interface {
 		}
 	}
 	
-	public static void main(String[] args) {
-		UserJNDIDAO dao = new UserJNDIDAO();
-//		
-//		UserVO userAdd = new UserVO("22222222@gmail.com","123456",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
-//		dao.insert(userAdd);
-//		
-//		UserVO userUpdate = new UserVO("test123@gmail.com","11111",Identity.REGULAR,"",Date.valueOf("2024-04-19"),Timestamp.valueOf("2024-04-19 11:22:33"),"127.0.0.1","GGenius","C:\\Users\\T14 Gen 3\\Downloads\\resource\\image\\donkey.jpg","this is user introduction");
-//		dao.update(3,userUpdate);
-//		
-//		UserVO userFoundById = dao.findById(5);
-//		System.out.println(userFoundById);
-//	
-//		List<UserVO> userFoundByEmail = dao.getByEmail("yahoo");
-//		System.out.println(userFoundByEmail);
-//		
-//		List<UserVO> userList = dao.getAll();
-//		System.out.println(userList);
-//		
-//		List<UserVO> userListRegular = dao.getByIdentity("REGULAR");
-//		System.out.println(userListRegular);
-//		
-//		List<UserVO> userListCompanyName = dao.getByCompanyName("RIOT");
-//		System.out.println(userListCompanyName);
-//	
-//		List<UserVO> userListLastIp = dao.getByLastIp(".0.1");
-//		System.out.println(userListLastIp);
-//		
-//		List<UserVO> userListNickname = dao.getByNickname("genius");
-//		System.out.println(userListNickname);
-//	
-//		dao.updateLastLogin(1);
-//		UserVO userFoundById = dao.findById(1);
-//		System.out.println(userFoundById);
-//		
-		System.out.println("===main done===");
-	}
 }

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.net.InetAddress"%>
+<%@ page import="java.net.UnknownHostException"%>
 <%@ page import="com.mike.user.model.*"%>
 <%@ page import="com.mike.tool.*"%>
 
@@ -77,18 +79,13 @@
 	    <table class="table table-striped align-middle table-bordered text-center" id="datatable">
 	    	<thead>
 		    	<tr class="text-center">
-		    		<th>id</th>
-		    		<th>email</th>
-		    		<th>password</th>
-		    		<th>identity</th>
-		    		<th>company_name</th>
-		    		<th>register_date</th>
-		    		<th>last_login</th>
-		    		<th>last_ip</th>
-		    		<th>nickname</th>
-		    		<th>avatar</th>
-		    		<th>intro</th>
-		    		<th>button</th>
+		    		<th>ID</th>
+		    		<th>信箱</th>
+		    		<th>身份</th>
+		    		<th>公司名稱</th>
+		    		<th>暱稱</th>
+		    		<th>頭像</th>
+		    		<th>帳號管理</th>
 		    	</tr>
 	    	</thead>
 	    	<tbody class="table-group-divider">
@@ -96,29 +93,24 @@
 					<tr>
 						<td><%= listedUser.getUserId() %></td>
 						<td><%= listedUser.getUserEmail() %></td>
-						<td><%= listedUser.getUserPassword() %></td>
 						<td><%= listedUser.getUserIdentity() %></td>
 						<td><%= listedUser.getUserCompanyName() %></td>
-						<td><%= listedUser.getUserRegisterDate() %></td>
-						<td><%= listedUser.getUserLastLogin() %></td>
-						<td><%= listedUser.getUserLastIp() %></td>
 						<td><%= listedUser.getUserNickname() %></td>
 						
 						<td>
 							<div class="">
-						<% if(listedUser.getUserAvatar()==null || listedUser.getUserAvatar().trim()== ""){ %>
-		 					<img src="/oasis/user/resources/avatarUploaded/unknown.jpg" width="200px" height="200px" style="object-fit: cover;">
+						<% if(listedUser.getUserAvatar()==null || listedUser.getUserAvatar().trim().isEmpty()){ %>
+		 					<img class=imgPreviewPlaceholder src="/oasis/user/resources/avatarUploaded/unknown.jpg" style="object-fit: cover;">
 						<% }else{ %>
-		 					<img src="<%= listedUser.getUserAvatar() %>" width="200px" height="200px" style="object-fit: cover;">
+		 					<img class="imgUpload" src="<%= StringProcessor.pathAddRandomQueryParams(listedUser.getUserAvatar()) %>" style="object-fit: cover;">
 						<% } %>
 							</div>
 						</td>
 						
-						<td><%= StringProcessor.nullDealer(listedUser.getUserIntro()) %></td>
 						<td>
 						  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/user/update" style="margin-bottom: 0px;">
-						     <input type="submit" value="修改">
-						     <input type="hidden" name="userId"  value="<%= listedUser.getUserId() %>"></FORM>
+						     <input type="submit" class="btn btn-outline-dark" value="查看">
+						     <input type="hidden" name="updateUserId"  value="<%= listedUser.getUserId() %>"></FORM>
 						</td>
 					</tr>
 		    	<% } %>

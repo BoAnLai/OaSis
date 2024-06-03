@@ -3,7 +3,7 @@
 <%@ page import="com.mike.user.model.*"%>
 
 <%
-	UserVO user = (UserVO) session.getAttribute("user");
+	UserDTO user = (UserDTO) session.getAttribute("user");
 %>
 
 <!DOCTYPE html>
@@ -20,13 +20,16 @@
             padding-bottom: 0;
             background-color: #e3f2fd;
         }
+        div.blocking-nav{
+        	margin-top: 150px;
+        }
     </style>
 </head>
 
 <body>
     <div class="root">
         <header>
-            <nav class="navbar navbar-expand-lg sticky-top">
+            <nav class="navbar navbar-expand-lg fixed-top">
                 <div class="container-fluid fs-4">
                     <a class="navbar-brand" href="<%=request.getContextPath()%>">
                         <img src="/oasis/home/resources/oasis.png"
@@ -41,10 +44,10 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">Home</a>
+                                <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">首頁</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<%= request.getContextPath()%>/game/list">Game List</a>
+                                <a class="nav-link" href="<%= request.getContextPath()%>/game/list">遊戲列表</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -62,7 +65,7 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-					        <li><a href="/oasis/login" class="btn btn-primary" id="login-btn">login</a></li>
+					        <li><a href="/oasis/login" class="btn btn-primary" id="login-btn">登入</a></li>
 					        <li>
 	                            <div class="dropdown" id="login-dropdown">
 								  <a class="btn btn-secondary dropdown-toggle" id="user-email" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,8 +78,29 @@
 								    <% } %>
 								  </a>
 								
-								  <ul class="dropdown-menu">
-								    <li><a class="dropdown-item" href="#">會員中心</a></li>
+								  <ul class="dropdown-menu dropdown-menu-end">
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/personalUpdate">修改個人資料</a></li>
+								    
+								    <%
+								    String identity = "REGULAR";
+								    if(user!=null){							    	
+									    identity = user.getUserIdentity().toString(); 
+								    }
+								    switch(identity) { 
+								     	case "ADMINISTRATOR": 
+								    %>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/user/list">會員列表</a></li>
+								    <%
+								    		break; 
+								     	case "COMPANY":	
+								    		break; 
+								     	case "REGULAR": 
+								    %>
+								    <li><a class="dropdown-item" href="">申請廠商身份</a></li>
+								    <% 
+								    		break; 
+								    } 
+								    %>
 								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/loggingout">登出</a></li>
 								  </ul>
 								</div>
@@ -86,11 +110,10 @@
                 </div>
             </nav>
         </header>
-        <div id="content">
-
-        </div>
-
     </div>
+    
+    <div class="blocking-nav"></div>
+    
 	<script>
 		if($("#user-email").text().trim()){
 			$("#login-btn").hide();
