@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.oracle.wls.shaded.org.apache.bcel.generic.LSTORE;
 import com.shiyen.util.HibernateUtil;
 
 
@@ -48,13 +49,11 @@ public class ArtService {
 	    }
 	}
 	
-	public List<ArtVO> getAllArt(Integer gameId) {
+	public List<ArtDTO> getAllArtByGameId(Integer gameId) {
 	    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 	    try {
 	        session.beginTransaction();
-	        List<ArtVO> list = dao.getAll();
-	        // 在事務範圍內遍歷集合或訪問關聯對象以確保初始化
-	        
+	        List<ArtDTO> list = dao.getAllArtByGameId(gameId); 
 	        session.getTransaction().commit();
 	        return list;
 	    } catch (Exception e) {
@@ -66,7 +65,6 @@ public class ArtService {
 
 	public ArtDTO getOneArt(Integer artId) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		ArtVO artVO = null;
         
         try {
 	        session.beginTransaction();
@@ -79,6 +77,19 @@ public class ArtService {
 		        return null;
 		 }
 		
+	}
+	public List<ArtReplyDTO> getReply(Integer artId){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+	        session.beginTransaction();
+	        List<ArtReplyDTO> artReplyDTO = dao.getReply(artId);
+	        session.getTransaction().commit();
+	        return artReplyDTO;
+	     }catch (Exception e) {
+		        session.getTransaction().rollback();
+		        e.printStackTrace();
+		        return null;
+		 }
 	}
 
 	public void deleteArt(Integer artId) {

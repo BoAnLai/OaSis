@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.shiyen.art.model.ArtDTO;
+import com.shiyen.art.model.ArtReplyDTO;
 import com.shiyen.art.model.ArtService;
 import com.shiyen.art.model.ArtVO;
 
@@ -30,16 +31,14 @@ public class ForumServlet extends HttpServlet {
 		res.setContentType("application/json; charset=UTF-8");
 		String action = req.getParameter("act");
 		
-		
-		
 		switch (action) {
 		
 		case "getOneForumArt": {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 //			接收參數和錯誤驗證
-			String gameId = req.getParameter("gameId");
-			if (gameId == null || (gameId.trim()).length() == 0) {
+			Integer gameId = Integer.valueOf(req.getParameter("gameId").trim()); 
+			if (gameId == null ) {
 				errorMsgs.add("遊戲編號錯誤");
 			}
 			if (!errorMsgs.isEmpty()) {
@@ -51,8 +50,8 @@ public class ForumServlet extends HttpServlet {
 			
 //			查詢資料
 			ArtService artSvc = new ArtService();
-			List<ArtVO> artVO = artSvc.getAllArt(Integer.valueOf(gameId));
-			if (artVO == null) {
+			List<ArtDTO> artDTO = artSvc.getAllArtByGameId(Integer.valueOf(gameId));
+			if (artDTO == null) {
 				errorMsgs.add("查無資料");
 			}
 			// Send the use back to the form, if there were errors
@@ -64,7 +63,7 @@ public class ForumServlet extends HttpServlet {
 			}
 //			傳送資料
 			Gson gson = new Gson();
-			String json = gson.toJson(artVO);
+			String json = gson.toJson(artDTO);
 			System.out.println(json);
 			res.getWriter().write(json);
 			
@@ -166,6 +165,7 @@ public class ForumServlet extends HttpServlet {
 //	     新增資料
 			ArtService artSvc = new ArtService();
 			Integer artId = artSvc.addArt(artVO);
+			System.out.println(artId);
 			
 //		回傳資料
 			String url = "/forum/artView.jsp";
@@ -174,8 +174,103 @@ public class ForumServlet extends HttpServlet {
 			successView.forward(req, res);	
 			break;
 		}
-	}
+//		新增回覆內容
+		case "addReply":{
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+//			接收參數和錯誤驗證
+			Integer gameId = Integer.valueOf(req.getParameter("gameId").trim());
+			if (gameId == null)  {
+				errorMsgs.add("遊戲編號錯誤");
+			}
+			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
+			if (userId == null)  {
+				errorMsgs.add("遊戲編號錯誤");
+			}
+			String artTitle = req.getParameter("artTitle");
+			
+			if (artTitle == null || artTitle.trim().length() == 0) {
+				errorMsgs.add("文章標題: 請勿空白");
+			}
+			String artContent = req.getParameter("artContent").trim();
+			if (artContent == null || artContent.trim().length() == 0) {
+				errorMsgs.add("內容請勿空白");
+			}	
+			Timestamp artTimestamp = null;
+			try {
+				artTimestamp = Timestamp.valueOf(req.getParameter("artTimestamp").trim());
+			} catch (IllegalArgumentException e) {
+				artTimestamp = new java.sql.Timestamp(System.currentTimeMillis());
+				errorMsgs.add("請輸入日期!");
+			}
+			
+			Integer	artReply = Integer.valueOf(req.getParameter("artReply").trim());
+
+			
+			Integer	artFavor = 0;
+			
+			Integer	artView = Integer.valueOf(req.getParameter("artView").trim());
+			
+			ArtVO artVO = new ArtVO();
+			artVO.setArtTitle(artTitle);
+			artVO.setArtContent(artContent);
+			artVO.setArtTimestamp(artTimestamp);
+			artVO.setArtReply(artReply);
+			artVO.setArtFavor(artFavor);
+			artVO.setArtView(artView);
+			artVO.setArtUserId(userId);
+			artVO.setArtGameId(gameId);
+			
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("artVO", artVO);// 含有輸入格式錯誤的ArtVO物件,也存入req
+				req.setAttribute("artId", artVO.getArtReply() );
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/forum/artView.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			
+//		     新增資料
+				ArtService artSvc = new ArtService();
+				 artSvc.addArt(artVO);
+//			回傳資料
+				String url = "/forum/artView.jsp";
+				req.setAttribute("artId", artReply);
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);	
+				break;
+		}
+		case "getReply":{
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 		
-	}
+//			接收參數和錯誤驗證
+			String artId = req.getParameter("artId");
+			
+			
+//			查詢資料
+			ArtService artSvc = new ArtService();
+			List<ArtReplyDTO> artReplyDTO = artSvc.getReply(Integer.valueOf(artId));
+			if (artReplyDTO == null) {
+				errorMsgs.add("查無資料");
+			}
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/forum/oneForum.jsp");
+				failureView.forward(req, res);
+				return;//程式中斷
+			}
+//			傳送資料
+			Gson gson = new Gson();
+			String json = gson.toJson(artReplyDTO);
+			System.out.println(json);
+			res.getWriter().write(json);
+			
+			break;
+			
+		}
+	}	
+  }
 
 }

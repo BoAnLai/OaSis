@@ -102,17 +102,80 @@ public class ArtDAO implements ArtDAO_interface {
 	
 
 	@Override
-	public List<ArtVO> getAllArt(Integer gameId) {
-		return getSession().createQuery(
-	            "FROM ArtVO a LEFT JOIN FETCH a.gameVO g WHERE g.gameId = :gameId ORDER BY a.artTimestamp DESC", ArtVO.class)
-	            .setParameter("gameId", gameId)
-	            .getResultList();
+	public List<ArtDTO> getAllArtByGameId(Integer gameId) {
+		Session session = getSession();
+		List<ArtDTO> artDTO = new ArrayList<>();
+		String sql ="SELECT a.art_Id, a.art_title,a.art_timestamp,u.user_nickname "
+				+ " FROM art a "
+				+ " JOIN user u ON a.art_user_id = u.user_id "
+				+ " WHERE a.art_game_id = :gameId";
+		NativeQuery<Object[]> query = session.createNativeQuery(sql);
+		query.setParameter("gameId", gameId);
+		List<Object[]> result = query.getResultList();
+        for(Object[] row:result) {
+        	Integer artId = (Integer)row[0];
+        	String artTitle = (String) row[1];
+            Timestamp artTimestamp = (Timestamp) row[2];
+            String artUserNickname = (String) row[3];
+            
+            ArtDTO art = new ArtDTO();
+            art.setArtId(artId);
+            art.setArtTitle(artTitle);
+            art.setArtTimestamp(artTimestamp);
+            art.setUserNickname(artUserNickname);
+            artDTO.add(art);
+            }
+        return artDTO;
 	}
 
 	@Override
-	public List<ArtVO> getReply() {
-		return getSession().createQuery("FROM ArtVO WHERE artReply IS NOT NULL ORDER BY artTimestamp DESC", ArtVO.class)
-				.getResultList();
+	public List<ArtReplyDTO> getReply(Integer artId) {
+		Session session = getSession();
+		List<MessageDTO> messages = new ArrayList<>();
+		List<ArtReplyDTO> artReply = new ArrayList<>();
+		ArtReplyDTO artReplyDTO = new ArtReplyDTO();
+		String sql ="SELECT a.art_Id, a.art_title, a.art_content,a.art_timestamp,u.user_nickname"
+				+ " FROM art a "
+				+ " JOIN user u ON a.art_user_id = u.user_id "
+				+ " WHERE a.art_reply = :artId";
+		NativeQuery<Object[]> query = session.createNativeQuery(sql);
+		query.setParameter("artId", artId); 
+		List<Object[]> result = query.getResultList();
+        for(Object[] row:result) {
+        	Integer messageArtId = (Integer)row[0];
+        	String artTitle = (String) row[1];
+            String artContent = (String) row[2];
+            Timestamp artTimestamp = (Timestamp) row[3];
+            String artUserNickname = (String) row[4];
+            
+            String sql1 ="SELECT m.message_content, m.message_timestamp,u.user_nickname"
+    				+ " FROM message m "
+    				+ " JOIN user u ON m.message_user_id = u.user_id "
+    				+ " WHERE m.message_art_id = :artId";
+            NativeQuery<Object[]> query1 = session.createNativeQuery(sql1);
+            query1.setParameter("artId", messageArtId); 
+            List<Object[]> result1 = query1.getResultList();
+            for(Object[] row1:result1) {
+                String messageContent = (String) row1[0]; 
+                Timestamp messageTimestamp = (Timestamp) row1[1];
+                String messageUserNickName = (String) row1[2];
+                
+                MessageDTO messageDTO = new MessageDTO();
+                messageDTO.setUserNickname(messageUserNickName);
+                messageDTO.setMessageContent(messageContent); 
+                messageDTO.setMessageTimestamp(messageTimestamp);
+                messages.add(messageDTO);
+            }
+            artReplyDTO.setArtId(messageArtId);
+            artReplyDTO.setArtContent(artContent);
+            artReplyDTO.setArtTimestamp(artTimestamp);
+            artReplyDTO.setUserNickname(artUserNickname);
+            
+            artReplyDTO.setMessageDTO(messages);
+            artReply.add(artReplyDTO);
+            
+        	}
+           return artReply;
 	}
 
 	@Override

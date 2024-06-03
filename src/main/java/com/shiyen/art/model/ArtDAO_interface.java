@@ -9,6 +9,6 @@ public interface ArtDAO_interface {
     public Integer delete(Integer artId);
     public ArtDTO findByPrimaryKey(Integer artId);
     public List<ArtVO> getAll();
-    public List<ArtVO> getAllArt(Integer gameId);
-    public List<ArtVO> getReply();
+    public List<ArtDTO> getAllArtByGameId(Integer gameId);
+    public List<ArtReplyDTO> getReply(Integer artId);
 }
