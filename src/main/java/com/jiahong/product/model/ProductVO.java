@@ -1,6 +1,7 @@
 package com.jiahong.product.model;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,28 +21,30 @@ public class ProductVO implements java.io.Serializable {
     @Column(name = "product_id")
     private Integer productId;
 
-    @Column(name = "product_user_id", insertable = true, updatable = true, nullable = false)
+    @Column(name = "product_user_id", nullable = false)
     private Integer productUserId;
 
-    @Column(name = "product_user_company_name", insertable = true, updatable = true, nullable = false)
+    @Column(name = "product_user_company_name", nullable = false)
     private String productUserCompanyName;
 
-    @Column(name = "product_game_name", insertable = true, updatable = true, nullable = false)
+    @Column(name = "product_game_id", nullable = false)
+    private Integer productGameId;
+
+    @Column(name = "product_game_name", nullable = false)
     private String productGameName;
 
-    @Column(name = "product_img", insertable = true, updatable = true)
+    @Column(name = "product_img")
     private String productImg;
 
-    @Column(name = "product_name", insertable = true, updatable = true, unique = true)
+    @Column(name = "product_name", unique = true)
     private String productName;
 
-    @Column(name = "product_description", insertable = true, updatable = true)
+    @Column(name = "product_description")
     private String productDescription;
 
-    @Column(name = "product_price", insertable = true, updatable = true, nullable = false)
+    @Column(name = "product_price", nullable = false)
     private Integer productPrice;
 
-    // 一個產品有多個明細
     @OneToMany(mappedBy = "product")
     private List<ItemVO> items;
 
@@ -49,15 +52,7 @@ public class ProductVO implements java.io.Serializable {
         super();
     }
 
-    public ProductVO(String productName) {
-        this.productName = productName;
-    }
-
-    public ProductVO(Integer productId, String productName, String productImg) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productImg = productImg;
-    }
+    // Getters and Setters
 
     public Integer getProductId() {
         return productId;
@@ -81,6 +76,14 @@ public class ProductVO implements java.io.Serializable {
 
     public void setProductUserCompanyName(String productUserCompanyName) {
         this.productUserCompanyName = productUserCompanyName;
+    }
+
+    public Integer getProductGameId() {
+        return productGameId;
+    }
+
+    public void setProductGameId(Integer productGameId) {
+        this.productGameId = productGameId;
     }
 
     public String getProductGameName() {
@@ -133,18 +136,16 @@ public class ProductVO implements java.io.Serializable {
 
     @Override
     public String toString() {
-        String outputStr = "Product: [";
-
-        outputStr += "\n productId=" + this.getProductId();
-        outputStr += "\n productUserId=" + this.getProductUserId();
-        outputStr += "\n productUserCompanyName=" + this.getProductUserCompanyName();
-        outputStr += "\n productGameName=" + this.getProductGameName();
-        outputStr += "\n productImg=" + this.getProductImg();
-        outputStr += "\n productName=" + this.getProductName();
-        outputStr += "\n productDescription=" + this.getProductDescription();
-        outputStr += "\n productPrice=" + this.getProductPrice();
-        outputStr += "]\n\n";
-
-        return outputStr;
+        return "ProductVO{" +
+                "productId=" + productId +
+                ", productUserId=" + productUserId +
+                ", productUserCompanyName='" + productUserCompanyName + '\'' +
+                ", productGameId=" + productGameId +
+                ", productGameName='" + productGameName + '\'' +
+                ", productImg='" + productImg + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productDescription='" + productDescription + '\'' +
+                ", productPrice=" + productPrice +
+                '}';
     }
 }

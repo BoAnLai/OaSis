@@ -1,79 +1,79 @@
 package com.jiahong.product.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.jiahong.product.model.ProductService;
 import com.jiahong.product.model.ProductVO;
-import java.util.List;
 
-@WebServlet("/product/*")
+@MultipartConfig
 public class ProductServlet extends HttpServlet {
 
     private ProductService productService = new ProductService();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        doPost(req, res);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getPathInfo().substring(1);
+    public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        System.out.print("req URL:");
+        System.out.println(req.getRequestURL());
 
-        switch (action) {
-            case "list":
-                listProducts(request, response);
-                break;
-            case "view":
-                viewProduct(request, response);
-                break;
-            case "add":
-                addProduct(request, response);
-                break;
-            case "update":
-                updateProduct(request, response);
-                break;
-            case "delete":
-                deleteProduct(request, response);
-                break;
-            default:
-                listProducts(request, response);
-                break;
+        HttpSession session = req.getSession();
+        String action = req.getServletPath();
+
+        if (action.equals("/product/list")) {
+            listProducts(req, res);
+        } else if (action.equals("/product/view")) {
+            viewProduct(req, res);
+        } else if (action.equals("/product/add")) {
+            addProduct(req, res);
+        } else if (action.equals("/product/update")) {
+            updateProduct(req, res);
+        } else if (action.equals("/product/delete")) {
+            deleteProduct(req, res);
+        } else {
+            listProducts(req, res);
         }
     }
 
-    private void listProducts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void listProducts(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         List<ProductVO> productList = productService.listAllProducts();
-        request.setAttribute("productList", productList);
+        req.setAttribute("productList", productList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/product/productList.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/product/productList.jsp");
+        dispatcher.forward(req, res);
     }
 
-    private void viewProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer productId = Integer.valueOf(request.getParameter("productId"));
+    private void viewProduct(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Integer productId = Integer.valueOf(req.getParameter("productId"));
         ProductVO product = productService.getProductById(productId);
-        request.setAttribute("product", product);
+        req.setAttribute("product", product);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/product/productView.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/product/productView.jsp");
+        dispatcher.forward(req, res);
     }
 
-    private void addProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void addProduct(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         // Implementation for adding a new product
     }
 
-    private void updateProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void updateProduct(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         // Implementation for updating an existing product
     }
 
-    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer productId = Integer.valueOf(request.getParameter("productId"));
+    private void deleteProduct(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Integer productId = Integer.valueOf(req.getParameter("productId"));
         productService.deleteProduct(productId);
 
-        listProducts(request, response);
+        listProducts(req, res);
     }
 }

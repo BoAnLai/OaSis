@@ -20,7 +20,7 @@
         
         <!-- jiahong's product configuration -->
         <mapping class="com.jiahong.product.model.ProductVO"/>
-        <mapping class="com.jiahong.item.model.ItemVO"/> 
-        <mapping class="com.jiahong.orders.model.OrdersVO"/>
+        <mapping class="com.jiahong.item.model.ItemVO"/>
+        <mapping class="com.jiahong.purchase.model.PurchaseVO"/>
     </session-factory>
 </hibernate-configuration>

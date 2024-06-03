@@ -1,18 +1,18 @@
-package com.jiahong.item.model;
+package com.jiahong.purchase.model;
 
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.mike.tool.HibernateTool;
 
-public class ItemService {
+public class PurchaseService {
     
-    public List<ItemVO> listAllItems() {
+    public List<PurchaseVO> listAllPurchases() {
         Transaction transaction = null;
-        List<ItemVO> items = null;
+        List<PurchaseVO> purchases = null;
         try (Session session = HibernateTool.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            items = session.createQuery("FROM ItemVO", ItemVO.class).list();
+            purchases = session.createQuery("FROM PurchaseVO", PurchaseVO.class).list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -20,15 +20,15 @@ public class ItemService {
             }
             e.printStackTrace();
         }
-        return items;
+        return purchases;
     }
 
-    public ItemVO getItemById(Integer itemId) {
+    public PurchaseVO getPurchaseById(Integer purchaseId) {
         Transaction transaction = null;
-        ItemVO item = null;
+        PurchaseVO purchase = null;
         try (Session session = HibernateTool.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            item = session.get(ItemVO.class, itemId);
+            purchase = session.get(PurchaseVO.class, purchaseId);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -36,28 +36,14 @@ public class ItemService {
             }
             e.printStackTrace();
         }
-        return item;
+        return purchase;
     }
 
-    public void addItem(ItemVO item) {
+    public void addPurchase(PurchaseVO purchase) {
         Transaction transaction = null;
         try (Session session = HibernateTool.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(item);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
-
-    public void updateItem(ItemVO item) {
-        Transaction transaction = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.update(item);
+            session.save(purchase);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -67,14 +53,28 @@ public class ItemService {
         }
     }
 
-    public void deleteItem(Integer itemId) {
+    public void updatePurchase(PurchaseVO purchase) {
         Transaction transaction = null;
         try (Session session = HibernateTool.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            ItemVO item = session.get(ItemVO.class, itemId);
-            if (item != null) {
-                session.delete(item);
-                System.out.println("Item is deleted");
+            session.update(purchase);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePurchase(Integer purchaseId) {
+        Transaction transaction = null;
+        try (Session session = HibernateTool.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            PurchaseVO purchase = session.get(PurchaseVO.class, purchaseId);
+            if (purchase != null) {
+                session.delete(purchase);
+                System.out.println("Purchase is deleted");
             }
             transaction.commit();
         } catch (Exception e) {

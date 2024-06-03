@@ -63,11 +63,11 @@ public class ItemServlet extends HttpServlet {
     }
 
     private void addItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Implementation for adding a new item
+        // 待實現：添加新項目的邏輯
     }
 
     private void updateItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Implementation for updating an existing item
+        // 待實現：更新現有項目的邏輯
     }
 
     private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
