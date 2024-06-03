@@ -71,6 +71,19 @@
 	  <url-pattern>/user/userList.jsp</url-pattern>
 	</filter-mapping>
 	
+	<filter>
+	  <filter-name>PurchaseFilter</filter-name>
+	  <filter-class>com.mike.purchase.filter.PurchaseFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>PurchaseFilter</filter-name>
+	  <url-pattern>/myCart</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>PurchaseFilter</filter-name>
+	  <url-pattern>/purchase/myCart.jsp</url-pattern>
+	</filter-mapping>
+	
 	
 	<!-- ===================shiyen===================== -->
 	<servlet>

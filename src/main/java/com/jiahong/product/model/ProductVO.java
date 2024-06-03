@@ -1,6 +1,7 @@
 package com.jiahong.product.model;
 
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jiahong.item.model.ItemVO;
+import com.mike.item.model.ItemVO;
 
 @Entity
 @Table(name = "product")

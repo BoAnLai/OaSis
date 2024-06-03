@@ -101,6 +101,7 @@
 								    		break; 
 								    } 
 								    %>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/myCart">購物車</a></li>
 								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/loggingout">登出</a></li>
 								  </ul>
 								</div>

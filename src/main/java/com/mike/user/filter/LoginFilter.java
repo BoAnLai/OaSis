@@ -27,11 +27,9 @@ public class LoginFilter extends HttpFilter implements Filter {
 
 		HttpSession session = req.getSession();
 		UserDTO user = (UserDTO)session.getAttribute("user");
-		
-		session.setAttribute("headingPath", req.getRequestURI());
-		
-		
+				
 		if(user == null) {
+			session.setAttribute("headingPath", req.getRequestURI());
 			req.getRequestDispatcher("/login").forward(req, res);
 		}else {
 			chain.doFilter(req, res);
