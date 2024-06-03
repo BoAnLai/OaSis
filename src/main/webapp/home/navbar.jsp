@@ -44,7 +44,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">Home</a>
+                                <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">首頁</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<%= request.getContextPath()%>/game/list">遊戲列表</a>
@@ -79,7 +79,7 @@
 								  </a>
 								
 								  <ul class="dropdown-menu dropdown-menu-end">
-								    <li><a class="dropdown-item" href="#">修改個人資料</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/personalUpdate">修改個人資料</a></li>
 								    
 								    <%
 								    String identity = "REGULAR";

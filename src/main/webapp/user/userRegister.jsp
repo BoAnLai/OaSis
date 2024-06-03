@@ -28,10 +28,10 @@
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">新使用者註冊</h1>
 	    <div class="mx-5">
-	        <form action="registering" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
+	        <form action="/registering" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
 	        	<div class="mb-4">
 			        <label for="email" class="form-label fs-4 fw-bold">輸入信箱</label>
-			        <input name="email" id="email" class="form-control" type="text" placeholder="必填" required>
+			        <input type="email" class="form-control" name="email" id="email" placeholder="必填" aria-describedby="emailHelp" required>
 	        	</div>
 	        	<div class="mb-4">
 			        <label for="password" class="form-label fs-4 fw-bold">輸入密碼</label>
@@ -71,19 +71,14 @@
 	                <label for="address" class="form-label fs-4 fw-bold">地址</label>
 	            	<textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="購物商品寄送地址"></textarea>
 	        	</div>
-	            <input type="submit" value="註冊 to user/registering">
-	            <input type="reset" value="清除資料">
+	            <input type="submit" class="btn btn-primary" value="註冊">
+	            <input type="reset" class="btn btn-secondary" value="清除資料">
 	        </form>
 	    </div>
 	</div>
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="js/userAvatar.js"></script>
-    <script>
-	    <c:forEach var="errorMsg" items="${requestScope.errorMsgs}">
-	    	alert("${errorMsg}");
-	  	</c:forEach>
-    </script>
 </body>
 
 </html>

@@ -108,13 +108,9 @@ public class UserJNDIDAO implements UserDAO_interface {
 			pstmt.setTimestamp(5, userVO.getUserRegisterTimestamp());
 			pstmt.setTimestamp(6, userVO.getUserLastLogin());
 			pstmt.setString(7, userVO.getUserLastIp());
-			
 			pstmt.setString(8, userVO.getUserNickname());
 			pstmt.setString(9, userVO.getUserAvatar());
-
-//			pstmt.setString(10, userVO.getUserIntro());
-			pstmt.setString(10, null);
-			
+			pstmt.setString(10, userVO.getUserIntro());
 			pstmt.setString(11, userVO.getUserRealName());
 			pstmt.setString(12, userVO.getUserCellphone());
 			pstmt.setString(13, userVO.getUserAddress());

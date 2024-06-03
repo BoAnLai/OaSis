@@ -96,5 +96,11 @@ public class UserService {
 			UserVO user = dao.findByEmail(email);
 			return user;
 	}
+	
+	public UserVO getByUserId(Integer userId) {
+		
+		UserVO user = dao.findById(userId);
+		return user;
+	}
 
 }

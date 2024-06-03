@@ -40,14 +40,6 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/updating</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
-		<url-pattern>/user/register</url-pattern>
-	</servlet-mapping>
-		<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
-		<url-pattern>/user/registering</url-pattern>
-	</servlet-mapping>
 	
 	<filter>
 	  <filter-name>LoginFilter</filter-name>

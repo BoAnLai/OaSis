@@ -92,15 +92,6 @@ public class UserServlet extends HttpServlet {
 			userUpdating.setUserEmail(req.getParameter("email"));
 			
 			
-//			System.out.print("password: ");
-//			System.out.println(req.getParameter("password"));
-//			System.out.println(req.getParameter("password").isBlank());
-//			System.out.println(req.getParameter("password")==null);
-//			System.out.print("confirm password: ");
-//			System.out.println(req.getParameter("confirmPassword"));
-//			System.out.println(req.getParameter("confirmPassword").isBlank());
-//			System.out.println(req.getParameter("confirmPassword")==null);
-			
 			String password = req.getParameter("password").trim();
 			String confirmPassword = req.getParameter("confirmPassword").trim();
 			boolean bothBlank = password.isBlank() && confirmPassword.isBlank();
@@ -121,7 +112,6 @@ public class UserServlet extends HttpServlet {
 				
 				req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");
 				req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
-//				res.sendRedirect("/user/update");
 				System.out.println("one contain one blank");
 			}
 			
@@ -130,6 +120,9 @@ public class UserServlet extends HttpServlet {
 			
 			userUpdating.setUserNickname(StringProcessor.EmptyToNull(req.getParameter("nickname")));
 			userUpdating.setUserIntro(StringProcessor.EmptyToNull(req.getParameter("intro")));
+			System.out.println(req.getParameter("intro"));
+			
+			
 			userUpdating.setUserRealName(StringProcessor.EmptyToNull(req.getParameter("realName")));
 			userUpdating.setUserCellphone(StringProcessor.EmptyToNull(req.getParameter("cellphone")));
 			userUpdating.setUserAddress(StringProcessor.EmptyToNull(req.getParameter("address")));
@@ -161,67 +154,7 @@ public class UserServlet extends HttpServlet {
 //			req.getRequestDispatcher("userList.jsp").forward(req, res);
 			res.sendRedirect("/oasis/user/list");
 		} //if(user/updating)
-
 		
-		
-		
-		if(req.getServletPath().equals("/user/register")) {
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/user/userRegister.jsp");
-			dispatcher.forward(req,res);
-		}  //if(user/register)
-		
-		
-		
-		
-		if(req.getServletPath().equals("/user/registering")) {
-			
-			//新增資料(不包含圖片) ============================
-			UserVO user = new UserVO();
-			user.setUserEmail(req.getParameter("email"));
-			user.setUserPassword(req.getParameter("password"));
-			user.setUserNickname(req.getParameter("nickname"));
-			user.setUserIntro(req.getParameter("intro"));
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			
-			try {
-				UserService userService = new UserService();
-				userService.register(user);				
-			}catch(SQLException e) {
-				RequestDispatcher dispatcher = req
-						.getRequestDispatcher("/user/userRegister.jsp");
-				
-				errorMsgs.add("出現SQLException");
-				dispatcher.forward(req,res);
-			}
-			
-			//取得userId PK ============================
-			UserService userService = new UserService();
-			user = userService.getOneUserByEmail(user.getUserEmail());
-			Integer userId = user.getUserId();
-			
-			//上傳圖片 ===========================
-			Part part = req.getPart("avatar");
-			if(part.getSize()!=0) {				
-				String submittedFilename = part.getSubmittedFileName();
-				String submittedFileExtension = StringProcessor.getFileExtension(submittedFilename);
-				String filename = userId +"."+ submittedFileExtension;
-				
-				String imgSrcPath = null;
-				
-				if (filename!= null && filename.length()!=0 && part.getContentType()!=null) {
-					File f = new File(fsaveDirectory, filename);
-					part.write(f.toString());
-					imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
-				}
-				user.setUserAvatar(imgSrcPath);
-				userService.userUpdate(user.getUserId(),user);				
-			}
-						
-			res.sendRedirect("userList.jsp");
-			
-		} //if(/user/registering)
 		
 	} //doPost 
 } //Class
