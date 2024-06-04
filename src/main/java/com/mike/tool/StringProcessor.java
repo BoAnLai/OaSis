@@ -70,5 +70,16 @@ public class StringProcessor {
 		String output = path.concat("?").concat(Integer.toString(new Random().nextInt()));
 		return output;
 	}
+	
+	public static boolean isCellphoneNumber(String number) {
+		
+		if (number == null || number.isBlank()) {
+		    return false;
+		  }
+
+		  String regex = "^09[0-9]{2}(-)?[0-9]{3}(-)?[0-9]{3}$";
+		  return number.matches(regex);
+	}
+	
 
 }

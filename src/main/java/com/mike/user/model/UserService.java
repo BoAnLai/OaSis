@@ -27,7 +27,7 @@ public class UserService {
 	}
 	
 	//使用者更新資料
-	public void userUpdate(Integer userId,UserVO userUpdating) {
+	public void userUpdate(Integer userId,UserVO userUpdating) throws IllegalArgumentException{
 		
 		UserVO user = dao.findById(userId);
 		if(userUpdating.getUserEmail()!=null) {
@@ -51,7 +51,12 @@ public class UserService {
 		if(userUpdating.getUserRealName()!=null) {
 			user.setUserRealName(StringProcessor.EmptyToNull(userUpdating.getUserRealName()));
 		}
-		if(userUpdating.getUserCellphone()!=null) {
+		String cellphone = userUpdating.getUserCellphone();
+		if(cellphone!=null) {
+			
+			if(!StringProcessor.isCellphoneNumber(cellphone)){
+				throw new IllegalArgumentException("Cellphone number only accept in format like 09XX-XXX-XXX");
+			}
 			user.setUserCellphone(StringProcessor.EmptyToNull(userUpdating.getUserCellphone()));
 		}
 		if(userUpdating.getUserAddress()!=null) {

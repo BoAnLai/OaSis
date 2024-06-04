@@ -57,6 +57,10 @@
 	  <filter-name>LoginFilter</filter-name>
 	  <url-pattern>/user/userList.jsp</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/purchase/myCart.jsp</url-pattern>
+	</filter-mapping>
 	
 	<filter>
 	  <filter-name>AdminFilter</filter-name>
@@ -71,6 +75,7 @@
 	  <url-pattern>/user/userList.jsp</url-pattern>
 	</filter-mapping>
 	
+	<!-- 
 	<filter>
 	  <filter-name>PurchaseFilter</filter-name>
 	  <filter-class>com.mike.purchase.filter.PurchaseFilter</filter-class>
@@ -83,6 +88,7 @@
 	  <filter-name>PurchaseFilter</filter-name>
 	  <url-pattern>/purchase/myCart.jsp</url-pattern>
 	</filter-mapping>
+	 -->
 	
 	
 	<!-- ===================shiyen===================== -->

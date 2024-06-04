@@ -75,11 +75,13 @@ public class UserLogin extends HttpServlet {
 						res.sendRedirect(headingPath);
 						
 					}else {	
-						try {
-							req.getRequestDispatcher("/").forward(req, res);
-						} catch (ServletException e) {
-							e.printStackTrace();
-						}
+//						try {
+//							req.getRequestDispatcher("/").forward(req, res);
+//						} catch (ServletException e) {
+//							e.printStackTrace();
+//						}
+						
+						res.sendRedirect("/oasis");
 					}
 					
 					

@@ -235,6 +235,9 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserNickname(rs.getString(9));
 				userVO.setUserAvatar(rs.getString(10));
 				userVO.setUserIntro(rs.getString(11));
+				userVO.setUserRealName(rs.getString(12));
+				userVO.setUserCellphone(rs.getString(13));
+				userVO.setUserAddress(rs.getString(14));
 				
 				userList.add(userVO);
 			}
@@ -653,6 +656,9 @@ public class UserJNDIDAO implements UserDAO_interface {
 				userVO.setUserNickname(rs.getString(9));
 				userVO.setUserAvatar(rs.getString(10));
 				userVO.setUserIntro(rs.getString(11));
+				userVO.setUserRealName(rs.getString(12));
+				userVO.setUserCellphone(rs.getString(13));
+				userVO.setUserAddress(rs.getString(14));
 				
 				return userVO;				
 			}else {

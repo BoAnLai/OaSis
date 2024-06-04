@@ -76,8 +76,9 @@
 	PurchaseService purchaseSvc = new PurchaseService();
 	PurchaseVO purchase = purchaseSvc.getCurrentPurchase(user.getUserId());
 	//List<ItemVO> itemList = purchase.getItemsByPurchaseId();
+	
 	List<ItemVO> itemList = purchase.getItems();
-	if(itemList != null){ 
+	if(itemList.size() != 0){ 
     %>
     
     
@@ -111,27 +112,46 @@
 		    	<% } %>
 	    	</tbody>				
 	    </table>
-	    <form>
+	    <div class="mx-5">
+	    <form action="/oasis/purchaseClosing" method="POST" enctype="multipart/form-data" class="border border-primary-subtle border-2 rounded p-4 mb-3">
+		    
+		    <input name="userId" class="form-control" value="<%= user.getUserId() %>" hidden=true></input>
+		    <input name="purchaseId" class="form-control" value="<%= purchase.getPurchaseId() %>" hidden=true></input>
+		    
+		    <div class="alert alert-info container text-center mt-5" id="updatedNotiftication" role="alert" style="display:none;">
+			  使用者資料完成更新!
+			</div>
+			<div class="alert alert-warning container text-center mt-5" id="wrongCellphoneNotiftication" role="alert" style="display:none;">
+			  手機號碼只接受 09XX-XXX-XXX 或相近的格式
+			</div>
+
  		    <div class="mb-4">
       	     	<label for="realName" class="form-label fs-4 fw-bold">真實姓名</label>
-                <input name="realName" id="realName" class="form-control" value="" placeholder="購物核對身份" required></input>
+                <input name="realName" id="realName" class="form-control" value="<%= StringProcessor.nullToEmpty(user.getUserRealName()) %>" placeholder="購物核對身份" required></input>
 	       	</div>
 	       	<div class="mb-4">
                <label for="cellphone" class="form-label fs-4 fw-bold">手機號碼</label>
-               <input name="cellphone" id="cellphone" class="form-control" value="" placeholder="購物核對身份" required></input>
+               <input name="cellphone" id="cellphone" class="form-control" value="<%= StringProcessor.nullToEmpty(user.getUserCellphone()) %>" placeholder="購物核對身份" required></input>
 	       	</div>
 	       	<div class="mb-4">
                 <label for="address" class="form-label fs-4 fw-bold">地址</label>
-	           	<textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="購物商品寄送地址" required></textarea>
+	           	<textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="購物商品寄送地址" required><%= StringProcessor.nullToEmpty(user.getUserAddress()) %></textarea>
+	       	</div>
+	       	<div class="d-flex justify-content-evenly">
+		       	<button class="btn btn-secondary" id="savePaymentInfoBtn">儲存結帳資訊</button>
+	            <input type="submit" class="btn btn-primary" value="送出結帳">
 	       	</div>
 	    </form>
+	    </div>
+	    
+	    
     </div>
     
     <% }else{ %>
     	
-    	<div>
-    		<h1>購物車現在沒有東西，歡迎至<span><a href="<%=request.getContextPath()%>/product">產品頁面</a></span>>選擇喜歡的商品</h1>
-    	</div>
+    	<div class="container text-center mt-5 ">
+		    <p class="lead fw-bold">購物車現在沒有東西，歡迎至<span><a href="<%=request.getContextPath()%>/product">產品頁面</a></span>選擇喜歡的商品</p>
+		</div>
     	
     <% } %>
 
@@ -142,6 +162,35 @@
             $('#datatable').DataTable();
         });
     </script>
+    <script>
+		$(document).ready(function() {
+		  $("#savePaymentInfoBtn").click(function(e) {
+			  e.preventDefault();
+			  console.log("savePaymentInfoBtn has been clicked!")
+			  
+		    let data = {
+				  			userId: <%= user.getUserId() %>,
+		    				realName: $("#realName").val(),
+		    				cellphone: $("#cellphone").val(),
+		    				address: $("#address").val()
+		    			};
+		
+		    $.ajax({
+		      type: "POST",
+		      url: "/oasis/paymentInfoUpdating",
+		      data: data,
+		      success: function(response) {
+		        console.log("Success! Response:", response);
+		        $("#updatedNotiftication").fadeIn(250).fadeOut(3000);
+		      },
+		      error: function(jqXHR, textStatus, errorThrown) {
+		        console.error("手機號碼只接受 09XX-XXX-XXX 或相近的格式");
+		        $("#wrongCellphoneNotiftication").fadeIn(250).fadeOut(3000);
+		      }
+		    });
+		  });
+		});
+	</script>
 </body>
 
 </html>

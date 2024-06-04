@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import com.mike.item.model.ItemVO;
 import com.mike.user.model.UserService;
@@ -37,6 +41,7 @@ public class PurchaseVO implements java.io.Serializable {
     private String purchaseUserAddress;
 
     @Column(name = "purchase_timestamp", insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    @Generated(GenerationTime.ALWAYS)
     private Timestamp purchaseTimestamp;
 
     @Column(name = "purchase_total", insertable = true, updatable = true)
@@ -45,7 +50,7 @@ public class PurchaseVO implements java.io.Serializable {
     @Column(name = "purchase_closed", insertable = true, updatable = true)
     private Boolean purchaseClosed;
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase", fetch=FetchType.EAGER)
     private List<ItemVO> items;
 
     public PurchaseVO() {
