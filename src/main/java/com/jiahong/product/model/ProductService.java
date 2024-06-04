@@ -7,7 +7,7 @@ import com.mike.tool.HibernateTool;
 
 public class ProductService {
     
-	   public List<ProductVO> listAllProducts() {
+    public List<ProductVO> listAllProducts() {
 	        Session session = HibernateTool.getSessionFactory().openSession();
 	        List<ProductVO> productList = null;
 	        try {
