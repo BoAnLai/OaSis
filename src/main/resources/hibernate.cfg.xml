@@ -33,8 +33,7 @@
         <!-- jiahong's product configuration -->
         <mapping class="com.jiahong.product.model.ProductVO"/>
         <mapping class="com.jiahong.item.model.ItemVO"/>
-        <mapping class="com.jiahong.purchase.model.PurchaseVO"/>
-        <mapping class="com.mike.item.model.ItemVO"/> 
+        <mapping class="com.mike.purchase.model.PurchaseVO"/>
         <mapping class="com.mike.purchase.model.PurchaseVO"/>
 
 

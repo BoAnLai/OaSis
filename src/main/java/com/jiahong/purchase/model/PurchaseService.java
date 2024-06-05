@@ -3,6 +3,8 @@ package com.jiahong.purchase.model;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import com.mike.purchase.model.PurchaseVO;
 import com.mike.tool.HibernateTool;
 
 public class PurchaseService {

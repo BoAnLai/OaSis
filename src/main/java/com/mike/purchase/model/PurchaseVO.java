@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-import com.mike.item.model.ItemVO;
+import com.jiahong.item.model.ItemVO;
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
 

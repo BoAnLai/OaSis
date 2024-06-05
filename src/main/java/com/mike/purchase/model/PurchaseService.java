@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import com.mike.item.model.ItemVO;
+import com.jiahong.item.model.ItemVO;
 import com.mike.tool.HibernateTool;
 import com.mike.tool.StringProcessor;
 

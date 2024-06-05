@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.jiahong.product.model.ProductVO;
-import com.jiahong.purchase.model.PurchaseVO;
+import com.mike.purchase.model.PurchaseVO;
 
 @Entity
 @Table(name = "item")
