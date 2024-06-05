@@ -6,14 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="lee/css/friendchat.css" type="text/css" />
+<link rel="stylesheet" href="chatter/css/friendchat.css" type="text/css" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
 <title>LobbyChatter</title>
 </head>
 
-<body onload="connect();" onunload="disconnect();">
+<body onload="connectPrivate();" onunload="disconnectPrivate();">
 	
 	<div id="row" style="height:50px; display: flex; flex-direction: column;"></div><!-- 動態生成使用者的列表 -->
 
@@ -31,8 +31,8 @@
 		<div class="panel input-area" style="width:450px;margin:0px;" >
 	    <input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 	    <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-	    <input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-	    <input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+	    <input type="button" id="connectPrivate" class="button" value="ConnectPrivate" onclick="connectPrivate();" /> 
+	    <input type="button" id="disconnectPrivate" class="button" value="DisconnectPrivate" onclick="disconnectPrivate();" />
 		</div>
         <!-- ////////////////////////////////////////////////////////////////////////////// -->
       </div>
@@ -44,7 +44,7 @@
 </body>
 <script>
 
-	var MyPoint = "/FriendChatterOasis/${userName}";//這邊是要帶給後端的 "Java類別/接收到並要傳給後端的資料"
+	var MyPoint = "/FriendChatterOasis/${user.getUserNickname()}";//這邊是要帶給後端的 "Java類別/接收到並要傳給後端的資料"
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -52,19 +52,19 @@
 	
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = '${userName}';
+	var self = '${user.getUserNickname()}';
 	var webSocket;
 	var currentTime = ""; // 定义一个变量来存储当前时间
 	
-	function connect() {
+	function connectPrivate() {
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
 			
 			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
+			document.getElementById('connectPrivate').disabled = true;
+			document.getElementById('disconnectPrivate').disabled = false;
 		};
 
 		webSocket.onmessage = function(event/*透過這個事件的屬性取得*/) {
@@ -226,11 +226,11 @@
 		});
 	}
 	
-	function disconnect() {
+	function disconnectPrivate() {
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
-		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
+		document.getElementById('connectprivate').disabled = false;
+		document.getElementById('disconnectPrivate').disabled = true;
 	}
 	
 	function updateFriendName(name) {

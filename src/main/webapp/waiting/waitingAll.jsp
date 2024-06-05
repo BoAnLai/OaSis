@@ -160,7 +160,7 @@
             </th>
             
 			
-            <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">${userDTO.userNickname}</a></td>
+            <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${WaitingVO.waitingID}</td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0">${WaitingVO.waitingReserve}</td>
             <td style="text-align: center">${WaitingVO.waitingMaxPeople}</td>
@@ -168,7 +168,7 @@
             
                 
                 <td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="加入">
 			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">
 			     	<input type="hidden" name="waimax"  value="${WaitingVO.waitingMaxPeople}">
@@ -177,7 +177,7 @@
 				
 				
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">

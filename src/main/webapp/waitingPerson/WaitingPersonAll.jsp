@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.mike.user.model.UserClientService"%>
+<%@page import="com.mike.user.model.UserDTO"%>
 <%@page import="com.lee.waitingperson.model.WaitingPersonVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.lee.waitingperson.model.WaitingPersonService"%>
@@ -13,6 +16,14 @@
 WaitingPersonService wapSvc = new WaitingPersonService();
 List<WaitingPersonVO> list = wapSvc.getAll(roomnum);
 pageContext.setAttribute("list", list);
+
+List<UserDTO> userList = new ArrayList<>();
+for (WaitingPersonVO waitingpersonVO : list) {
+    UserDTO userDTO = UserClientService.getUserById(waitingpersonVO.getWaitingPersonUserID());
+    userList.add(userDTO);
+}
+pageContext.setAttribute("userList", userList);
+
 %>
 
 <html>
@@ -211,39 +222,42 @@ pageContext.setAttribute("list", list);
             
             
             <div class="row text-center justify-content-center">
-    <c:forEach var="waitingPersonVo" items="${list}" varStatus="loop">
-        <div class="col-lg-2 col-sm-4 col-xs-6 wow fadeInUp">
-            <div class="our-team">
-                <div class="single-team">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="img-fluid" alt="">
-                    <h3>等待者:${waitingPersonVo.waitingPersonUserID}</h3>
-                    <p>房號:${waitingPersonVo.waitingPersonWaitingID}</p>
-                </div>
-                
-                
-                <c:if test="${check eq 'Yes'}">
-                
-                <form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
-					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">	
-		  				<input type="hidden" name="userno"  value="${waitingPersonVo.waitingPersonUserID}">
-		  				<input type="hidden" name="waitId"  value="${waitingPersonVo.waitingPersonWaitingID}">
-		  				<input type="hidden" name="waitpId"  value="${waitingPersonVo.waitingPersonID}">
-		  				
-		  				 				
-		  				<input type="hidden" name="action" value="delect_roomPeople">
-		  				<button type="submit" class="btn btn-secondary" aria-label="Close">踢出</button>
-					</div>
-					</form>
-                           
-                </c:if>
-            </div>
-        </div>
-        <%-- 在第五個卡片前插入一個空的 div，使第五個卡片出現在第二排 --%>
-        <c:if test="${loop.index == 4}"><div class="w-100"></div></c:if>
+    <c:forEach var="waitingPersonVo" items="${list}" varStatus="status">
+    	<c:if test="${status.index < userList.size()}">
+    		<c:set var="userDTO" value="${userList[status.index]}" />
+		        <div class="col-lg-2 col-sm-4 col-xs-6 wow fadeInUp">
+		            <div class="our-team">
+		                <div class="single-team">
+		                    <img src="${userDTO.userAvatar}" class="img-fluid" alt="">
+		                    <h3>等待者:${userDTO.userNickname}</h3>
+		                    <p>房號:${waitingPersonVo.waitingPersonWaitingID}</p>
+		                </div>
+		                
+		                
+		                <c:if test="${check eq 'Yes'}">
+		                
+		                <form method="post" action="<%=request.getContextPath() %>/Waiting.do">
+							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">	
+				  				<input type="hidden" name="userno"  value="${waitingPersonVo.waitingPersonUserID}">
+				  				<input type="hidden" name="waitId"  value="${waitingPersonVo.waitingPersonWaitingID}">
+				  				<input type="hidden" name="waitpId"  value="${waitingPersonVo.waitingPersonID}">
+				  				
+				  				 				
+				  				<input type="hidden" name="action" value="delect_roomPeople">
+				  				<button type="submit" class="btn btn-secondary" aria-label="Close">踢出</button>
+							</div>
+							</form>
+		                           
+		                </c:if>
+		            </div>
+		        </div>
+	        <%-- 在第五個卡片前插入一個空的 div，使第五個卡片出現在第二排 --%>
+	        <c:if test="${loop.index == 4}"><div class="w-100"></div></c:if>
+        </c:if>
     </c:forEach>
 </div>
 
-					<form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+					<form method="post" action="<%=request.getContextPath() %>/Waiting.do">
 						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">	
 			  				<input type="hidden" name="action" value="select_AllWait">
 			  				<button type="submit" class="btn btn-info" aria-label="Close">回到首頁</button>

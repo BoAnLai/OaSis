@@ -147,7 +147,7 @@
             <th scope="row" class="ps-4">
                 <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" for="contacusercheck7"></label></div>
             </th>
-            <td style="text-align: center"><img src="<%=userDTO.getUserAvatar() %>" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body"><%=userDTO.getUserNickname() %></a></td>
+            <td style="text-align: center"><img src="<%=userDTO.getUserAvatar() %>" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;"><%=userDTO.getUserNickname() %></a></td>
             <td style="text-align: center"><%=waiVO.getWaitingID() %></td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0"><%=waiVO.getWaitingReserve() %></td>
             <td style="text-align: center"><%=waiVO.getWaitingMaxPeople() %></td>
@@ -155,7 +155,7 @@
             
             
             	<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="¥[¤J">
 			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">
 			     	<input type="hidden" name="waimax"  value="${waiVO.waitingMaxPeople}">
@@ -164,7 +164,7 @@
 				
 				
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">

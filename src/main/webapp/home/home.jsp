@@ -34,14 +34,14 @@
 		  </div>
 		</div>
 		
-      	<div class="card">
+      	<div class="card" style="background-color:#EA7500; background-size: cover; background-position: center;">
 		  <div class="card-header">
 		    Featured
 		  </div>
 		  <div class="card-body">
 		    <h5 class="card-title">Match Up</h5>
-		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		    <a href="#" class="btn btn-primary">Enter</a>
+		    <p class="card-text">我們的配對功能讓您可以輕鬆組隊，提供多種實用功能，包括出發時間、遊戲標籤、大廳聊天和一對一聊天。無論您是想找到合適的遊戲夥伴，還是希望在遊戲開始前討論策略，這個功能都能滿足您的需求，讓您的遊戲體驗更加順暢和愉快。加入我們，立即開始您的遊戲之旅！</p>
+		    <a href="<%=request.getContextPath()%>/waiting/waiting_select.jsp" class="btn btn-primary">Enter</a>
 		  </div>
 		</div>
 		

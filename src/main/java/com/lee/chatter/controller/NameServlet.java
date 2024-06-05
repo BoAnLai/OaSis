@@ -19,7 +19,7 @@ public class NameServlet extends HttpServlet {
 		
 		req.setAttribute("userName", userName);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("lobbychatter/friendchatter.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("chatter/friendchatter.jsp");
 		dispatcher.forward(req, res);
 	}
 }

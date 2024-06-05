@@ -1,3 +1,6 @@
+<%@page import="com.mike.game.model.GameVO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mike.game.model.GameService"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,6 +8,16 @@
 
 <% //見com.emp.controller.EmpServlet.java第163行存入req的empVO物件 (此為從資料庫取出的empVO, 也可以是輸入格式有錯誤時的empVO物件)
 	WaitingVO waiVO = (WaitingVO) request.getAttribute("waiVO");
+%>
+
+<%
+    List<GameVO> gameList = null;
+    try {
+        gameList = GameService.listAll();
+    } catch (Exception e) {
+        e.printStackTrace(); //
+    }
+    request.setAttribute("gameList", gameList);
 %>
 <%----<%= empVO==null %>--${empVO.deptno}--  --%> <!-- Line 100 -->
 
@@ -56,11 +69,8 @@
 			</c:forEach>
 		</ul>
 	</c:if>
-	
-	
-	
 
-<FORM METHOD="post" ACTION="WaitingServlet" name="form1">
+<FORM METHOD="post" ACTION="Waiting.do" name="form1">
 
 
   <body class="p-3 m-0 border-0 bd-example m-0 border-0 bd-example-row">
@@ -75,12 +85,7 @@
         </font></font></div>
         
   
-        <div class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-        <div class="input-group input-group-lg">
-	  	<span class="input-group-text" id="inputGroup-sizing-lg">房主編號:</span>
-	  	<input type="text" class="form-control" name="user"   value="<%=waiVO.getWaitingUserId()%>" size="45" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" >
-		</div>
-        </font></font></div><br>
+        <input class="form-control" type="text" placeholder="隊伍創建人:${user.userNickname}" aria-label="Disabled input example" disabled>
         
         
         <div class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -99,19 +104,20 @@
         </font></font></div><br>
         
         
-        <div class=""><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-        <div class="input-group input-group-lg">
-	  	<span class="input-group-text" id="inputGroup-sizing-lg">遊戲類型:</span>
-	  	<input type="text" class="form-control" name="game"   value="<%=waiVO.getWaitingGameName()%>" size="45" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required="required">
-		</div>
-        </font></font></div><br>
         
+        <div class="input-group mb-3"><font style="vertical-align: inherit;">
+        <div class="input-group input-group-lg">
+		  <label class="input-group-text" for="inputGroupSelect01">遊戲類型:</label>
+		  <select class="form-select" id="inputGroupSelect01" name="game">
+		    <c:forEach var="GameVO" items="${gameList}">
+                <option value="${GameVO.gameName}" ${GameVO.gameName == param.game ? 'selected' : ''}>${GameVO.gameName}</option>
+            </c:forEach>
+          
+        </select></div></font>
+		</div>
+              
       </div>
-    </div>
-    
-    
-   
-  
+    </div> 
 
 <br>
 <div class="btn-group" role="group" aria-label="Third group">

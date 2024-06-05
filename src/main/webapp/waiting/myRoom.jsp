@@ -182,7 +182,8 @@
     
     <c:if test="${list.size() != 0}">
    
-   	<c:if test="${situation eq 'my'}">	
+   	<c:if test="${situation eq 'my'}">
+   		
     <tr>
     <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
     </th>
@@ -215,7 +216,7 @@
 	</c:if>
     <c:if test="${list.size() eq 0}">
    
-   		<img src="lee/images/Empty.png" alt="Centered Image" width="500" height="500" >
+   		<img src="https://cms.pixso.cn/images/designskills/2022/22Q3/kongzhuangtaiyemian1.png" alt="Centered Image" width="500" height="500" >
 	</c:if>
     
     <c:forEach var="waitingVO" items="${list}" varStatus="status">
@@ -226,7 +227,7 @@
     		<!-- *************************************以下為刪除房間按鈕 -->
             <th scope="row" class="ps-4">
             
-            <form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+            <form method="post" action="<%=request.getContextPath() %>/Waiting.do">
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 		  				
 		  				<input type="hidden" name="waiNo"  value="${waitingVO.waitingID}">
@@ -242,7 +243,7 @@
               
             </th>
             <!-- *************************************以上為刪除房間按鈕 -->
-            <td style="text-align: center"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">${userDTO.userNickname}</a></td>
+            <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${waitingVO.waitingID}</td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0">${waitingVO.waitingReserve}</td>
             <td style="text-align: center">${waitingVO.waitingMaxPeople}</td>
@@ -250,7 +251,7 @@
             
             <c:if test="${situation eq 'my'}">
    			<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="修改">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="waimax"  value="${waitingVO.waitingMaxPeople}">
@@ -259,7 +260,7 @@
 			
 			
 			<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="查看">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="check"  value="Yes">
@@ -271,7 +272,7 @@
 			<c:if test="${situation eq 'in'}">
 			
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
@@ -280,7 +281,7 @@
 				</td>
 			
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">

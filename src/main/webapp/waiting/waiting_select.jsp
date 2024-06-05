@@ -1,3 +1,5 @@
+<%@page import="com.mike.game.model.GameService"%>
+<%@page import="com.mike.game.model.GameVO"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
 <%@page import="java.sql.Timestamp"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,6 +9,16 @@
 <%
 //見com.emp.controller.EmpServlet.java第238行存入req的empVO物件 (此為輸入格式有錯誤時的empVO物件)
 WaitingVO watVO = (WaitingVO) request.getAttribute("watVO");
+%>
+
+<%
+    List<GameVO> gameList = null;
+    try {
+        gameList = GameService.listAll();
+    } catch (Exception e) {
+        e.printStackTrace(); //
+    }
+    request.setAttribute("gameList", gameList);
 %>
 
 
@@ -69,12 +81,12 @@ h4 {
 
 </head>
 
-<%@ include file="/home/navbar.jsp" %>
 <body>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 	
+<%@ include file="/home/navbar.jsp" %>
 	
 
 	<%-- 錯誤表列 --%>
@@ -96,7 +108,7 @@ h4 {
 	</c:if>
 
 	<form method="post"
-		action="<%=request.getContextPath()%>/WaitingServlet">
+		action="<%=request.getContextPath()%>/Waiting.do">
 
 		<div class="input-group mb-3">
 			<input type="text" name="waino" class="form-control"
@@ -113,7 +125,7 @@ h4 {
 			<div>
 
 				<form method="post"
-					action="<%=request.getContextPath()%>/WaitingServlet">
+					action="<%=request.getContextPath()%>/Waiting.do">
 					<div class="btn-group" role="group"
 						aria-label="Basic radio toggle button group">
 						<input type="button" name="sin" class="btn-check"
@@ -129,14 +141,14 @@ h4 {
 
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-warning" data-bs-toggle="modal"
-					data-bs-target="#staticBackdrop">建立隊伍</button>
+					data-bs-target="#staticGroup">建立隊伍</button>
 
 
 			</div>
 			<div>
 
 				<form method="post"
-					action="<%=request.getContextPath()%>/WaitingServlet">
+					action="<%=request.getContextPath()%>/Waiting.do">
 					<div class="btn-group" role="group"
 						aria-label="Basic radio toggle button group">
 						<input type="button" name="sin" class="btn-check"
@@ -150,7 +162,7 @@ h4 {
 			<div>
 
 				<form method="post"
-					action="<%=request.getContextPath()%>/WaitingServlet">
+					action="<%=request.getContextPath()%>/Waiting.do">
 					<div class="btn-group" role="group"
 						aria-label="Basic radio toggle button group">
 						<input type="button" name="sin" class="btn-check"
@@ -172,16 +184,16 @@ h4 {
 	</div>
 
 	<c:if test="${sin eq 'A' || sin eq null}">
-		<jsp:include page="/lee/waiting/waitingAll.jsp"></jsp:include>
+		<jsp:include page="/waiting/waitingAll.jsp"></jsp:include>
 	</c:if>
 
 
 	<c:if test="${sin eq 'C'}">
-		<jsp:include page="/lee/waiting/myRoom.jsp"></jsp:include>
+		<jsp:include page="/waiting/myRoom.jsp"></jsp:include>
 	</c:if>
 
 	<c:if test="${sin eq 'D'}">
-		<jsp:include page="/lee/waiting/waiting_selectOne.jsp"></jsp:include>
+		<jsp:include page="/waiting/waiting_selectOne.jsp"></jsp:include>
 	</c:if>
 
 
@@ -189,14 +201,14 @@ h4 {
 
 
 	<!-- INSERT Modal -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+	<div class="modal fade" id="staticGroup" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		aria-labelledby="staticGroupLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<!-- Modal的大小改變在這邊 -->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel">
+					<h1 class="modal-title fs-5" id="staticGroupLabel">
 						<a href="#"
 							class="d-inline-flex focus-ring py-1 px-2 text-decoration-none border rounded-2"
 							style="--bs-focus-ring-x: 10px; --bs-focus-ring-y: 10px; --bs-focus-ring-blur: 4px">
@@ -208,7 +220,7 @@ h4 {
 				<!-- ===================表單內容===================== -->
 				<table
 					class="table project-list-table table-nowrap align-middle table-borderless">
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" name="form1">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" name="form1">
 
 
 						<div class="container text-center">
@@ -245,17 +257,18 @@ h4 {
 
 							<div class="row">
 								<div class="col-6" style="padding: 0px">
-									<font style="vertical-align: inherit;"><font
-										style="vertical-align: inherit;">
-											<div class="input-group flex-nowrap">
-												<span class="input-group-text" id="inputGroup-sizing-lg">GAME</span>
-												<input type="text" class="form-control" name="game"
-													placeholder="遊戲類型" aria-label="Username"
-													aria-describedby="addon-wrapping">
-											</div>
-									</font></font>
-								</div>
+								<font style="vertical-align: inherit;">
+							        <div class="input-group flex-nowrap">
+									  <label class="input-group-text" for="inputGroupSelect01">遊戲類型:</label>
+									  <select class="form-select" id="inputGroupSelect01" name="game">
+									    <c:forEach var="GameVO" items="${gameList}">
+							                <option value="${GameVO.gameName}" ${GameVO.gameName == param.game ? 'selected' : ''}>${GameVO.gameName}</option>
+							            </c:forEach>
+							          
+							        </select></div></font>
+									</div>
 							</div>
+							
 						</div>
 
 
@@ -320,11 +333,11 @@ reserve = new Timestamp(System.currentTimeMillis());
 		data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling"
 		aria-labelledby="offcanvasScrollingLabel" style="width: 700px;">
 		<div class="offcanvas-header">
-			<h5 class="offcanvas-title" id="offcanvasScrollingLabel">OASIS CHATTER</h5>
+			<h3 class="offcanvas-title" id="offcanvasScrollingLabel">OASIS CHATTER</h5>
 			<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
 				aria-label="Close"></button>
 		</div>
-		<jsp:include page="/lee/chatter/index.jsp"></jsp:include>
+		<jsp:include page="/chatter/index.jsp"></jsp:include>
 		
 	</div>
 
