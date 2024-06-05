@@ -36,6 +36,66 @@
             margin: 0;
             margin-right: 10px; /* 可选，调整 h2 和按钮之间的间距 */
         } 
+        
+/* 设置消息列表的基本样式 */
+#area {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#area li {
+    margin: 10px 0;
+    clear: both;
+}
+
+/* 设置发送者消息样式 */
+.me {
+    float: right;
+    background-color: #daf1da;
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* 设置接收者消息样式 */
+.friend {
+    float: left;
+    background-color: #f1f0f0;
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* 设置消息文本样式 */
+.me p, .friend p {
+    margin: 0;
+    display: inline;
+}
+
+/* 设置时间戳样式 */
+.custom-paragraph {
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 10px;
+}
+        
+        
+        
+        
+        
+        
+        
+        
+       
  
 </style>
 
@@ -74,10 +134,10 @@
             </div>
             <div class="modal-body">
                 <!---------------------------------------------- 對話窗內容! ------------------------------------------------>
-                <div id="messagesArea" class="panel message-area" style="border:1px solid #00EC00; height:400px;width:450px;margin:0px;"></div>
-					<div class="panel input-area" style="width:450px;margin:0px;" >
-				    <input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-				    <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
+                <div id="PsmessagesArea" class="panel message-area" style="border:1px solid #00EC00; height:400px; width:450px; margin:0px; overflow-y: auto;"></div>
+					<div class="panel input-area" style="width:450px;margin:0px;" >													
+				    <input id="Psmessage" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) PrivatesendMessage();" /> 
+				    <input type="submit" id="PSsendMessage" class="button" value="Send" onclick="PrivatesendMessage();" /> 
 				  
 					</div>
                 <!---------------------------------------------- 對話窗內容! ------------------------------------------------>
@@ -85,7 +145,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -136,9 +195,12 @@
 		var webSocket;
 		var self = '${user.getUserNickname()}';
 		var psName = document.getElementById("PrivateLabel");
+		var PsmessagesArea = document.getElementById("PsmessagesArea");
+		var PswebSocket;
 		
 		function connect(){
-			webSocket =new WebSocket(endPointURL);
+			webSocket =new WebSocket(endPointURL);//---建立大眾聊天
+			PswebSocket = new WebSocket(PsendPointURL);//私人聊天連線建立
 			
 			webSocket.onopen=function(event){
 				updateStatus("OASIS Chatter Connected","btn btn-outline-success");
@@ -168,6 +230,9 @@
 			    if ("open" === jsonObj.type) {
 					refreshFriendList(jsonObj);//傳給refreshFriendList這個function
 				}
+			    else if ("close" === jsonObj.type) {
+	                refreshFriendList(jsonObj);
+	            }
 			};
 
 			webSocket.onclose = function(event) {
@@ -227,20 +292,121 @@
 			
 		}
 			//================================================WebSocket 2號
-			function connectPrivate() {
-				// create a websocket
-				console.log("New Socket!");
-				PswebSocket = new WebSocket(PsendPointURL);
+			 function connectPrivate() {
+				console.log("Connecting to private chat...");
+		        
 		
+		        PswebSocket.onopen = function(event) {
+		        	console.log("Private WebSocket connected");
+		            document.getElementById('PSsendMessage').disabled = false;
+		        };
+		
+		        PswebSocket.onmessage = function(event) {
+		            var jsonObj = JSON.parse(event.data);
+
+		            if ("history" === jsonObj.type) {
+		                PsmessagesArea.innerHTML = '';
+		                var Psul = document.createElement('ul');
+		                Psul.id = "area";
+		                PsmessagesArea.appendChild(Psul);
+
+		                var Psmessages = JSON.parse(jsonObj.message);
+		                for (var i = 0; i < Psmessages.length; i++) {
+		                    var historyData = JSON.parse(Psmessages[i]);
+		                    var showMsg = historyData.message; // 确保这个字段与服务器发送的消息字段名一致
+
+		                    var li = document.createElement('li');
+		                    historyData.sender === self ? li.className += 'me' : li.className += 'friend';
+
+		                    var messageParagraph = document.createElement('p');
+		                    messageParagraph.textContent = showMsg;
+		                    messageParagraph.style.display = 'inline';
+
+		                    var timeParagraph = document.createElement('span');
+		                    timeParagraph.className = 'custom-paragraph';
+		                    timeParagraph.textContent = " " + historyData.time;
+
+		                    messageParagraph.appendChild(timeParagraph);
+		                    li.appendChild(messageParagraph);
+		                    Psul.appendChild(li);
+		                }
+		                PsmessagesArea.scrollTop = PsmessagesArea.scrollHeight;
+		            } else if ("chat" === jsonObj.type) {
+		                console.log("Socket Number2 Chat.onmessage!");
+		                var li = document.createElement('li');
+		                if (jsonObj.sender === self) {
+		                    li.className = 'me';
+		                } else {
+		                    li.className = 'friend';
+		                }
+
+		                var messageParagraph = document.createElement('p');
+		                messageParagraph.textContent = jsonObj.message;
+		                messageParagraph.style.display = 'inline';
+
+		                var timeParagraph = document.createElement('span');
+		                timeParagraph.className = 'custom-paragraph';
+		                timeParagraph.textContent = " " + jsonObj.time;
+
+		                messageParagraph.appendChild(timeParagraph);
+		                li.appendChild(messageParagraph);
+		                document.getElementById("area").appendChild(li);
+
+		                PsmessagesArea.scrollTop = PsmessagesArea.scrollHeight;
+		            } 
+		        };
+		        
+		     		 //二號連線錯誤方法
+					 PswebSocket.onerror = function(event) {
+				        console.error("WebSocket error observed:", event);
+				    	};
+
+				   	 PswebSocket.onclose = function(event) {
+				        console.log("Private WebSocket closed");
+				   		 };
+		        
+		    }
 			
-				};
+				
+				//================================================WebSocket 2號 送出訊息方法	
+				function PrivatesendMessage() {
+			    var PsinputMessage = document.getElementById("Psmessage");
+			    var friend = psName.textContent;
+			    var Psmessage = PsinputMessage.value.trim();
+			    console.log("到PrivatesendMessage此了");
+			
+			    if (Psmessage === "") {
+			        alert("Input a message");
+			        PsinputMessage.focus();
+			    } else if (friend === "") {
+			        alert("Choose a friend");
+			    } else {
+			        var jsonObj = {
+			            "type": "chat",
+			            "sender": self,
+			            "receiver": friend,
+			            "message": Psmessage, // Corrected this line
+			            "time": currentTime
+			        };
+			        PswebSocket.send(JSON.stringify(jsonObj)); // Corrected this line
+			        PsinputMessage.value = "";
+			        PsinputMessage.focus();
+			    }
+			}
 		
-		function disconnect() {
-			webSocket.close();
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
-		}
+				function disconnect() {
+				    if (webSocket) {
+				        webSocket.send(JSON.stringify({ type: 'close', userName: self })); // 发送离线消息
+				        bSocket.send(JSON.stringify({ type: 'close', userName: self })); // 发送离线消息
+				        webSocket.close();
+				    }
+				    if (PswebSocket) {
+				        PswebSocket.close();
+				    }
+				    document.getElementById('sendMessage').disabled = true;
+				    document.getElementById('connect').disabled = false;
+				    document.getElementById('disconnect').disabled = true;
+				}
 		
 		
 		function updateStatus(newStatus,type){
@@ -250,6 +416,8 @@
 		
 		// 有好友上線或離線就更新列表
 		function refreshFriendList(jsonObj) {
+			console.log(jsonObj)
+				
 			var friends = jsonObj.users;
 			var row = document.getElementById("row");
 			row.innerHTML = '';
@@ -258,6 +426,7 @@
 				row.innerHTML +='<div id=' + i + ' class="column" style="border: 1px solid black; border-radius: 10px; background-color:#BB5E00;padding:0px; " name="friendName" value=' + friends[i] + ' ><h2 data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="background-color:#BB5E00;">' + friends[i] + '</h2 ></div>';
 			}
 			addListener();//以下方法 點選使用者後的事件
+			
 		}
 		
 	
@@ -270,20 +439,30 @@
 				connectPrivate();
 				
 				var friend = e.srcElement.textContent;//這邊的語法不一定會依樣，要去抓自己前端標籤的結構
-				updateFriendName(friend);<%--
+				updateFriendName(friend);
 				var jsonObj = {//json 開始發送資料給後端要歷史紀錄
 						"type" : "history",
 						"sender" : self,/*自己*/
 						"receiver" : friend,/*點選到的對象*/
 						"message" : ""
 					};
-				webSocket.send(JSON.stringify(jsonObj));//發送給後端的onmessage--%> 
+				
+				if (PswebSocket && PswebSocket.readyState === WebSocket.OPEN) {
+		            PswebSocket.send(JSON.stringify(jsonObj));
+		        } else {//確認PswebSocket是否連線，有連線即發送
+		            console.log("WebSocket is not connected. Current state: " + PswebSocket.readyState);
+		        }
 			});
 		}
 		//修改視窗上的好友名子
 		function updateFriendName(name) {
 			psName.innerHTML = name;
 		}
+		
+	
+		
+		
+		
 		
 			
 	</script>

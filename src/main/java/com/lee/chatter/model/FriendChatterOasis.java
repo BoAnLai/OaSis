@@ -60,6 +60,7 @@ public class FriendChatterOasis {
 		
 		
 		if ("history".equals(chatMessage.getType())) {//過濾是否是要歷史紀錄
+			System.out.println("有收到查詢歷史紀錄"+userSession+message);
 			List<String> historyData =JedisHandleMessage.getHistoryMsg(sender, receiver);//透過此方法，對Redis做歷史紀錄的查詢
 			String historyMsg = gson.toJson(historyData);//轉成JsonArray 準備給前端
 			ChatMessage cmHistory = new ChatMessage/*再把此JSON字串放入DTO裡面*/("history", sender, receiver, historyMsg,time);

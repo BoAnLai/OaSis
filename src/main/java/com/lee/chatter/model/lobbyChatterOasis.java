@@ -73,6 +73,27 @@ public class lobbyChatterOasis {
 		String text = String.format("session ID = %s, disconnected; close code = %d; reason phrase = %s",
 				userSession.getId(), reason.getCloseCode().getCode(), reason.getReasonPhrase());
 		System.out.println(text);
+		
+
+		String userNameClose = null;
+		Set<String> userNames = sessionsMap.keySet();
+		for (String userName : userNames) {
+			if (sessionsMap.get(userName).equals(userSession)) {
+				userNameClose = userName;
+				sessionsMap.remove(userName);
+				break;
+			}
+		}
+
+		if (userNameClose != null) {
+			StateDTO stateMessage = new StateDTO("close", userNameClose, userNames);
+			String stateMessageJson = gson.toJson(stateMessage);//把要轉傳的資料丟進來，變成GSON物件(String)
+			Collection<Session> sessions = sessionsMap.values();
+			for (Session session : sessions) {
+				session.getAsyncRemote().sendText(stateMessageJson);//若是要對方不在線上也能發送訊息，把此行拉出去即可
+			}
+		}
+
 	}
 
 	
