@@ -40,16 +40,16 @@ public class UserService {
 			user.setUserIdentity(userUpdating.getUserIdentity());
 		}
 		if(userUpdating.getUserCompanyName()!=null) {
-			user.setUserCompanyName(StringProcessor.EmptyToNull(userUpdating.getUserCompanyName()));
+			user.setUserCompanyName(StringProcessor.blankToNull(userUpdating.getUserCompanyName()));
 		}		
 		if(userUpdating.getUserNickname()!=null) {
-			user.setUserNickname(StringProcessor.EmptyToNull(userUpdating.getUserNickname()));
+			user.setUserNickname(StringProcessor.blankToNull(userUpdating.getUserNickname()));
 		}
 		if(userUpdating.getUserIntro()!=null) {
-			user.setUserIntro(StringProcessor.EmptyToNull(userUpdating.getUserIntro()));
+			user.setUserIntro(StringProcessor.blankToNull(userUpdating.getUserIntro()));
 		}
 		if(userUpdating.getUserRealName()!=null) {
-			user.setUserRealName(StringProcessor.EmptyToNull(userUpdating.getUserRealName()));
+			user.setUserRealName(StringProcessor.blankToNull(userUpdating.getUserRealName()));
 		}
 		String cellphone = userUpdating.getUserCellphone();
 		if(cellphone!=null) {
@@ -57,10 +57,10 @@ public class UserService {
 			if(!StringProcessor.isCellphoneNumber(cellphone)){
 				throw new IllegalArgumentException("Cellphone number only accept in format like 09XX-XXX-XXX");
 			}
-			user.setUserCellphone(StringProcessor.EmptyToNull(userUpdating.getUserCellphone()));
+			user.setUserCellphone(StringProcessor.blankToNull(userUpdating.getUserCellphone()));
 		}
 		if(userUpdating.getUserAddress()!=null) {
-			user.setUserAddress(StringProcessor.EmptyToNull(userUpdating.getUserAddress()));
+			user.setUserAddress(StringProcessor.blankToNull(userUpdating.getUserAddress()));
 		}
 		dao.update(userId,user);
 	}

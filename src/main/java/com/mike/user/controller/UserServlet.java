@@ -118,14 +118,14 @@ public class UserServlet extends HttpServlet {
 			
 			
 			
-			userUpdating.setUserNickname(StringProcessor.EmptyToNull(req.getParameter("nickname")));
-			userUpdating.setUserIntro(StringProcessor.EmptyToNull(req.getParameter("intro")));
+			userUpdating.setUserNickname(StringProcessor.blankToNull(req.getParameter("nickname")));
+			userUpdating.setUserIntro(StringProcessor.blankToNull(req.getParameter("intro")));
 			System.out.println(req.getParameter("intro"));
 			
 			
-			userUpdating.setUserRealName(StringProcessor.EmptyToNull(req.getParameter("realName")));
-			userUpdating.setUserCellphone(StringProcessor.EmptyToNull(req.getParameter("cellphone")));
-			userUpdating.setUserAddress(StringProcessor.EmptyToNull(req.getParameter("address")));
+			userUpdating.setUserRealName(StringProcessor.blankToNull(req.getParameter("realName")));
+			userUpdating.setUserCellphone(StringProcessor.blankToNull(req.getParameter("cellphone")));
+			userUpdating.setUserAddress(StringProcessor.blankToNull(req.getParameter("address")));
 			
 			UserService userService = new UserService();
 			userService.userUpdate(userUpdating.getUserId(),userUpdating);

@@ -68,13 +68,9 @@
 					        <li><a href="/oasis/login" class="btn btn-primary" id="login-btn">登入</a></li>
 					        <li>
 	                            <div class="dropdown" id="login-dropdown">
-								  <a class="btn btn-secondary dropdown-toggle" id="user-email" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								  <a class="btn btn-secondary dropdown-toggle" id="user-name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								    <% if(user!=null){ %>
-								    	<% if(user.getUserNickname().trim() != ""){ %>
-								    		<%= user.getUserNickname()%>
-								    	<% }else{ %>
-									    	<%=user.getUserEmail()%>
-									    <% } %>
+								    	<%= user.getUserName() %>
 								    <% } %>
 								  </a>
 								
@@ -116,7 +112,7 @@
     <div class="blocking-nav"></div>
     
 	<script>
-		if($("#user-email").text().trim()){
+		if($("#user-name").text().trim()){
 			$("#login-btn").hide();
 		}else{
 			$("#login-dropdown").hide();

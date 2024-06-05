@@ -24,7 +24,6 @@ public class PersonalUpdate extends HttpServlet{
 	
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("successfully lead to personal update controller");
 		req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req, res);
 	}
 	
@@ -66,21 +65,20 @@ public class PersonalUpdate extends HttpServlet{
 				req.setAttribute("errorMsg", "兩次密碼不相符");
 				req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
 			}
-			System.out.println("password both contain");
+//			System.out.println("password both contain");
 		}else if(bothBlank) {
-			System.out.println("password both blank");
+//			System.out.println("password both blank");
 		}else {
 			
 			req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");
 			req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
-			System.out.println("one contain one blank");
 		}
 		
-		userUpdating.setUserNickname(StringProcessor.EmptyToNull(req.getParameter("nickname")));
-		userUpdating.setUserIntro(StringProcessor.EmptyToNull(req.getParameter("intro")));
-		userUpdating.setUserRealName(StringProcessor.EmptyToNull(req.getParameter("realName")));
-		userUpdating.setUserCellphone(StringProcessor.EmptyToNull(req.getParameter("cellphone")));
-		userUpdating.setUserAddress(StringProcessor.EmptyToNull(req.getParameter("address")));
+		userUpdating.setUserNickname(StringProcessor.blankToNull(req.getParameter("nickname")));
+		userUpdating.setUserIntro(StringProcessor.blankToNull(req.getParameter("intro")));
+		userUpdating.setUserRealName(StringProcessor.blankToNull(req.getParameter("realName")));
+		userUpdating.setUserCellphone(StringProcessor.blankToNull(req.getParameter("cellphone")));
+		userUpdating.setUserAddress(StringProcessor.blankToNull(req.getParameter("address")));
 		
 		userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
 		
