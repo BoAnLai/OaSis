@@ -6,7 +6,19 @@
     ProductService productService = new ProductService();
     List<ProductVO> productList = productService.listAllProducts();
 %>
-
+<style type="text/css">
+	.btn-link {
+    	border: none;
+    	outline: none;
+    	background: none;
+    	cursor: pointer;
+    	color: #0000EE;
+    	padding: 0;
+    	text-decoration: underline;
+    	font-family: inherit;
+    	font-size: inherit;
+	}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +47,14 @@
             <tbody>
                 <% for(ProductVO product: productList){ %>
                     <tr>
-                        <td><%= product.getProductName() %></td>
+			     						
+						<td  style="text-align: center ">
+			  				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductServlet" style="margin-bottom: 0px;">
+			     			<input type="hidden" name="productId"  value=<%= product.getProductId() %>>
+			     			<input type="hidden" name="action"	value="select_product">
+			     			<input type="submit" class="btn-link"  value=<%= product.getProductName() %>></FORM>
+			     	
+						</td>
                         <td>
                             <img src="<%= product.getProductImg() %>" alt="產品圖片" width="100" class="product-img" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="<%= product.getProductImg() %>" data-product-name="<%= product.getProductName() %>">
                         </td>
