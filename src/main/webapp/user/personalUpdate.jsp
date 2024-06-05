@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OaSis - Personal Update</title>
-    <link rel="stylesheet" type="text/css" href="user/css/avatar.css">
+    <link rel="stylesheet" type="text/css" href="/oasis/user/css/avatar.css">
     <style>
     	#content{
     		margin: 30px 150px;
@@ -29,7 +29,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-	<%@ include file="../home/navbar.jsp" %>
+	<%@ include file="/home/navbar.jsp" %>
 
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">修改個人資料</h1>
@@ -93,7 +93,7 @@
 		    
 	</div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="user/js/userAvatar.js"></script>
+    <script src="/oasis/user/js/userAvatar.js"></script>
 </body>
 
 </html>

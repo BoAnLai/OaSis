@@ -58,7 +58,7 @@
 				<a type="button" href="<%=request.getContextPath()%>" class="btn btn-secondary">回到首頁</a>
 			</div>
 			<div class="text-end mt-3 ml-auto">
-				<a href="<%= request.getContextPath() %>/user/register">註冊</a>
+				<a href="<%= request.getContextPath() %>/register">註冊</a>
 			</div>
 		</form>
 	</div>

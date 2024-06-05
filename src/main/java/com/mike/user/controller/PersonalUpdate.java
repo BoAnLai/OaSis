@@ -65,9 +65,7 @@ public class PersonalUpdate extends HttpServlet{
 				req.setAttribute("errorMsg", "兩次密碼不相符");
 				req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
 			}
-//			System.out.println("password both contain");
 		}else if(bothBlank) {
-//			System.out.println("password both blank");
 		}else {
 			
 			req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");

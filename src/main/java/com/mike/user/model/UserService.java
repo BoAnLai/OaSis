@@ -97,7 +97,7 @@ public class UserService {
 		}		
 	}
 	
-	public UserVO findByEmail(String email) throws SQLException {
+	public UserVO findByEmail(String email) throws SQLException, EmailNotFoundException {
 			UserVO user = dao.findByEmail(email);
 			return user;
 	}

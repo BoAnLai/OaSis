@@ -57,36 +57,22 @@ public class UserLogin extends HttpServlet {
 			
 			
 			try {
+				
 				if(userSvc.identityConfirm(inputEmail, inputPassword)) {
 					
 					UserVO user = userSvc.findByEmail(inputEmail);
 					UserDTO userDTO = new UserDTO(user);
 					
 					session.setAttribute("user",userDTO);
-					
-					
 					String headingPath = null;
 					headingPath = (String)session.getAttribute("headingPath");
 					session.removeAttribute("headingPath");
 					
-					
 					if(headingPath != null) {
-						
 						res.sendRedirect(headingPath);
-						
 					}else {	
-//						try {
-//							req.getRequestDispatcher("/").forward(req, res);
-//						} catch (ServletException e) {
-//							e.printStackTrace();
-//						}
-						
 						res.sendRedirect("/oasis");
 					}
-					
-					
-					
-					
 					
 				}else {
 					req.setAttribute("errorMsg", new String("密碼錯誤，請重新輸入"));
@@ -97,6 +83,7 @@ public class UserLogin extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
+				
 			} catch (EmailNotFoundException e) {
 				req.setAttribute("errorMsg", new String("此信箱尚未註冊，請註冊或重新輸入"));
 				try {

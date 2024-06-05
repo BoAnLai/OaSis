@@ -1,6 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.mike.user.model.*"%>
 
+<%
+	String errorMsg = (String) request.getAttribute("errorMsg");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="css/avatar.css">
+    <link rel="stylesheet" type="text/css" href="/oasis/user/css/avatar.css">
     <style>
     	#content{
     		margin: 30px 150px;
@@ -23,23 +26,28 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-	<%@ include file="../home/navbar.jsp" %>
+	<%@ include file="/home/navbar.jsp" %>
 
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">新使用者註冊</h1>
 	    <div class="mx-5">
-	        <form action="/registering" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
+	        <form action="/oasis/registering" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
 	        	<div class="mb-4">
 			        <label for="email" class="form-label fs-4 fw-bold">輸入信箱</label>
 			        <input type="email" class="form-control" name="email" id="email" placeholder="必填" aria-describedby="emailHelp" required>
 	        	</div>
+	        	<% if(errorMsg != null){ %>
+				<div class="bg-danger-subtle border border-danger-subtle rounded-3 text-danger-emphasis p-3 mb-2">
+					<%= errorMsg %>
+				</div>
+				<% } %>
 	        	<div class="mb-4">
 			        <label for="password" class="form-label fs-4 fw-bold">輸入密碼</label>
 			        <input name="password" id="password" class="form-control" type="password" placeholder="必填" required>
 	        	</div>
 	        	<div class="mb-4">
-			        <label for="confirm_password" class="form-label fs-4 fw-bold">再次輸入密碼</label>
-			        <input name="confirm_password" id="confirm_password" class="form-control" type="password" placeholder="必填" required>
+			        <label for="confirmPassword" class="form-label fs-4 fw-bold">再次輸入密碼</label>
+			        <input name="confirmPassword" id="confirmPassword" class="form-control" type="password" placeholder="必填" required>
 	        	</div>
 	        	<div class="mb-4">
 			        <label for="nickname" class="form-label fs-4 fw-bold">輸入暱稱</label>
@@ -78,7 +86,7 @@
 	</div>
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="js/userAvatar.js"></script>
+    <script src="/oasis/user/js/userAvatar.js"></script>
 </body>
 
 </html>
