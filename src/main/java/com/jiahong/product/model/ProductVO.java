@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jiahong.item.model.ItemVO;
+import com.mike.item.model.ItemVO;
 
 @Entity
 @Table(name = "product")
