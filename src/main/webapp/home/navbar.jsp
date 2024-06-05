@@ -47,7 +47,7 @@
                                 <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">首頁</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<%= request.getContextPath()%>/game/list">遊戲列表</a>
+                                <a class="nav-link" href="<%= request.getContextPath()%>/game">論壇入口</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

@@ -44,8 +44,10 @@
 					<th><%= game.getGameName() %></td>
 	 				<td class="imgContainer"><img class="listImg" src="<%= game.getGameImg() %>"></td>
 					<td>
-						<% List<GenreVO> genreList = GameService.getGenresByGameId(game.getGameId()); %>
-						<% for(GenreVO genre: genreList){ %>
+						<% 
+						   List<GenreVO> genreList = GameService.getGenresByGameId(game.getGameId());
+						   for(GenreVO genre: genreList){ 
+						%>
            					<%= genre.getGenreName() %> <br>
 						<% } %>
 					</td>
