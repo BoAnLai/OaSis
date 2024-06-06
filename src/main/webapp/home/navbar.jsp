@@ -6,6 +6,8 @@
 	UserDTO user = (UserDTO) session.getAttribute("user");
 %>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
