@@ -78,14 +78,14 @@
         <div id="gameList">討論區</div>
         <div id="artList">文章列表</div>
         <form class="headerForm" action="<%=request.getContextPath()%>/reurl" method="POST" >
-        <button id="postButton" type = "submit">發文</button>
+        <button id="postButton" style = "${displayPost}" type = "submit">發文</button>
         <input type=hidden name="reurl" value = "toPostArt">
         </form>
         <form class="headerForm" action="<%=request.getContextPath()%>/reurl" method="POST" >
         <input type=hidden name ="reurl"   value = "toReplyArt">
         <input type=hidden name ="artTitle" >
         <input type=hidden name ="artReplyId" >
-        <button id="replyButton">回復</button>
+        <button id="replyButton" style = "${displayReply}" type = "submit" >回覆</button>
         </form>
     </header>
 
@@ -95,23 +95,9 @@
         };
 
         document.getElementById('artList').onclick = function() {
-            window.location.href = '/oasis/forum/oneForum.jsp'; 
+            window.location.href = '/oasis/forum'; 
         };
-        window.onload = function() {
-        	  var postButton = document.getElementById('postButton');
-        	  var replyButton = document.getElementById('replyButton');
-
-        	  if (window.location.pathname === '/oasis/forum/oneForum.jsp') {
-        	    postButton.style.display = 'block';
-        	    replyButton.style.display = 'none';
-        	  } else if (window.location.pathname === '/oasis/forum/artView.jsp') {
-        	    postButton.style.display = 'none';
-        	    replyButton.style.display = 'block';
-        	  }else {
-        	        postButton.style.display = 'none';
-        	        replyButton.style.display = 'none';
-        	    }
-        	};
+       
     </script>
 </body>
 </html>

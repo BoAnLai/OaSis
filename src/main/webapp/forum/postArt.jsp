@@ -106,7 +106,7 @@
   
   <div class="container">
     <h1>發文</h1>
-    <form id="postForm" action="<%=request.getContextPath()%>/forum" method="POST" >
+    <form id="postForm" action="<%=request.getContextPath()%>/post" method="POST" >
       
       
       

@@ -58,9 +58,10 @@ public class ArtDAO implements ArtDAO_interface {
 		List<MessageDTO> messages = new ArrayList<>();
 		ArtDTO artDTO = new ArtDTO();
 		String sql = "SELECT m.message_content, m.message_timestamp, u.user_nickname "
-        		+ "FROM message m "
-                + "LEFT JOIN user u ON m.message_user_id = u.user_id "
-                + "WHERE m.message_art_id = :artId";
+        		+ " FROM message m "
+                + " LEFT JOIN user u ON m.message_user_id = u.user_id "
+                + " WHERE m.message_art_id = :artId"
+                + " ORDER BY m.message_timestamp";
         NativeQuery<Object[]> query = session.createNativeQuery(sql);
         query.setParameter("artId", artId);    
         List<Object[]> result = query.getResultList();
@@ -108,7 +109,9 @@ public class ArtDAO implements ArtDAO_interface {
 		String sql ="SELECT a.art_Id, a.art_title,a.art_timestamp,u.user_nickname "
 				+ " FROM art a "
 				+ " JOIN user u ON a.art_user_id = u.user_id "
-				+ " WHERE a.art_game_id = :gameId";
+				+ " WHERE a.art_game_id = :gameId"
+				+ " AND a.art_reply IS  NULL "
+				+ " ORDER BY a.art_timestamp";
 		NativeQuery<Object[]> query = session.createNativeQuery(sql);
 		query.setParameter("gameId", gameId);
 		List<Object[]> result = query.getResultList();
@@ -131,15 +134,15 @@ public class ArtDAO implements ArtDAO_interface {
 	@Override
 	public List<ArtReplyDTO> getReply(Integer artId) {
 		Session session = getSession();
-		List<MessageDTO> messages = new ArrayList<>();
 		List<ArtReplyDTO> artReply = new ArrayList<>();
-		ArtReplyDTO artReplyDTO = new ArtReplyDTO();
 		String sql ="SELECT a.art_Id, a.art_title, a.art_content,a.art_timestamp,u.user_nickname"
 				+ " FROM art a "
 				+ " JOIN user u ON a.art_user_id = u.user_id "
-				+ " WHERE a.art_reply = :artId";
+				+ " WHERE a.art_reply = :artId"
+				+ " ORDER BY a.art_timestamp";
 		NativeQuery<Object[]> query = session.createNativeQuery(sql);
 		query.setParameter("artId", artId); 
+		System.out.println(artId);
 		List<Object[]> result = query.getResultList();
         for(Object[] row:result) {
         	Integer messageArtId = (Integer)row[0];
@@ -148,10 +151,18 @@ public class ArtDAO implements ArtDAO_interface {
             Timestamp artTimestamp = (Timestamp) row[3];
             String artUserNickname = (String) row[4];
             
+            List<MessageDTO> messages = new ArrayList<>();
+            ArtReplyDTO artReplyDTO = new ArtReplyDTO();
+            artReplyDTO.setArtId(messageArtId);
+            artReplyDTO.setArtContent(artContent);
+            artReplyDTO.setArtTimestamp(artTimestamp);
+            artReplyDTO.setUserNickname(artUserNickname);
+            System.out.println(artReplyDTO.getArtContent());
             String sql1 ="SELECT m.message_content, m.message_timestamp,u.user_nickname"
     				+ " FROM message m "
     				+ " JOIN user u ON m.message_user_id = u.user_id "
-    				+ " WHERE m.message_art_id = :artId";
+    				+ " WHERE m.message_art_id = :artId"
+    				+ " ORDER BY m.message_timestamp";
             NativeQuery<Object[]> query1 = session.createNativeQuery(sql1);
             query1.setParameter("artId", messageArtId); 
             List<Object[]> result1 = query1.getResultList();
@@ -160,21 +171,19 @@ public class ArtDAO implements ArtDAO_interface {
                 Timestamp messageTimestamp = (Timestamp) row1[1];
                 String messageUserNickName = (String) row1[2];
                 
+                
                 MessageDTO messageDTO = new MessageDTO();
                 messageDTO.setUserNickname(messageUserNickName);
                 messageDTO.setMessageContent(messageContent); 
                 messageDTO.setMessageTimestamp(messageTimestamp);
                 messages.add(messageDTO);
+                
+                
             }
-            artReplyDTO.setArtId(messageArtId);
-            artReplyDTO.setArtContent(artContent);
-            artReplyDTO.setArtTimestamp(artTimestamp);
-            artReplyDTO.setUserNickname(artUserNickname);
             
             artReplyDTO.setMessageDTO(messages);
             artReply.add(artReplyDTO);
-            
-        	}
+        }
            return artReply;
 	}
 

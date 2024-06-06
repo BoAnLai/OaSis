@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
 
@@ -39,11 +40,11 @@
 		src="https://cdn.datatables.net/v/ju/dt-2.0.7/b-3.0.2/b-colvis-3.0.2/cr-2.0.2/fh-4.0.1/r-3.0.2/rr-1.5.0/sc-2.4.2/sl-2.0.1/datatables.min.js"></script>
 	<script>
     $(document).ready(function () {
-      
+      let gameId = ${sessionScope.game.gameId};
       $.ajax({
-        url: "/oasis/forum",
+        url: "/oasis/art",
         type: "POST",
-        data: { act: "getOneForumArt", gameId: "1" },
+        data: { act: "getOneForumArt", gameId: gameId },
         dataType: "json",
         success: function (data) {
           $.each(data,function (index,artDTO) {

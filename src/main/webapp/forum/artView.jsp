@@ -54,24 +54,13 @@ body {
 	margine-top: 10px;
 	margin-bottom: 10px;
 }
-.artReplyContainer{
-	display:flex;
-	position:absolute;
-	right:5px;
-	width:75%;
-	height:100px;
-	background-color: white;
-	margin: 10px;
-	padding:5px;
-	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
 .user {
 	position: sticky;
 	height: 200px;
 	width: 200px;
 	top: 150px;
 	padding: 20px;
+	flex-shrink: 0;
 	background-color: white;
 	margin: 10px;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -103,7 +92,7 @@ body {
 }
 
 .artTitle {
-	
+	margin-top:10px;
 }
 
 .artContent {
@@ -216,19 +205,19 @@ img.image_resized {
 	  return timestamp;
 	}
   
-  let artId = getUrlParameter('art');
-  if (!artId) {
-    artId = '<%=request.getAttribute("artId")%>';
+  let artFirstId = getUrlParameter('art');
+  if (!artFirstId) {
+    artFirstId = '<%=request.getAttribute("artId")%>';
   }
-  '
+  
   let messageTimestamp = getCurrentTimestamp();
   $(document).ready(function () {
     $.ajax({
-      url: "/oasis/forum",
+      url: "/oasis/art",
       type: "POST",
       data: {
         act: "getArt",
-        artId: artId
+        artId: artFirstId
       },
       dataType: "json",
       success: function (data) {
@@ -237,7 +226,7 @@ img.image_resized {
         $("#artTitle").append(data.artTitle);
         $("#artContent").append(data.artContent);
         $('input[name="artTitle"]').val(data.artTitle);
-        $('input[name="artReplyId"]').val(artId);
+        $('input[name="artReplyId"]').val(artFirstId);
         $.each(
             data.messageDTO,function (index,message) {
               let comment = '<div class="messageTop">'
@@ -248,11 +237,13 @@ img.image_resized {
                 + '<div class = "messageTimestamp">' + message.messageTimestamp + '</div>'
                 + '</div>';
               $("#comment").prepend(comment);});
-       let input = '<form id="messageForm" action="<%=request.getContextPath()%>/message " method="POST" >' 
+       			let input = '<form id="messageForm" action="<%=request.getContextPath()%>/post " method="POST" >' 
         		+ '<input type=text class = "message" name="messageContent" placeholder="留言...">'
-        		+ '<input type=hidden name= "artId" value="' + artId + '" >'
-        		+ '<input type=hidden name= "userId" value="  " >'
+        		+ '<input type=hidden name= "artFirstId" value="' + artFirstId + '" >'
+        		+ '<input type=hidden name= "artId" value="' + artFirstId + '" >'
+        		+ '<input type=hidden name= "userId" value="'+ ${sessionScope.user.userId} + '" >'
         		+ '<input type=hidden name= "messageTimestamp" value="' + messageTimestamp + '" >'
+        		+ '<input type=hidden name= "act" value="addMessage" >'
         		+ '<button class="messageBtn" type = "submit">留言</button>'
         		+ '</div>'
         		+ '</form>';
@@ -267,15 +258,15 @@ img.image_resized {
     });
 
     $.ajax({
-        url: "/oasis/forum",
+        url: "/oasis/art",
         type: "POST",
         data: {
           act: "getReply",
-          artId: artId
+          artId: artFirstId
         },
         dataType: "json",
         success: function (data) {
-
+			console.log(data);
           $.each(data,function (index, art) {
                 let artReply = '<div class="artContainer">'
                   + '<aside class="user">'
@@ -312,7 +303,16 @@ img.image_resized {
                       $('#comment'+ index)
                         .append(comment);
                     });
-                input = '<input type=text class = "message" name=message data-artId =' + art.artId + ' placeholder="留言...">';
+                let input = '<form id="messageForm" action="<%=request.getContextPath()%>/post " method="POST" >' 
+            		+ '<input type=text class = "message" name="messageContent" placeholder="留言...">'
+            		+ '<input type=hidden name= "artFirstId" value="' + artFirstId + '" >'
+            		+ '<input type=hidden name= "artId" value="' + art.artId + '" >'
+            		+ '<input type=hidden name= "userId" value="'+ ${sessionScope.user.userId} + '" >'
+            		+ '<input type=hidden name= "messageTimestamp" value="' + messageTimestamp + '" >'
+            		+ '<input type=hidden name= "act" value="addMessage" >'
+            		+ '<button class="messageBtn" type = "submit">留言</button>'
+            		+ '</div>'
+            		+ '</form>';
                 $('#comment'+ index).append( input);
               })
         },

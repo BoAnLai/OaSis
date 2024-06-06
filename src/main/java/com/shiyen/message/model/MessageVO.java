@@ -40,6 +40,9 @@ public class MessageVO implements java.io.Serializable {
 	
 	@Column(name ="message_timestamp")
 	private Timestamp messageTimestamp;
+	
+	@Column(name ="message_status")
+	private Integer messageStatus;
 
 	public Integer getMessageId() {
 		return messageId;
@@ -95,6 +98,14 @@ public class MessageVO implements java.io.Serializable {
 
 	public void setMessageArtId(Integer messageArtId) {
 		this.messageArtId = messageArtId;
+	}
+
+	public Integer getMessageStatus() {
+		return messageStatus;
+	}
+
+	public void setMessageStatus(Integer messageStatus) {
+		this.messageStatus = messageStatus;
 	}
 	
 	
