@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OaSis</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/avatar.css">
+    <link rel="stylesheet" type="text/css" href="/oasis/user/css/avatar.css">
     <style>
 	  table#table-1 {
 		background-color: #CCCCFF;
@@ -79,18 +79,13 @@
 	    <table class="table table-striped align-middle table-bordered text-center" id="datatable">
 	    	<thead>
 		    	<tr class="text-center">
-		    		<th>id</th>
-		    		<th>email</th>
-		    		<th>password</th>
-		    		<th>identity</th>
-		    		<th>company_name</th>
-		    		<th>register_date</th>
-		    		<th>last_login</th>
-		    		<th>last_ip</th>
-		    		<th>nickname</th>
-		    		<th>avatar</th>
-		    		<th>intro</th>
-		    		<th>button</th>
+		    		<th>ID</th>
+		    		<th>信箱</th>
+		    		<th>身份</th>
+		    		<th>公司名稱</th>
+		    		<th>暱稱</th>
+		    		<th>頭像</th>
+		    		<th>帳號管理</th>
 		    	</tr>
 	    	</thead>
 	    	<tbody class="table-group-divider">
@@ -98,29 +93,24 @@
 					<tr>
 						<td><%= listedUser.getUserId() %></td>
 						<td><%= listedUser.getUserEmail() %></td>
-						<td><%= listedUser.getUserPassword() %></td>
 						<td><%= listedUser.getUserIdentity() %></td>
 						<td><%= listedUser.getUserCompanyName() %></td>
-						<td><%= listedUser.getUserRegisterTimestamp() %></td>
-						<td><%= listedUser.getUserLastLogin() %></td>
-						<td><%= listedUser.getUserLastIp() %></td>
 						<td><%= listedUser.getUserNickname() %></td>
 						
 						<td>
 							<div class="">
 						<% if(listedUser.getUserAvatar()==null || listedUser.getUserAvatar().trim().isEmpty()){ %>
-		 					<img src="/oasis/user/resources/avatarUploaded/unknown.jpg" width="200px" height="200px" style="object-fit: cover;">
+		 					<img class=imgPreviewPlaceholder src="/oasis/user/resources/avatarUploaded/unknown.jpg" style="object-fit: cover;">
 						<% }else{ %>
-		 					<img src="<%= StringProcessor.pathAddRandomQueryParams(listedUser.getUserAvatar()) %>" width="200px" height="200px" style="object-fit: cover;">
+		 					<img class="imgUpload" src="<%= StringProcessor.pathAddRandomQueryParams(listedUser.getUserAvatar()) %>" style="object-fit: cover;">
 						<% } %>
 							</div>
 						</td>
 						
-						<td><%=StringProcessor.nullToEmpty(listedUser.getUserIntro())%></td>
 						<td>
 						  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/user/update" style="margin-bottom: 0px;">
-						     <input type="submit" value="修改">
-						     <input type="hidden" name="userId"  value="<%= listedUser.getUserId() %>"></FORM>
+						     <input type="submit" class="btn btn-outline-dark" value="查看">
+						     <input type="hidden" name="updateUserId"  value="<%= listedUser.getUserId() %>"></FORM>
 						</td>
 					</tr>
 		    	<% } %>

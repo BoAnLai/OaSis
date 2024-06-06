@@ -13,26 +13,35 @@ import javax.servlet.http.HttpSession;
 
 import com.mike.game.model.GameService;
 import com.mike.game.model.GameVO;
+import com.mike.tool.StringProcessor;
 
 @MultipartConfig
-@WebServlet(name = "GameServlet", urlPatterns = {"/game/list"})
+@WebServlet(name = "GameServlet", urlPatterns = {"/game/list","/game","/game/forum/*"})
 public class GameServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req,res);
-	}
-	
-	public void doPost(HttpServletRequest req, HttpServletResponse res)
-			throws ServletException, IOException {
-	
-		HttpSession session = req.getSession();
-		
 		if(req.getServletPath().equals("/game/list")) {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/game/gameList.jsp");
 			dispatcher.forward(req,res);
 		}
 		
-
+		if(req.getServletPath().equals("/game")) {
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/game/gameDisplay.jsp");
+			dispatcher.forward(req,res);
+		}
+	}
+	
+	
+	// /game/forum/*
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws ServletException, IOException {
+	
+		HttpSession session = req.getSession();
+		
+		Integer gameId = Integer.parseInt(StringProcessor.getUrlLastSegment(req.getRequestURI()));
+		
+		session.setAttribute("gameId", gameId);
+		req.getRequestDispatcher("/forum/oneForum.jsp").forward(req, res);
 		
 	} //doPost
 	

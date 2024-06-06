@@ -1,5 +1,9 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%
+	String errorMsg = (String) request.getAttribute("errorMsg");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +18,11 @@
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
 </head>
+<style>
+	form{
+		width: 400px;
+	}
+</style>
 
 <body>
 
@@ -27,6 +36,13 @@
 		class="container w-100 h-50 d-flex justify-content-center">
 		<form class="border border-primary border-2 rounded p-4"
 			action="/oasis/logging" method="post">
+			
+			<% if(errorMsg != null){ %>
+			<div class="bg-danger-subtle border border-danger-subtle rounded-3 text-danger-emphasis p-3 mb-2">
+			<%= errorMsg %>
+			</div>
+			<% } %>
+			
 			<div class="mb-3">
 				<label for="email" class="form-label fs-5 fw-bold">信箱</label> <input
 					type="email" class="form-control" id="email" name="email"
@@ -42,7 +58,7 @@
 				<a type="button" href="<%=request.getContextPath()%>" class="btn btn-secondary">回到首頁</a>
 			</div>
 			<div class="text-end mt-3 ml-auto">
-				<a href="<%= request.getContextPath() %>/user/register">註冊</a>
+				<a href="<%= request.getContextPath() %>/register">註冊</a>
 			</div>
 		</form>
 	</div>

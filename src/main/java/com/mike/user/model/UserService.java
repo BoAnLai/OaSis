@@ -27,7 +27,7 @@ public class UserService {
 	}
 	
 	//使用者更新資料
-	public void userUpdate(Integer userId,UserVO userUpdating) {
+	public void userUpdate(Integer userId,UserVO userUpdating) throws IllegalArgumentException{
 		
 		UserVO user = dao.findById(userId);
 		if(userUpdating.getUserEmail()!=null) {
@@ -40,22 +40,27 @@ public class UserService {
 			user.setUserIdentity(userUpdating.getUserIdentity());
 		}
 		if(userUpdating.getUserCompanyName()!=null) {
-			user.setUserCompanyName(StringProcessor.EmptyToNull(userUpdating.getUserCompanyName()));
+			user.setUserCompanyName(StringProcessor.blankToNull(userUpdating.getUserCompanyName()));
 		}		
 		if(userUpdating.getUserNickname()!=null) {
-			user.setUserNickname(StringProcessor.EmptyToNull(userUpdating.getUserNickname()));
+			user.setUserNickname(StringProcessor.blankToNull(userUpdating.getUserNickname()));
 		}
 		if(userUpdating.getUserIntro()!=null) {
-			user.setUserIntro(StringProcessor.EmptyToNull(userUpdating.getUserIntro()));
+			user.setUserIntro(StringProcessor.blankToNull(userUpdating.getUserIntro()));
 		}
 		if(userUpdating.getUserRealName()!=null) {
-			user.setUserRealName(StringProcessor.EmptyToNull(userUpdating.getUserRealName()));
+			user.setUserRealName(StringProcessor.blankToNull(userUpdating.getUserRealName()));
 		}
-		if(userUpdating.getUserCellphone()!=null) {
-			user.setUserCellphone(StringProcessor.EmptyToNull(userUpdating.getUserCellphone()));
+		String cellphone = userUpdating.getUserCellphone();
+		if(cellphone!=null) {
+			
+			if(!StringProcessor.isCellphoneNumber(cellphone)){
+				throw new IllegalArgumentException("Cellphone number only accept in format like 09XX-XXX-XXX");
+			}
+			user.setUserCellphone(StringProcessor.blankToNull(userUpdating.getUserCellphone()));
 		}
 		if(userUpdating.getUserAddress()!=null) {
-			user.setUserAddress(StringProcessor.EmptyToNull(userUpdating.getUserAddress()));
+			user.setUserAddress(StringProcessor.blankToNull(userUpdating.getUserAddress()));
 		}
 		dao.update(userId,user);
 	}
@@ -92,9 +97,15 @@ public class UserService {
 		}		
 	}
 	
-	public UserVO findByEmail(String email) throws SQLException {
+	public UserVO findByEmail(String email) throws SQLException, EmailNotFoundException {
 			UserVO user = dao.findByEmail(email);
 			return user;
+	}
+	
+	public UserVO getByUserId(Integer userId) {
+		
+		UserVO user = dao.findById(userId);
+		return user;
 	}
 
 }
