@@ -111,26 +111,24 @@
       
       
       <label for="title">標題</label>
-      <input type="text" id="title" name="artTitle" required value=${empty artTitle ? '' : artTitle}  <c:if test="${not empty artTitle}">readonly</c:if>  >
+      <input type="text" id="title" name="artTitle" required value="${artVO.artTitle}">
 
       <label for="content">內容</label>
-      <textarea id="content" name="artContent" ></textarea>
+      <textarea id="content" name="artContent" value="${artVO.artContent}" ></textarea>
 			
 	  <input type="hidden" name="artTimestamp" value="<%= formattedTimestamp %>">
-	  <input type="hidden" name="artReply" value='${empty artReplyId ? "null" : artReplyId}'>
-      <input type="hidden" name="userId" value="${sessionScope.user.userId}">
-      <input type="hidden" name="gameId" value="${sessionScope.gameId}">
-      <input type="hidden" name="artView" value=${empty artView ? "0" : artView}>
+	  
       
-      <input type="hidden" name="act" value=${empty artTitle ? 'addArt' : 'addReply'} >
+      <input type="hidden" name="act" value="updateArt" >
       <button type="submit" >發文</button>
     </form>
   </div>
   
   <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
-  <script>
+   
  
-
+	<script>
+	const content = `${artVO.artContent}`;
     CKEDITOR.ClassicEditor.create(document.querySelector('#content'), {
       language: 'zh', // 設定語言為繁體中文
       shouldNotHideSourceElement: true,
@@ -284,11 +282,11 @@
 
     })
       .then(editor => {
-        window.editor = editor;
+    	  
+          editor.setData(content);
         
           
-        });
-      })
+        })
       .catch(error => {
         console.error('初始化 CKEditor 失敗:', error);
       });
@@ -307,12 +305,13 @@
         editor.updateSourceElement();
         }
     });
-	
     
+       
+    </script>
     
       
     
-  </script>
+ 
 </body>
 
 </html>

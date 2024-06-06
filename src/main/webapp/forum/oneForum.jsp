@@ -40,7 +40,7 @@
 		src="https://cdn.datatables.net/v/ju/dt-2.0.7/b-3.0.2/b-colvis-3.0.2/cr-2.0.2/fh-4.0.1/r-3.0.2/rr-1.5.0/sc-2.4.2/sl-2.0.1/datatables.min.js"></script>
 	<script>
     $(document).ready(function () {
-      let gameId = ${sessionScope.game.gameId};
+      let gameId = ${sessionScope.gameId};
       $.ajax({
         url: "/oasis/art",
         type: "POST",

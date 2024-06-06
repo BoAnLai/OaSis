@@ -91,7 +91,7 @@
 
     <script>
         document.getElementById('gameList').onclick = function() {
-            window.location.href = '/oasis/game/list';
+            window.location.href = '/oasis/game';
         };
 
         document.getElementById('artList').onclick = function() {

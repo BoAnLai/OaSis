@@ -105,16 +105,40 @@ body {
 .commentContainer {
 	background-color: #F4DAD0;
 	margin: 1px;
-	opcaity: 0.5;
+	opcaity: 0.3;
+	z-index:0;
 }
+.oneMessage {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+}
+.oneMessage:hover{
+	background-color: #D8D3D3;
+	opcaity:0.8;
+	z-index:1;
+}
+.imageContainer{
+	position: absolute;
+  	top: 0;
+    right: 0;
+	 }
+.message{
+	 display: flex;
+	 flex-direction: column;
+  	
 
+}
 .messageTop {
 	display: flex;
-	justify-content: space-between;
+  flex-direction: row;
+	
 }
 
 .messageUser {
 	width: fit-content;
+	display: inline-block;
 	font-weight: bold;
 	flex-shrink: 0;
 	margin-left: 10px;
@@ -124,12 +148,9 @@ body {
 }
 
 .messageContent {
+	display: inline-block;
 	flex-grow: 1;
 	margin-top: 5px;
-}
-
-.messageContent:hovor {
-	 transform: scale(1.1);
 }
 
 .messageTimestamp {
@@ -137,7 +158,8 @@ body {
 	color: #777;
 	text-align: left;
 	margin-left: 10px;
-	margin-bottom: 5px;
+	margin-top: 5px;
+	
 }
 #messageForm{
 	display: flex;
@@ -152,6 +174,11 @@ img.image_resized {
 	max-width: 100%;
 	height: auto;
 }
+.image img{
+width:100%
+}
+
+
 </style>
 </head>
 
@@ -188,7 +215,8 @@ img.image_resized {
 				<div id="comment" class="comment"></div>
 			</div>
 		</div>
-	</div>
+	
+    
 	
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -229,12 +257,17 @@ img.image_resized {
         $('input[name="artReplyId"]').val(artFirstId);
         $.each(
             data.messageDTO,function (index,message) {
-              let comment = '<div class="messageTop">'
+              let comment =
+            	  '<div class ="oneMessage" >'
+            	+ '<div class="message">' 
+            	+ '<div class="messageTop">'
                 + '<span class = "messageUser">' + message.userNickname + '</span>'
                 + '<span class = "messageContent">' + message.messageContent + '</span>'
                 + '</div>'
                 + '<div>'
                 + '<div class = "messageTimestamp">' + message.messageTimestamp + '</div>'
+                + '</div>'
+                + '</div>'
                 + '</div>';
               $("#comment").prepend(comment);});
        			let input = '<form id="messageForm" action="<%=request.getContextPath()%>/post " method="POST" >' 
@@ -254,7 +287,8 @@ img.image_resized {
         console.error(
           'AJAX request failed:',
           error);
-      }
+      },
+      
     });
 
     $.ajax({
@@ -287,7 +321,9 @@ img.image_resized {
                 $.each(
                     art.messageDTO,
                     function (index1,message) {
-                      let comment = '<div class="messageTop">'
+                      let comment =
+                    	  '<div class ="oneMessage" >'
+                    	+ '<div class="messageTop">'
                         + '<span class = "messageUser">'
                         + message.userNickname
                         + '</span>'
@@ -298,6 +334,7 @@ img.image_resized {
                         + '<div>'
                         + '<div class = "messageTimestamp">'
                         + message.messageTimestamp
+                        + '</div>'
                         + '</div>'
                         + '</div>';
                       $('#comment'+ index)
@@ -323,6 +360,7 @@ img.image_resized {
         }
       });
   });
+  
 </script>
 </body>
 </html>

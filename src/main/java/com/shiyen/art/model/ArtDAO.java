@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import com.shiyen.message.model.MessageDTO;
 import com.shiyen.util.HibernateUtil;
@@ -32,7 +33,7 @@ public class ArtDAO implements ArtDAO_interface {
 	@Override
 	public Integer update(ArtVO artVO) {
 		try {
-			getSession().update(artVO);
+			getSession().saveOrUpdate(artVO);
 			return 1;
 		} catch (Exception e) {
 			return -1;
@@ -193,6 +194,54 @@ public class ArtDAO implements ArtDAO_interface {
 		 return getSession().createQuery(
 	            "FROM ArtVO ", ArtVO.class)
 	            .getResultList();
+	}
+
+	@Override
+	public List<ArtVO> getAllByUserId(Integer userId) {
+		Session session = getSession();
+		List<ArtVO> artVO = new ArrayList<>();
+		String sql ="SELECT a.art_Id, a.art_title,art_Content,a.art_timestamp,a.art_reply,a.art_favor,a.art_view,a.art_status"
+				+ " FROM art a " 
+				+ " WHERE a.art_user_id = :userId"
+				+ " ORDER BY a.art_timestamp";
+		NativeQuery<Object[]> query = session.createNativeQuery(sql);
+		query.setParameter("userId", userId);
+		List<Object[]> result = query.getResultList();
+        for(Object[] row:result) {
+        	Integer artId = (Integer)row[0];
+        	String artTitle = (String) row[1];
+        	String artContent = (String) row[2];
+            Timestamp artTimestamp = (Timestamp) row[3];
+            Integer artReply = (Integer) row[4];
+            Integer artFavor = (Integer) row[5];
+            Integer artView = (Integer) row[6];
+            Integer artStatus = (Integer) row[7];
+            
+            
+            
+            ArtVO art = new ArtVO();
+            art.setArtId(artId);
+            art.setArtTitle(artTitle);
+            art.setArtContent(artContent);
+            art.setArtTimestamp(artTimestamp);
+            art.setArtReply(artReply);
+            art.setArtFavor(artFavor);
+            art.setArtView(artView);
+            art.setArtStatus(artStatus);
+            artVO.add(art);
+            }
+        return artVO;
+	}
+
+	@Override
+	public ArtVO getOneArtByArtId(Integer artId) {
+		Session session = getSession();
+
+		String hql = "FROM ArtVO WHERE artId = :artId";
+		Query<ArtVO> query = session.createQuery(hql, ArtVO.class);
+		query.setParameter("artId", artId);
+		ArtVO artVO =  query.uniqueResult();
+		return artVO;
 	}
 
 }

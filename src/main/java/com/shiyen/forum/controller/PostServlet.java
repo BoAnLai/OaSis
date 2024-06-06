@@ -1,4 +1,4 @@
-package com.shiyen.message.controller;
+package com.shiyen.forum.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.ViewportUI;
 
 import com.shiyen.art.model.ArtService;
 import com.shiyen.art.model.ArtVO;
@@ -213,6 +214,60 @@ public class PostServlet extends HttpServlet {
 				successView.forward(req, res);	
 				break;
 			}
+		//導到修改網頁
+		case"update":{
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			ArtService artSvc = new ArtService();
+			ArtVO artVO = artSvc.getOneArtByArtId(artId);
+			
+			
+			
+			
+			String url = "/forum/updateArt.jsp";
+			req.setAttribute("artVO", artVO);
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+			
+		}
+		//修改文章
+		case"updateArt":{
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String artTitle = req.getParameter("artTitle");
+			if (artTitle == null || artTitle.trim().length() == 0) {
+				errorMsgs.add("文章標題: 請勿空白");
+			}
+			
+			String artContent = req.getParameter("artContent").trim();
+			if (artContent == null || artContent.trim().length() == 0) {
+				errorMsgs.add("內容請勿空白");
+			}	
+			Timestamp artTimestamp = null;
+			try {
+				artTimestamp = Timestamp.valueOf(req.getParameter("artTimestamp").trim());
+			} catch (IllegalArgumentException e) {
+				artTimestamp = new java.sql.Timestamp(System.currentTimeMillis());
+				errorMsgs.add("請輸入日期!");
+			}
+			
+			ArtVO artVO = new ArtVO();
+			artVO.setArtTitle(artTitle);
+			artVO.setArtContent(artContent);
+			artVO.setArtTimestamp(artTimestamp);
+			
+			ArtService artSvc = new ArtService();
+			artSvc.updateArt(artVO);
+			
+			String url = "/forum/artList.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+		}
 		
 		}
 		
