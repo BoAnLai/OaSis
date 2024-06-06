@@ -34,7 +34,7 @@
 		  </div>
 		</div>
 		
-      	<div class="card" style="background-color:#EA7500; background-size: cover; background-position: center;">
+      	<div class="card" style=" background-size: cover; background-position: center;">
 		  <div class="card-header">
 		    Featured
 		  </div>

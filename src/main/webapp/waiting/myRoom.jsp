@@ -216,7 +216,7 @@
 	</c:if>
     <c:if test="${list.size() eq 0}">
    
-   		<img src="https://cms.pixso.cn/images/designskills/2022/22Q3/kongzhuangtaiyemian1.png" alt="Centered Image" width="500" height="500" >
+   		<img src="<%=request.getContextPath() %>/waiting/img/size0_type.png" alt="Centered Image" width="500" height="500" >
 	</c:if>
     
     <c:forEach var="waitingVO" items="${list}" varStatus="status">

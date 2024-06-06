@@ -395,14 +395,9 @@
 			}
 		
 				function disconnect() {
-				    if (webSocket) {
-				        webSocket.send(JSON.stringify({ type: 'close', userName: self })); // 发送离线消息
-				        bSocket.send(JSON.stringify({ type: 'close', userName: self })); // 发送离线消息
-				        webSocket.close();
-				    }
-				    if (PswebSocket) {
-				        PswebSocket.close();
-				    }
+				   
+				    webSocket.close();
+				   
 				    document.getElementById('sendMessage').disabled = true;
 				    document.getElementById('connect').disabled = false;
 				    document.getElementById('disconnect').disabled = true;
