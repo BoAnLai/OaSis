@@ -1,9 +1,12 @@
+<%@page import="com.lee.waitingperson.model.WaitingPersonVO"%>
+<%@page import="com.lee.waitingperson.model.WaitingPersonService"%>
 <%@page import="com.mike.user.model.UserDTO"%>
 <%@page import="com.mike.user.model.UserClientService"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
 <%@page import="com.lee.waiting.model.WaitingService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 
@@ -143,7 +146,7 @@
     <th scope="col" style="text-align: left">創建者</th>
     <th scope="col" style="text-align: center">房間編號</th>
     <th scope="col" style="text-align: center">出發時間</th>
-    <th scope="col" style="text-align: center">人數上限</th>
+    <th scope="col" style="text-align: center">人數上限/房內人數</th>
     <th scope="col" style="text-align: center">遊戲類型</th>
     <th scope="col" style="text-align: center">加入</th>
     <th scope="col" style="text-align: center">查看</th>
@@ -158,12 +161,17 @@
             <th scope="row" class="ps-4">
                 <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" for="contacusercheck7"></label></div>
             </th>
-            
+            <c:set var="waitingID" value="${WaitingVO.waitingID}" />
+			
+			<c:set var="waitingID" value="${WaitingVO.waitingID}" />
+			<jsp:useBean id="wapSVC" class="com.lee.waitingperson.model.WaitingPersonService" scope="page" />
+			<c:set var="wpList" value="${wapSVC.getAll(waitingID)}" />
+			<c:set var="a" value="${fn:length(wpList)}" />
 			
             <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${WaitingVO.waitingID}</td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0">${WaitingVO.waitingReserve}</td>
-            <td style="text-align: center">${WaitingVO.waitingMaxPeople}</td>
+            <td style="text-align: center">${WaitingVO.waitingMaxPeople}/${a}</td>
             <td style="text-align: center">${WaitingVO.waitingGameName}</td>
             
                 
