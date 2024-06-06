@@ -41,7 +41,7 @@ public class GameServlet extends HttpServlet {
 		Integer gameId = Integer.parseInt(StringProcessor.getUrlLastSegment(req.getRequestURI()));
 		
 		session.setAttribute("gameId", gameId);
-		req.getRequestDispatcher("/forum/oneForum.jsp").forward(req, res);
+		req.getRequestDispatcher("/forum").forward(req, res);
 		
 	} //doPost
 	

@@ -42,7 +42,7 @@
 		  <div class="card-body">
 		    <h5 class="card-title">Discuss</h5>
 		    <div class="h-75">
-			    <p class="card-text">Lventtttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttitttttttttiam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			    <p class="card-text">我們的論壇讓你輕鬆參與各種遊戲社群的討論:發表文章、留言評論或是針對文章再發表文張進行討論!馬上加入我們，開始分享遊戲心得、吐槽官方或發表最新迷因圖!</p>
 		    </div>
 		    <div class="btn-container">
 			    <a href="#" class="btn btn-primary">Enter</a>
@@ -57,7 +57,7 @@
 		  <div class="card-body">
 		    <h5 class="card-title">Match Up</h5>
 		    <div class="h-75">
-			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			    <p class="card-text">我們的配對功能讓您可以輕鬆組隊，提供多種實用功能，包括出發時間、遊戲標籤、大廳聊天和一對一聊天。無論您是想找到合適的遊戲夥伴，還是希望在遊戲開始前討論策略，這個功能都能滿足您的需求，讓您的遊戲體驗更加順暢和愉快。加入我們，立即開始您的遊戲之旅！</p>
 		    </div>
 		    <div class="btn-container">
 			    <a href="#" class="btn btn-primary">Enter</a>
@@ -72,7 +72,7 @@
 		  <div class="card-body">
 		    <h5 class="card-title">Shopping</h5>
 		    <div class="h-75">
-			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			    <p class="card-text">荷包裡錢太多沒地方花嗎?購物車功能讓你從此不需煩惱!把太多的錢錢轉換成自己喜歡的形狀!</p>
 		    </div>
 		    <div class="btn-container">
 			    <a href="#" class="btn btn-primary">Enter</a>
@@ -87,7 +87,7 @@
 		  <div class="card-body">
 		    <h5 class="card-title">Subscribe</h5>
 		    <div class="h-75">
-			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			    <p class="card-text">訂閱功能讓您輕鬆追蹤喜愛的文章或遊戲：訂閱您感興趣的文章，第一時間收到最新的更新通知！馬上訂閱，確保您不會錯過任何精彩內容。立即加入我們，享受即時的資訊掌握，讓您的遊戲體驗更加豐富和充實！</p>
 		    </div>
 		    <div class="btn-container">
 			    <a href="#" class="btn btn-primary">Enter</a>

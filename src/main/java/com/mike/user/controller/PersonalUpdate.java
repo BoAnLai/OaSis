@@ -98,8 +98,7 @@ public class PersonalUpdate extends HttpServlet{
 				part.write(f.toString());
 				imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
 			}
-			userUpdating.setUserAvatar(imgSrcPath);
-			userSvc.userUpdate(userUpdating.getUserId(),userUpdating);				
+			userSvc.updateAvatar(userUpdating.getUserId(),imgSrcPath);				
 		}
 		
 		

@@ -58,6 +58,40 @@
 		                <input name="confirmPassword" id="confirmPassword" class="form-control" type="password" placeholder="必填" value="">
 		        	</div>
 		        	<div class="mb-4">
+                  		<label for="identity" class="form-label fs-4 fw-bold">身份</label>
+	                  	<select name="identity" class="form-select" aria-label="Default select example">
+	                  	<% 
+	                  		switch(userDisplayed.getUserIdentity().toString()){
+	                  	
+	                  			case "REGULAR":
+	                  	%>
+							<option value="REGULAR" selected>一般使用者</option>
+							<option value="COMPANY">廠商</option>
+						  	<option value="ADMINISTRATOR">管理員</option>
+	                  	<%
+									break;
+	                  	
+	                  	
+	                  			case "COMPANY":
+						%>	                  	
+							<option value="REGULAR">一般使用者</option>
+							<option value="COMPANY" selected>廠商</option>
+						  	<option value="ADMINISTRATOR">管理員</option>
+	                  	<%			break;
+	                  	
+	                  			case "ADMINISTRATOR":
+	                  	%>	
+							<option value="REGULAR">一般使用者</option>
+							<option value="COMPANY">廠商</option>
+						  	<option value="ADMINISTRATOR" selected>管理員</option>
+	                  	<%
+	                  				break;
+	                  		}
+	                  	%>
+	                  	
+						</select>
+		        	</div>
+		        	<div class="mb-4">
 	                  <label for="nickname" class="form-label fs-4 fw-bold">暱稱</label>
 	                  <input name="nickname" id="nickname" class="form-control" type="text" value="<%=StringProcessor.nullToEmpty(userDisplayed.getUserNickname())%>">
 		        	</div>

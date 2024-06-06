@@ -68,7 +68,7 @@ public class UserService {
 	public void updateAvatar(Integer userId, String avatarPath) {
 		
 		UserVO userUpdating = dao.findById(userId);
-		if(avatarPath != null && avatarPath.equals("")) {
+		if(avatarPath != null && !avatarPath.isBlank()) {
 			userUpdating.setUserAvatar(avatarPath);
 		}
 		dao.update(userId, userUpdating);
