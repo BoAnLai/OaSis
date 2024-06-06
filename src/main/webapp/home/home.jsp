@@ -10,6 +10,18 @@
 		.card{
 			max-width: 250px;
 		}
+		div.card-body{
+			height:300px;
+		}
+		#btn-container{
+			display: flex;
+            justify-content: flex-end;
+		}
+		p{
+			height:100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	</style>
 </head>
 <body>
@@ -29,8 +41,12 @@
 		  </div>
 		  <div class="card-body">
 		    <h5 class="card-title">Discuss</h5>
-		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		    <a href="#" class="btn btn-primary">Enter</a>
+		    <div class="h-75">
+			    <p class="card-text">Lventtttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttitttttttttiam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		    </div>
+		    <div class="btn-container">
+			    <a href="#" class="btn btn-primary">Enter</a>
+		    </div>
 		  </div>
 		</div>
 		
@@ -40,8 +56,12 @@
 		  </div>
 		  <div class="card-body">
 		    <h5 class="card-title">Match Up</h5>
-		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		    <a href="#" class="btn btn-primary">Enter</a>
+		    <div class="h-75">
+			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		    </div>
+		    <div class="btn-container">
+			    <a href="#" class="btn btn-primary">Enter</a>
+		    </div>
 		  </div>
 		</div>
 		
@@ -51,8 +71,12 @@
 		  </div>
 		  <div class="card-body">
 		    <h5 class="card-title">Shopping</h5>
-		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		    <a href="#" class="btn btn-primary">Enter</a>
+		    <div class="h-75">
+			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		    </div>
+		    <div class="btn-container">
+			    <a href="#" class="btn btn-primary">Enter</a>
+		    </div>
 		  </div>
 		</div>
 		
@@ -62,8 +86,12 @@
 		  </div>
 		  <div class="card-body">
 		    <h5 class="card-title">Subscribe</h5>
-		    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		    <a href="#" class="btn btn-primary">Enter</a>
+		    <div class="h-75">
+			    <p class="card-text">Lveniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		    </div>
+		    <div class="btn-container">
+			    <a href="#" class="btn btn-primary">Enter</a>
+		    </div>
 		  </div>
 		</div>
 		
