@@ -1,9 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.user.model.*"%>
+<%@ page import="com.ryan.subs.model.*"%>
 
 <%
 	UserDTO user = (UserDTO) session.getAttribute("user");
+	
 %>
 
 <!DOCTYPE html>

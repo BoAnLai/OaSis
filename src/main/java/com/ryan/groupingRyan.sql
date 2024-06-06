@@ -4,7 +4,7 @@ DROP table IF EXISTS subs;
 
 CREATE TABLE subs (
     subs_id INT AUTO_INCREMENT PRIMARY KEY not null,
-    subs_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    subs_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     subs_user_id INT NOT NULL,
     subs_game_id INT,
     subs_art_id INT,

@@ -1,10 +1,11 @@
 package com.ryan.subs.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -23,10 +24,10 @@ public class SubsDAOImpl implements SubsDAO_interface {
 		}
 	}
 	
-	private static final String INSERT_SUBS = "INSERT INTO subs (subs_user_id, subs_game_id, subs_art_id, subs_date, subs_status) VALUES (?, ?, ?, ?, TRUE)";
-	private static final String GET_ONE_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_date, subs_status FROM subs where subs_id = ?";
-	private static final String GET_USERID_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_date, subs_status FROM subs where subs_user_id = ?";
-	private static final String UPDATE = "UPDATE subs set subs_date=?, subs_status=? where subs_id = ?";
+	private static final String INSERT_SUBS = "INSERT INTO subs (subs_user_id, subs_game_id, subs_art_id, subs_status) VALUES (?, ?, ?, TRUE)";
+	private static final String GET_ONE_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_timestamp, subs_status FROM subs where subs_id = ?";
+	private static final String GET_USERID_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_timestamp, subs_status FROM subs where subs_user_id = ?";
+	private static final String UPDATE = "UPDATE subs set subs_status=? where subs_id = ?";
 	
 	@Override
 	public void insert(SubsVO subsVO) {
@@ -42,8 +43,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			pstmt.setInt(1, subsVO.getSubsUserId());
 			pstmt.setInt(2, subsVO.getSubsGameId());
 			pstmt.setInt(3, subsVO.getSubsArtId());
-			pstmt.setDate(4, new java.sql.Date(subsVO.getSubsDate().getTime()));
-			pstmt.setBoolean(5, subsVO.getSubsStatus());//狀態欄
+			pstmt.setBoolean(4, subsVO.getSubsStatus());//狀態欄
 
 			pstmt.executeUpdate("set auto_increment_offset=1;");
 			pstmt.executeUpdate("set auto_increment_increment=1;");
@@ -83,9 +83,8 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 
-			pstmt.setDate(1, new java.sql.Date(subsVO.getSubsDate().getTime()));
-			pstmt.setBoolean(2, subsVO.getSubsStatus());
-			pstmt.setInt(3, subsVO.getSubsId());
+			pstmt.setBoolean(1, subsVO.getSubsStatus());
+			pstmt.setInt(2, subsVO.getSubsId());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -112,9 +111,9 @@ public class SubsDAOImpl implements SubsDAO_interface {
 	}
 	
 	@Override
-	public SubsVO findByUserId(Integer subsUserId) {
+	public List<SubsVO> findByUserId(Integer subsUserId) {
 		
-		SubsVO subsVO = null;
+		List<SubsVO> subsList = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -130,16 +129,16 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				subsVO = new SubsVO();
+				SubsVO subsVO = new SubsVO();
                 subsVO.setSubsId(rs.getInt("subs_id"));
                 subsVO.setSubsUserId(rs.getInt("subs_user_id"));
                 subsVO.setSubsGameId(rs.getInt("subs_game_id"));
                 subsVO.setSubsArtId(rs.getInt("subs_art_id"));
-                subsVO.setSubsDate(rs.getDate("subs_date"));
+                subsVO.setSubsTimestamp(rs.getTimestamp("subs_timestamp"));
                 subsVO.setSubsStatus(rs.getBoolean("subs_status"));
+                subsList.add(subsVO);
                
-                             
-			}
+            }
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -169,7 +168,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 				}
 			}
 		}
-		return subsVO;
+		return subsList;
 	}
 	
 	@Override
@@ -193,7 +192,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
                 subsVO.setSubsUserId(rs.getInt("subs_user_id"));
                 subsVO.setSubsGameId(rs.getInt("subs_game_id"));
                 subsVO.setSubsArtId(rs.getInt("subs_art_id"));
-                subsVO.setSubsDate(rs.getDate("subs_date"));
+                subsVO.setSubsTimestamp(rs.getTimestamp("subs_timestamp"));
                 subsVO.setSubsStatus(rs.getBoolean("subs_status"));
 				
 			}

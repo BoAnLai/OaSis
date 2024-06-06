@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home/*"})
 public class HomeController extends HttpServlet{
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res){

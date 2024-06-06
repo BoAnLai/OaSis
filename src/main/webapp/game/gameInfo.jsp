@@ -21,5 +21,6 @@
 	<p>GameId: <%= game.getGameId() %></p>
 	<p>GameName: <%= game.getGameName() %></p>
 	<img src="<%= game.getGameImg() %>">
+	<a href=""></a>
 </body>
 </html>

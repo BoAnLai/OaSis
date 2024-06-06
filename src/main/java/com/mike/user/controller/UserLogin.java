@@ -2,12 +2,12 @@ package com.mike.user.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +17,9 @@ import com.mike.user.model.UserDTO;
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
+
+import com.ryan.subs.model.SubsService;
+import com.ryan.subs.model.SubsVO;
 
 @MultipartConfig
 @WebServlet(name = "userLogin", urlPatterns = {"/login","/logging","/loggingout"})
@@ -31,6 +34,7 @@ public class UserLogin extends HttpServlet {
 		UserService userSvc = new UserService();
 		HttpSession session = req.getSession();
 		
+		SubsService subsSvc = new SubsService();
 		
 		
 		
@@ -63,6 +67,15 @@ public class UserLogin extends HttpServlet {
 					UserDTO userDTO = new UserDTO(user);
 					
 					session.setAttribute("user",userDTO);
+					
+					
+					List<SubsVO> subsList = subsSvc.findByUserId(userDTO.getUserId());
+					
+					session.setAttribute("subsList", subsList);
+					
+					
+					
+					
 					
 					res.sendRedirect("/oasis");
 				}else {
