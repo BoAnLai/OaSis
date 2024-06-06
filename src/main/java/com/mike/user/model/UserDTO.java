@@ -29,10 +29,10 @@ public class UserDTO {
 	}
 	
 	public String getUserName() {
-		if(!(userNickname == null || userNickname == "")) {
-			return userNickname;
-		}else {
+		if(userNickname == null || userNickname.isBlank()) {
 			return StringProcessor.getUserNameFromEmail(userEmail);
+		}else {
+			return userNickname;
 		}
 	}
 
