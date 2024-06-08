@@ -7,8 +7,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
-import tool.HibernateUtil;
-import tool.Tool;
+import com.lee.waiting.controller.HibernateUtil;
+import com.lee.waiting.controller.Tool;
 
 /*
  * SQL:是對表格跟欄位做查詢

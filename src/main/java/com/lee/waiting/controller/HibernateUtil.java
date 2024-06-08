@@ -1,4 +1,4 @@
-package tool;
+package com.lee.waiting.controller;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

@@ -256,7 +256,7 @@ waiting_maxpeople int,
 waiting_game_name varchar(20) NOT NULL
 );
 INSERT INTO waiting (waiting_user_id,waiting_reserve,waiting_maxpeople,waiting_game_name)
-values(3,'2024-06-21 08:30:00',2,'百變洽吉'), (2,'2024-07-01 21:30:00',5,'世紀帝國');
+values(3,'2024-06-21 08:30:00',2,'阿爾比恩'), (2,'2024-07-01 21:30:00',5,'世紀帝國');
 
 -- waiting_person table --------------------------
 CREATE TABLE WaitingPerson(
