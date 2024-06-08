@@ -1,89 +1,184 @@
 package com.jiahong.purchase.model;
 
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import com.mike.purchase.model.PurchaseVO;
+import org.hibernate.Session;
+
+import com.jiahong.item.model.ItemVO;
+import com.lee.waiting.model.WaitingVO;
 import com.mike.tool.HibernateTool;
+import com.mike.tool.StringProcessor;
+
+import tool.HibernateUtil;
 
 public class PurchaseService {
-    
-    public List<PurchaseVO> listAllPurchases() {
-        Transaction transaction = null;
-        List<PurchaseVO> purchases = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            purchases = session.createQuery("FROM PurchaseVO", PurchaseVO.class).list();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return purchases;
-    }
 
-    public PurchaseVO getPurchaseById(Integer purchaseId) {
-        Transaction transaction = null;
-        PurchaseVO purchase = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            purchase = session.get(PurchaseVO.class, purchaseId);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return purchase;
-    }
+	public PurchaseService() {
+		super();
+	}
+	public void insert(PurchaseVO vo) {
 
-    public void addPurchase(PurchaseVO purchase) {
-        Transaction transaction = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(purchase);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			session.save(vo);
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+		}
 
-    public void updatePurchase(PurchaseVO purchase) {
-        Transaction transaction = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.update(purchase);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+	}
+	
+	
+	public PurchaseVO getPurchaseByPurchaseId(Integer purchaseId) {
+		try {	
+			Session session = HibernateTool.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			
+			PurchaseVO purchase = session.get(PurchaseVO.class, purchaseId);
+			session.getTransaction().commit();
+			return purchase;
+		}catch(Exception e) {
+			throw e;
+		}		
+	}
+	
+	
+	
+	public PurchaseVO createPurchase(Integer userId) {
+		try {	
+			Session session = HibernateTool.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			
+			PurchaseVO purchase = new PurchaseVO(userId);
+			session.save(purchase);
+			session.refresh(purchase);
+			session.getTransaction().commit();
+			return purchase;
+		}catch(Exception e) {
+			throw e;
+		}		
+	}
+	
+	
+	
+	public PurchaseVO getCurrentPurchase(Integer userId) {
+		String hql = "FROM PurchaseVO p WHERE p.purchaseUserId = :userId AND p.purchaseClosed = :closed";
+		
+		try {	
+			Session session = HibernateTool.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			List<PurchaseVO> purchaseList = session.createQuery(hql, PurchaseVO.class)
+                    .setParameter("userId", userId)
+                    .setParameter("closed", false)
+                    .getResultList();
+			session.getTransaction().commit();
+			
+			
+			int listLength = purchaseList.size();
+			
+			PurchaseVO output = null;
+			if(listLength == 0) {
+				
+				output = createPurchase(userId);
+				return output;
+			}else if(listLength == 1){
+				output = purchaseList.get(0);
+				return output;
+			}else {
+				System.out.println("Bugs in purchase managing code: more than one active purchase");
+				output = purchaseList.get(0);
+				return output;
+			}
+			
+		}catch(Exception e) {
+			throw e;
+		}	
+	}
 
-    public void deletePurchase(Integer purchaseId) {
-        Transaction transaction = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            PurchaseVO purchase = session.get(PurchaseVO.class, purchaseId);
-            if (purchase != null) {
-                session.delete(purchase);
-                System.out.println("Purchase is deleted");
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-    }
+	
+	
+	public void updatePurchase(PurchaseVO purchase) {
+		
+		try {	
+			Session session = HibernateTool.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+			
+			session.update(purchase);
+			
+			session.getTransaction().commit();
+		}catch(Exception e) {
+			throw e;
+		}	
+	}
+	
+	
+	
+	
+	public void closePurchase(Integer purchaseId) {
+		PurchaseVO purchase = getPurchaseByPurchaseId(purchaseId);
+		closePurchase(purchase);
+	}
+	
+	public void closePurchase(PurchaseVO purchase) {
+		updateTotal(purchase);
+		
+		String realName = purchase.getPurchaseUserRealName();
+		boolean realNameValid = realName != null && !(realName.isBlank()) ;
+		
+		String cellphone = purchase.getPurchaseUserCellphone();
+		boolean cellphoneValid = StringProcessor.isCellphoneNumber(cellphone);
+		
+		String address = purchase.getPurchaseUserAddress();
+		boolean addressValid = address != null && !(address.isBlank());
+		
+		if(realNameValid && cellphoneValid && addressValid) {
+			try {	
+				Session session = HibernateTool.getSessionFactory().getCurrentSession();
+				session.beginTransaction();
+				
+				purchase.setPurchaseClosed(true);
+				
+				session.update(purchase);
+				
+				session.getTransaction().commit();
+			}catch(Exception e) {
+				throw e;
+			}
+			
+		}else {
+			throw new IllegalArgumentException("payment info are not valid ");
+		}
+	}
+	
+	
+	
+	
+	public void addItems(Integer userId, Integer productId, Integer productCount) {}
+	
+	public void removeItems(Integer itemId) {}
+	
+
+	
+	
+	public void updateTotal(Integer purchaseId) {
+		PurchaseVO purchase = getPurchaseByPurchaseId(purchaseId);
+		updateTotal(purchase);
+	}
+	
+	public void updateTotal(PurchaseVO purchase) {
+		List<ItemVO> itemList = purchase.getItems();
+		
+		int total = 0;
+		for(ItemVO item: itemList) {
+			total += item.getItemTotal();
+		}
+		
+		purchase.setPurchaseTotal(total);
+		updatePurchase(purchase);
+	}
+	
+	
+	
 }

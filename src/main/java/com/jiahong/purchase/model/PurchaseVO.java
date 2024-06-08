@@ -1,6 +1,7 @@
-package com.mike.purchase.model;
+package com.jiahong.purchase.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 import com.jiahong.item.model.ItemVO;
+import com.jiahong.product.model.ProductVO;
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
 
@@ -52,32 +54,22 @@ public class PurchaseVO implements java.io.Serializable {
 
     @OneToMany(mappedBy = "purchase", fetch=FetchType.EAGER)
     private List<ItemVO> items;
-
+    
     public PurchaseVO() {
         super();
     }
     
     public PurchaseVO(Integer userId) {
-    	
-    	UserService userSvc = new UserService();
-    	UserVO user = userSvc.getByUserId(userId);
-    	
-    	setPurchaseUserId(userId);
-    	setPurchaseUserRealName(user.getUserRealName());
-    	setPurchaseUserCellphone(user.getUserCellphone());
-    	setPurchaseUserAddress(user.getUserAddress());
-    	setPurchaseTotal(0);
-    	setPurchaseClosed(false);
-    	
+        UserService userSvc = new UserService();
+        UserVO user = userSvc.getByUserId(userId);
+        
+        setPurchaseUserId(userId);
+        setPurchaseUserRealName(user.getUserRealName());
+        setPurchaseUserCellphone(user.getUserCellphone());
+        setPurchaseUserAddress(user.getUserAddress());
+        setPurchaseTotal(0);
+        setPurchaseClosed(false);
     }
-
-//    public PurchaseVO(Integer purchaseUserId, String purchaseUserRealName, String purchaseUserCellphone, String purchaseUserAddress, Integer purchaseTotal) {
-//        this.purchaseUserId = purchaseUserId;
-//        this.purchaseUserRealName = purchaseUserRealName;
-//        this.purchaseUserCellphone = purchaseUserCellphone;
-//        this.purchaseUserAddress = purchaseUserAddress;
-//        this.purchaseTotal = purchaseTotal;
-//    }
 
     public Integer getPurchaseId() {
         return purchaseId;
@@ -122,8 +114,9 @@ public class PurchaseVO implements java.io.Serializable {
     public Timestamp getPurchaseTimestamp() {
         return purchaseTimestamp;
     }
+    
     public void setPurchaseTimestamp(Timestamp purchaseTimestamp) {
-    	this.purchaseTimestamp = purchaseTimestamp;
+        this.purchaseTimestamp = purchaseTimestamp;
     }
 
     public Integer getPurchaseTotal() {
@@ -135,26 +128,24 @@ public class PurchaseVO implements java.io.Serializable {
     }
 
     public Boolean getPurchaseClosed() {
-		return purchaseClosed;
-	}
+        return purchaseClosed;
+    }
 
-	public void setPurchaseClosed(Boolean purchaseClosed) {
-		this.purchaseClosed = purchaseClosed;
-	}
+    public void setPurchaseClosed(Boolean purchaseClosed) {
+        this.purchaseClosed = purchaseClosed;
+    }
 
-	
-	public List<ItemVO> getItems() {
-		return items;
-	}
-	
-	public void setItems(List<ItemVO> items) {
-		this.items = items;
-	}
-
-	@Override
+    public List<ItemVO> getItems() {
+        return items;
+    }
+    
+    public void setItems(List<ItemVO> items) {
+        this.items = items;
+    }
+    
+    @Override
     public String toString() {
         String outputStr = "Purchase: [";
-
         outputStr += "\n purchaseId=" + this.getPurchaseId();
         outputStr += "\n purchaseUserId=" + this.getPurchaseUserId();
         outputStr += "\n purchaseUserRealName=" + this.getPurchaseUserRealName();
@@ -164,7 +155,6 @@ public class PurchaseVO implements java.io.Serializable {
         outputStr += "\n purchaseTotal=" + this.getPurchaseTotal();
         outputStr += "\n purchaseClosed=" + this.getPurchaseClosed();
         outputStr += "]\n\n";
-
         return outputStr;
     }
 }

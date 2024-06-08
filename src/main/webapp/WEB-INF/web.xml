@@ -100,13 +100,33 @@
 		<servlet-name>ForumServlet</servlet-name>
 		<url-pattern>/forum</url-pattern>
 	</servlet-mapping>
+	
 	<!-- Jiahong block -->
-	<servlet>
-		<servlet-name>ProductServlet</servlet-name>
-		<servlet-class>com.jiahong.product.controller.ProductServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ProductServlet</servlet-name>
-		<url-pattern>/ProductServlet</url-pattern>
-	</servlet-mapping>
+	 <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>com.jiahong.product.controller.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/ProductServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <servlet-class>com.jiahong.purchase.controller.PurchaseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <url-pattern>/PurchaseServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ItemServlet</servlet-name>
+        <servlet-class>com.jiahong.item.controller.ItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemServlet</servlet-name>
+        <url-pattern>/ItemServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
