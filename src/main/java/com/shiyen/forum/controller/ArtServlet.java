@@ -71,7 +71,7 @@ public class ArtServlet extends HttpServlet {
 			break;
 		}
 //獲取首篇文章
-		case "getArt":{
+		case "getFirstArt":{
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 //			接收參數和錯誤驗證
@@ -87,7 +87,7 @@ public class ArtServlet extends HttpServlet {
 			}
 //			查詢資料
 			ArtService artSvc = new ArtService();
-			ArtDTO  artDTO = artSvc.getOneArt(Integer.valueOf(artId));
+			ArtDTO  artDTO = artSvc.getFirstArt(Integer.valueOf(artId));
 			if (artDTO == null) {
 				errorMsgs.add("查無資料");
 			}

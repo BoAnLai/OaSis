@@ -10,7 +10,7 @@
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<title>所有文章 - listAllArt.jsp</title>
+<title>所有文章 </title>
 
 <style>
 table#table-1 {
@@ -38,9 +38,10 @@ h4 {
 		margin-top: 5px;
 		margin-bottom: 5px;
 	  }
-	  table, th, td {
-	    border: 1px solid #CCCCFF;
-	  }
+	    table.dataTable th,
+    	table.dataTable td {
+        white-space: nowrap;  
+    }
 	  th, td {
 	    padding: 5px;
 	    text-align: center;
@@ -59,7 +60,10 @@ h4 {
             font-size: 12px;
         }
     	}
-    
+    .artTitle{
+    	color:black;
+	 	text-decoration: none
+    }
 </style>
 
 </head>
@@ -76,14 +80,13 @@ pageContext.setAttribute("list", list);
 
 
 	
-	<h3>所有文章 - listAllArt.jsp</h3>
+	<h3>發表文章</h3>
 	
 
 	<table id="artTable">
 		<thead>
 		<tr>
-			<th>文章編號</th>
-			<th>文章內容</th>
+			<th>文章標題</th>
 			<th>發文時間</th>
 			<th>修改</th>
 			<th>刪除</th>
@@ -94,23 +97,22 @@ pageContext.setAttribute("list", list);
 		<c:forEach var="artVO" items="${list}">
 			
 			<tr>
-				<td>${artVO.artId}</td>
-				<td><a href="<%=request.getContextPath()%>/forum/artView.jsp" >${artVO.artTitle}</a></td>
+				<td><a href="<%=request.getContextPath()%>/forum/artView.jsp?art=${empty artVO.artReply ? artVO.artId:artVO.artReply }" >${artVO.artTitle}</a></td>
 				<td>${artVO.artTimestamp}</td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post"
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reurl"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> 
 						<input type="hidden"name="artId" value="${artVO.artId}"> 						
-						<input type="hidden"name="act" value="update">
+						<input type="hidden"name="reurl" value="update">
 					</FORM>
 				</td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>//forum"
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden"
-							name="artId" value="${artVO.artId}"> <input type="hidden"
-							name="act" value="delete">
+						<input type="submit" value="刪除"> 
+						<input type="hidden" name="artId" value="${artVO.artId}"> 
+						<input type="hidden" name="act" value="delete">
 					</FORM>
 				</td>
 			</tr>
@@ -128,7 +130,25 @@ pageContext.setAttribute("list", list);
 		src="https://cdn.datatables.net/v/ju/dt-2.0.7/b-3.0.2/b-colvis-3.0.2/cr-2.0.2/fh-4.0.1/r-3.0.2/rr-1.5.0/sc-2.4.2/sl-2.0.1/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#artTable').DataTable();
+            $('#artTable').DataTable({
+                "columns": [
+                    { "width": "60%" }, 
+                    { "width": "20%" }, 
+                    { "width": "10%" }, 
+                    { "width": "10%" }, 
+                    
+                ],
+            "columnDefs": [{
+                "targets": "_all", 
+                "render": function (data, type, row, meta) {
+                    if (type === 'display' && typeof data === 'string' && data.includes('<a ')) {
+                        return data.replace(/<a /, '<a class="artTitle" ');
+                    }
+                    return data;
+                }
+            }]
+            
+            });
         });
     </script>
 

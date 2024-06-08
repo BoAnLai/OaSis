@@ -55,30 +55,44 @@ body {
 	margin-bottom: 10px;
 }
 .user {
+	display: flex;
+	flex-direction: column;
 	position: sticky;
 	height: 200px;
 	width: 200px;
 	top: 150px;
-	padding: 20px;
 	flex-shrink: 0;
 	background-color: white;
+	padding:10px;
 	margin: 10px;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
-
-.user img {
-	height: 50px;
-	width: 50px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center; /* 水平居中 */
-	align-items: center;
+.userAvatar{
+	flex:8;
+    border-radius: 50%;  
+   	display:flex;
+     overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    
 }
+.userAvatar img {
+	 display: block;
+ 	 width: 100%;
+ 	 height: auto;
+ 	 max-width:150px;
+ 	 max-height:130px;
+ 	 
+        }
 
 .userNickname {
+    flex:2;
 	width: fit-content;
-	top: 100px;
-	left: 100px;
+	display: flex;
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+   
 }
 
 .art {
@@ -170,10 +184,7 @@ input[type="text"] {
 	width: 100%;
 }
 
-img.image_resized {
-	max-width: 100%;
-	height: auto;
-}
+
 .image img{
 width:100%
 }
@@ -197,7 +208,9 @@ width:100%
 	<div class="artContainer">
 		<!-- 左侧作者信息 -->
 		<aside id="user" class="user">
-			<img src="author-avatar.jpg" alt="作者头像">
+			<div class = "userAvatar">
+			<img src="" alt="使用者頭像" id = "firstUser">
+			</div>
 			<div id="userNickname" class="userNickname"></div>
 		</aside>
 		<!-- 右侧文章内容 -->
@@ -239,17 +252,18 @@ width:100%
   }
   
   let messageTimestamp = getCurrentTimestamp();
+  
   $(document).ready(function () {
     $.ajax({
       url: "/oasis/art",
       type: "POST",
       data: {
-        act: "getArt",
+        act: "getFirstArt",
         artId: artFirstId
       },
       dataType: "json",
       success: function (data) {
-
+    	$('#firstUser').attr('src', data.userAvatar);
         $("#userNickname").append(data.userNickname);
         $("#artTitle").append(data.artTitle);
         $("#artContent").append(data.artContent);
@@ -304,7 +318,9 @@ width:100%
           $.each(data,function (index, art) {
                 let artReply = '<div class="artContainer">'
                   + '<aside class="user">'
-                  + '<img src="author-avatar.jpg" alt="作者头像">'
+                  + '<div class = "userAvatar">'
+                  + '<img src="' + (art.userAvatar ? art.userAvatar : '/oasis/forum/image/altImg.png') + '" alt="使用者頭像">'
+                  + '</div>'
                   + '<div class="userNickname">'+ art.userNickname + '</div>'
                   + '</aside>'
                   + '<div class="art">'

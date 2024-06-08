@@ -17,6 +17,7 @@ public class ForumServlet  extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		if(req.getServletPath().equals("/forum")) {
 			req.setAttribute("displayReply","display:none");
+			
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/forum/oneForum.jsp");
 			dispatcher.forward(req,res);
 			

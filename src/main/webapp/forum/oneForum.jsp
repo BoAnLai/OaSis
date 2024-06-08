@@ -9,6 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <title>討論區</title>
+<style>
+	.artTitle{
+		color:black;
+		 text-decoration: none
+	}
+</style>
 
 </head>
 
@@ -57,8 +63,18 @@
         			
             $("#artTable tbody").append(art);
           });
-          // 初始化 DataTables 插件
-          $('#artTable').DataTable();
+          
+          $('#artTable').DataTable({
+              "columnDefs": [{
+                  "targets": "_all", 
+                  "render": function (data, type, row, meta) {
+                      if (type === 'display' && typeof data === 'string' && data.includes('<a ')) {
+                          return data.replace(/<a /, '<a class="artTitle" ');
+                      }
+                      return data;
+                  }
+              }]
+          });
 
         },
         error: function (xhr, status, error) {

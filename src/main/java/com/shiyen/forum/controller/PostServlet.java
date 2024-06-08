@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.Case;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -214,29 +215,13 @@ public class PostServlet extends HttpServlet {
 				successView.forward(req, res);	
 				break;
 			}
-		//導到修改網頁
-		case"update":{
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
-			
-			ArtService artSvc = new ArtService();
-			ArtVO artVO = artSvc.getOneArtByArtId(artId);
-			
-			
-			
-			
-			String url = "/forum/updateArt.jsp";
-			req.setAttribute("artVO", artVO);
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);	
-			break;
-			
-		}
+		
 		//修改文章
 		case"updateArt":{
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
 			
 			String artTitle = req.getParameter("artTitle");
 			if (artTitle == null || artTitle.trim().length() == 0) {
@@ -244,6 +229,7 @@ public class PostServlet extends HttpServlet {
 			}
 			
 			String artContent = req.getParameter("artContent").trim();
+			System.out.println(artContent);
 			if (artContent == null || artContent.trim().length() == 0) {
 				errorMsgs.add("內容請勿空白");
 			}	
@@ -256,6 +242,7 @@ public class PostServlet extends HttpServlet {
 			}
 			
 			ArtVO artVO = new ArtVO();
+			artVO.setArtId(artId);
 			artVO.setArtTitle(artTitle);
 			artVO.setArtContent(artContent);
 			artVO.setArtTimestamp(artTimestamp);
@@ -263,12 +250,24 @@ public class PostServlet extends HttpServlet {
 			ArtService artSvc = new ArtService();
 			artSvc.updateArt(artVO);
 			
+			
 			String url = "/forum/artList.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);	
 			break;
 		}
-		
+		//刪除文章
+		case "delete" :{
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			ArtService artSvc = new ArtService();
+			artSvc.deleteArt(artId);
+			
+			String url = "/forum/artList.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+		}
 		}
 		
 	}
