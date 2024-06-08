@@ -1,10 +1,11 @@
 package com.ryan.subs.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -42,7 +43,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			pstmt.setInt(1, subsVO.getSubsUserId());
 			pstmt.setInt(2, subsVO.getSubsGameId());
 			pstmt.setInt(3, subsVO.getSubsArtId());
-			pstmt.setDate(4, new java.sql.Date(subsVO.getSubsDate().getTime()));
+			pstmt.setDate(4, new java.sql.Date(subsVO.getSubsTimestamp().getTime()));
 			pstmt.setBoolean(5, subsVO.getSubsStatus());//狀態欄
 
 			pstmt.executeUpdate("set auto_increment_offset=1;");
@@ -83,7 +84,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 
-			pstmt.setDate(1, new java.sql.Date(subsVO.getSubsDate().getTime()));
+			pstmt.setDate(1, new java.sql.Date(subsVO.getSubsTimestamp().getTime()));
 			pstmt.setBoolean(2, subsVO.getSubsStatus());
 			pstmt.setInt(3, subsVO.getSubsId());
 			pstmt.executeUpdate();
@@ -112,9 +113,9 @@ public class SubsDAOImpl implements SubsDAO_interface {
 	}
 	
 	@Override
-	public SubsVO findByUserId(Integer subsUserId) {
+	public List<SubsVO> findByUserId(Integer subsUserId) {
 		
-		SubsVO subsVO = null;
+		List<SubsVO> subsList = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -130,12 +131,12 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				subsVO = new SubsVO();
-                subsVO.setSubsId(rs.getInt("subs_id"));
+				SubsVO subsVO = new SubsVO();
+				subsVO.setSubsId(rs.getInt("subs_id"));
                 subsVO.setSubsUserId(rs.getInt("subs_user_id"));
                 subsVO.setSubsGameId(rs.getInt("subs_game_id"));
                 subsVO.setSubsArtId(rs.getInt("subs_art_id"));
-                subsVO.setSubsDate(rs.getDate("subs_date"));
+                subsVO.setSubsTimestamp(rs.getTimestamp("subs_date"));
                 subsVO.setSubsStatus(rs.getBoolean("subs_status"));
                
                              
@@ -169,7 +170,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 				}
 			}
 		}
-		return subsVO;
+		return subsList;
 	}
 	
 	@Override
@@ -193,7 +194,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
                 subsVO.setSubsUserId(rs.getInt("subs_user_id"));
                 subsVO.setSubsGameId(rs.getInt("subs_game_id"));
                 subsVO.setSubsArtId(rs.getInt("subs_art_id"));
-                subsVO.setSubsDate(rs.getDate("subs_date"));
+                subsVO.setSubsTimestamp(rs.getTimestamp("subs_timestamp"));
                 subsVO.setSubsStatus(rs.getBoolean("subs_status"));
 				
 			}

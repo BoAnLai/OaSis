@@ -100,4 +100,15 @@
 		<servlet-name>ForumServlet</servlet-name>
 		<url-pattern>/forum</url-pattern>
 	</servlet-mapping>
+	
+	<!-- ===================ryan===================== -->
+	<servlet>
+		<servlet-name>SubsServlet</servlet-name>
+		<servlet-class>com.ryan.subs.controller.SubsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubsServlet</servlet-name>
+		<url-pattern>/subs.do</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
