@@ -14,8 +14,17 @@
 	
 	<!-- ====================LEE==================== -->
 
+	<servlet>
+		<servlet-name>WaitingServlet</servlet-name>
+		<servlet-class>com.lee.waiting.controller.WaitingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WaitingServlet</servlet-name>
+		<url-pattern>/WaitingServlet</url-pattern>
+	</servlet-mapping>
 	
 	
+	<!-- ====================mike==================== -->
 
 	<servlet>
 		<servlet-name>UserServlet</servlet-name>
@@ -25,12 +34,18 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/list</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>UserUpdate</servlet-name>
+		<servlet-class>com.mike.user.controller.UserUpdate</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/update</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/updating</url-pattern>
 	</servlet-mapping>
 	
