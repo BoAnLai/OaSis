@@ -92,6 +92,10 @@
 						</select>
 		        	</div>
 		        	<div class="mb-4">
+	                  <label for="companyName" class="form-label fs-4 fw-bold">公司名稱</label>
+	                  <input name="companyName" id="companyName" class="form-control" type="text" value="<%=StringProcessor.nullToEmpty(userDisplayed.getUserCompanyName())%>">
+		        	</div>
+		        	<div class="mb-4">
 	                  <label for="nickname" class="form-label fs-4 fw-bold">暱稱</label>
 	                  <input name="nickname" id="nickname" class="form-control" type="text" value="<%=StringProcessor.nullToEmpty(userDisplayed.getUserNickname())%>">
 		        	</div>

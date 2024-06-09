@@ -107,5 +107,12 @@ public class UserService {
 		UserVO user = dao.findById(userId);
 		return user;
 	}
+	
+	public Identity applyCompanyIdentity(Integer userId, String companyName) {
+		UserVO user = dao.findById(userId);
+		user.setUserCompanyName(companyName);
+		dao.update(userId, user);
+		return user.getUserIdentity();
+	}
 
 }

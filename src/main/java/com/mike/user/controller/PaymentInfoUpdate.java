@@ -23,10 +23,6 @@ public class PaymentInfoUpdate extends HttpServlet{
 		String realName = req.getParameter("realName");
 		String cellphone = req.getParameter("cellphone");
 		String address = req.getParameter("address");
-		System.out.println(userId);
-		System.out.println(realName);
-		System.out.println(cellphone);
-		System.out.println(address);
 		
 		UserService userSvc = new UserService();
 		UserVO user = userSvc.getByUserId(userId);

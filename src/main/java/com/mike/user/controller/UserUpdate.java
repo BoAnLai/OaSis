@@ -94,6 +94,7 @@ public class UserUpdate extends HttpServlet {
 			}
 			
 			userUpdating.setUserIdentity(Identity.valueOf(req.getParameter("identity")));
+			userUpdating.setUserCompanyName(StringProcessor.blankToNull(req.getParameter("companyName")));
 			
 			userUpdating.setUserNickname(StringProcessor.blankToNull(req.getParameter("nickname")));
 			userUpdating.setUserIntro(StringProcessor.blankToNull(req.getParameter("intro")));
@@ -103,6 +104,12 @@ public class UserUpdate extends HttpServlet {
 			
 			UserService userService = new UserService();
 			userService.userUpdate(userUpdating.getUserId(),userUpdating);
+			
+			
+			
+			
+			
+			
 			
 			Part part = req.getPart("avatar");
 			if(part.getSize()!=0) {

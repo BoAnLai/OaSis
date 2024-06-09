@@ -83,8 +83,8 @@ public class PersonalUpdate extends HttpServlet{
 		Part part = req.getPart("avatar");
 		if(part.getSize()!=0) {
 			String filename;
-			if(userUpdating.getUserAvatar()!=null) {				
-				filename = StringProcessor.getFilename(((UserDTO)session.getAttribute("userDisplayed")).getUserAvatar());
+			if(userUpdating.getUserAvatar()!=null && !(userUpdating.getUserAvatar().isBlank())) {				
+				filename = StringProcessor.getFilename(((UserDTO)session.getAttribute("user")).getUserAvatar());
 			}else {
 				String submittedFilename = part.getSubmittedFileName();
 				String submittedFileExtension = StringProcessor.getFileExtension(submittedFilename);
