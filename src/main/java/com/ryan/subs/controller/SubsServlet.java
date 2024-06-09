@@ -27,98 +27,7 @@ public class SubsServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("subsGame".equals(action)) {// from game subs req
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			String strSubs = req.getParameter("subsId");
-
-			Integer subsId = Integer.valueOf(strSubs);
-
-			//  查詢有無訂閱資料
-			SubsService subsSvc = new SubsService();
-			SubsVO subsVO = subsSvc.findByPrimaryKey(subsId);
-			if (subsVO == null) {
-				
-				Integer subsGameId = Integer.valueOf(req.getParameter("game_id"));
-				Integer subsUserId = Integer.valueOf(req.getParameter("user_id"));
-//				Timestamp subsTimestamp = new Timestamp();
-				Boolean subsStatus = true;
-				
-				SubsVO subsVOGame =  new SubsVO();
-				subsVOGame.setSubsGameId(subsGameId);
-				subsVOGame.setSubsUserId(subsUserId);
-//				subsVOGame.setSubsTimestamp(subsTimestamp);
-				subsVOGame.setSubsStatus(subsStatus);
-				
-				subsSvc.insertGmaeSubsVO(subsUserId, subsGameId, subsStatus);
-				
-			} else {
-				
-				 	Timestamp subsUpdateTimestamp = new Timestamp(System.currentTimeMillis()); // Assuming you need the current timestamp
-			        Boolean subsStatus = false; // Or set the status as per your business logic
-
-			        // Call the update method
-			        subsSvc.updateSubsVO(subsId);
-			        
-			        // Update the subsVO object with new values
-			        subsVO.setSubsTimestamp(subsUpdateTimestamp);
-			        subsVO.setSubsStatus(subsStatus);
-
-			        // Optionally, you might want to store the updated subsVO back to the session or request
-			        req.setAttribute("updatedSubsVO", subsVO);
-				
-				
-			        return;
-			}
-		}
-		if ("subsArt".equals(action)) {// from art subs req
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			
-			String strSubs = req.getParameter("subsId");
-			
-			Integer subsId = Integer.valueOf(strSubs);
-			
-			//  查詢有無訂閱資料
-			SubsService subsSvc = new SubsService();
-			SubsVO subsVO = subsSvc.findByPrimaryKey(subsId);
-			if (subsVO == null) {
-				
-				Integer subsArtId = Integer.valueOf(req.getParameter("art_id"));
-				Integer subsUserId = Integer.valueOf(req.getParameter("user_id"));
-//				Timestamp subsTimestamp = new timestamp();
-				Boolean subsStatus = true;
-				
-				SubsVO subsVOArt =  new SubsVO();
-				subsVOArt.setSubsArtId(subsArtId);
-				subsVOArt.setSubsUserId(subsUserId);
-//				subsVOArt.setSubsTimestamp(subsTimestamp);
-				subsVOArt.setSubsStatus(subsStatus);
-				
-				subsSvc.insertArtSubsVO(subsUserId, subsArtId, subsStatus);
-				
-			} else {
-				Timestamp subsUpdateTimestamp = new Timestamp(System.currentTimeMillis()); // Assuming you need the current timestamp
-		        Boolean subsStatus = false; // Or set the status as per your business logic
-
-		        // Call the update method
-		        subsSvc.updateSubsVO(subsId);
-		        
-		        // Update the subsVO object with new values
-		        subsVO.setSubsTimestamp(subsUpdateTimestamp);
-		        subsVO.setSubsStatus(subsStatus);
-
-		        // Optionally, you might want to store the updated subsVO back to the session or request
-		        req.setAttribute("updatedSubsVO", subsVO);
-			
-			
-		        return;
-				
-			}
-		}
+		
 		
 		if ("subsupdate".equals(action)) {
 			
@@ -136,6 +45,7 @@ public class SubsServlet extends HttpServlet {
 			
 			if (user == null) {
 				req.getRequestDispatcher("/login").forward(req, res);
+				return;
 			}
 			
 			String url = "/subs/mySubs.jsp";
@@ -151,10 +61,13 @@ public class SubsServlet extends HttpServlet {
 			
 			HttpSession session = req.getSession();
 			UserDTO user = (UserDTO)session.getAttribute("user");
-//			SubsVO subsId = (SubsVO)session.getAttribute("subsId");
+			SubsVO subsId = (SubsVO)session.getAttribute("subsId");
 
 			if (user == null) {
 				req.getRequestDispatcher("/login").forward(req, res);
+			}
+			if (subsId == null) {
+				
 			}
 			
 			SubsService subsSvc = new SubsService();
@@ -168,6 +81,53 @@ public class SubsServlet extends HttpServlet {
 			
 			
 		}
+		
+		String subsId = req.getParameter("subsId");
+		String userId = req.getParameter("userId");
+	    String gameId = req.getParameter("gameId");
+	    String articleId = req.getParameter("articleId");
+	    String subsType = req.getParameter("subsType");
+	    System.out.println(subsType);
+	    
+	   
+	    if ("game".equals(subsType)) {
+            // 處理遊戲訂閱邏輯
+	    	SubsService subsSvc = new SubsService();
+//			SubsVO subsVO = subsSvc.findByPrimaryKey(subsId);
+//			
+			System.out.println("subsVO");
+			
+			if (subsId == null || subsId.isEmpty()) {
+				
+				
+				Integer subsGameId = Integer.valueOf(gameId);
+				Integer subsUserId = Integer.valueOf(userId);
+				Boolean subsStatus = true;
+				
+				SubsVO subsVOGame =  new SubsVO();
+				subsVOGame.setSubsGameId(subsGameId);
+				subsVOGame.setSubsUserId(subsUserId);
+				subsVOGame.setSubsStatus(subsStatus);
+				
+				subsSvc.insertGmaeSubsVO(subsUserId, subsGameId, subsStatus);
+				
+			}else {
+				
+				Integer subsIdNew = Integer.valueOf(req.getParameter("subsId"));
+				SubsVO subsVO = subsSvc.findByPrimaryKey(subsIdNew);
+				// 如果訂閱存在，更新訂閱狀態為false
+			    subsSvc.updateSubsVO(subsVO.getSubsId());
+			}
+				
+//        } else if ("article".equals(subsType)) {
+//            // 處理文章訂閱邏輯
+//            handleArticleSubscription(userId, articleId);
+//        }
+	    
+	    }
+	    
+	   
+	    
 	}
-
+	
 }

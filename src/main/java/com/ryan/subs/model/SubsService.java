@@ -20,6 +20,7 @@ public class SubsService {
 		subsVO.setSubsUserId(subsUserId);
 		subsVO.setSubsGameId(subsGameId);
 		subsVO.setSubsStatus(subsStatus);
+		subsVO.setSubsArtId(null);
 		subsDAO.insert(subsVO);
 
 		return subsVO;
@@ -33,6 +34,7 @@ public class SubsService {
 		subsVO.setSubsUserId(subsUserId);
 		subsVO.setSubsArtId(subsArtId);
 		subsVO.setSubsStatus(subsStatus);
+		subsVO.setSubsGameId(null);
 		subsDAO.insert(subsVO);
 
 		return subsVO;

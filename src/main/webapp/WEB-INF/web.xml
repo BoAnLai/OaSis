@@ -103,5 +103,5 @@
 		<servlet-name>SubsServlet</servlet-name>
 		<url-pattern>/subs.do</url-pattern>
 	</servlet-mapping>
-	
+	/oasis/subs
 </web-app>

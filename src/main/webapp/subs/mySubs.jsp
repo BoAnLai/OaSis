@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.ryan.subs.model.*"%>
 <%@ page import="com.mike.user.model.*"%>
+<%@ page import="com.mike.game.model.*"%>
 
 
 
@@ -47,6 +48,37 @@ body {
 .my-button:hover {
 	background-color: #45a049; /* 滑鼠懸停背景色 */
 }
+.container {
+            display: flex;
+        }
+.left, .right {
+            flex: 1;
+            padding: 20px;
+        }
+        th {
+        border: 10px solid black;
+        padding: 10px;
+        text-align: center;
+        min-width: 100px; /* 設置最小寬度，可以根據需要調整 */
+      
+    	}
+
+   		td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+        min-width: 100px; /* 設置最小寬度，可以根據需要調整 */
+
+    	}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .message {
+            margin-top: 20px;
+            color: red;
+        }
 </style>
 </head>
 <body>
@@ -73,18 +105,21 @@ body {
 	SubsService subsService = new SubsService();
 
 	List<SubsVO> subsList = subsService.findByUserId(userId);
-	pageContext.setAttribute("list",subsList);
+
 	%>
 	
-	--${list}--
+
 
 	<%if (subsList == null || subsList.isEmpty()){ %>
 	<p class="lead fw-bold">
-		您還沒有訂閱喜歡的內容，歡迎到<span><a
-			href="<%=request.getContextPath()%>/game">遊戲頁面</a></span>訂閱喜歡的遊戲 !!
+		您還沒有訂閱喜歡的內容，歡迎到
+		<span><a href="<%=request.getContextPath()%>/game">遊戲頁面</a></span>訂閱喜歡的遊戲 !!
 	</p>
 
 	<%} else { %>
+	
+<div class="container">
+	<div class="left">
 	<h2>遊戲訂閱</h2>
 	<%
     int count = 1;
@@ -96,21 +131,20 @@ body {
 		<tr>
 			<th>訂閱編號</th>
 			<th>遊戲</th>
-			<th>訂閱日期</th>
 			<th>訂閱狀態</th>
 		</tr>
 		
 		<tr>
 			<td><%= subs.getSubsId() %></td>
-			<td><%= subs.getSubsGameId() %></td>
-			<td><%= subs.getSubsTimestamp() %></td>
+			<td><%= GameService.getGameByGameId(subs.getSubsGameId()).getGameName() %></td>
 			<td><%= ((subs.getSubsStatus()==true) ? "已訂閱" : "已取消訂閱") %></td>
 				<% if (!subs.getSubsStatus()) {%>
 			<td>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/subs.do" style="margin-bottom: 0px;">
 					<input type="submit" class="btn btn-outline-dark" value="恢復訂閱">
-					<input type="hidden" name="action" value="subsupdate">--${subs.SubsStatus}--
+					<input type="hidden" name="action" value="subsupdate">
 					<input type="hidden" name="subsId" value="<%= subs.getSubsId() %>">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsGameId() %>">
 				</FORM>
 			</td>
 			<% }  if (subs.getSubsStatus()){%>
@@ -119,6 +153,7 @@ body {
 					<input type="submit" class="btn btn-outline-dark" value="取消訂閱">
 					<input type="hidden" name="action"  value="subsupdate">
 					<input type="hidden" name="subsId" value="<%= subs.getSubsId() %>">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsGameId() %>">
 				</FORM>
 			</td>
 			<% } %>
@@ -128,14 +163,18 @@ body {
 	<%
         } else if(count <= 1){
     %>
-	<p>您還沒有訂閱 喜歡的遊戲 !</p>
+	<p>您還沒有訂閱 喜歡的遊戲 ! 歡迎到
+	<span><a href="<%=request.getContextPath()%>/game">遊戲頁面</a></span>訂閱遊戲 !!
+	</p>
 	<%
     		count += 1;
     		}
 		}
     %>
-
-
+	</div>
+	
+	
+	<div class="right">
 	<h2>文章訂閱</h2>
 	<%
     int count2 = 1;
@@ -143,30 +182,33 @@ body {
     	
         if (subs.getSubsArtId() != null && subs.getSubsArtId() != 0) {
     %>
-	<table border="1">
+	<table boder="1">
 		<tr>
 			<th>訂閱編號</th>
 			<th>文章</th>
-			<th>訂閱日期</th>
 			<th>訂閱狀態</th>
 		</tr>
 
 		<tr>
 			<td><%= subs.getSubsId() %></td>
 			<td><%= subs.getSubsArtId() %></td>
-			<td><%= subs.getSubsTimestamp() %></td>
 			<td><%= (subs.getSubsStatus() ? "已訂閱" : "已取消訂閱") %></td>
 			<% if (!subs.getSubsStatus()) {%>
 			<td>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/subs.do" style="margin-bottom: 0px;">
 					<input type="submit" class="btn btn-outline-dark" value="恢復訂閱">
-					<input type="hidden" name="action"  value="subsupdate"></FORM>
+					<input type="hidden" name="action"  value="subsupdate">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsId() %>">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsArtId() %>">
+				</FORM>
 			</td>
 			<% } else {%>
-				<td>
+			<td>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/subs.do" style="margin-bottom: 0px;">
 					<input type="submit" class="btn btn-outline-dark" value="取消訂閱">
 					<input type="hidden" name="action"  value="subsupdate">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsId() %>">
+					<input type="hidden" name="subsId" value="<%= subs.getSubsArtId() %>">
 				</FORM>
 			</td>
 			<% } %>
@@ -177,7 +219,9 @@ body {
         } else if(count2 <= 1){ 
         	
     %>
-	<p>您還沒有訂閱 喜歡的文章 !</p>
+	<p>您還沒有訂閱 喜歡的文章 ! 歡迎到
+		<span><a href="<%=request.getContextPath()%>/game">文章頁面</a></span>訂閱文章 !!
+	</p>
 	<%
         	count2 += 1;
         	}
@@ -185,6 +229,8 @@ body {
 	}
     %>
 
+	</div>
+</div>
 <%-- 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/subs.do" > --%>
    
 <!--         <input type="hidden" name="action" value="mysubs"> -->
