@@ -10,6 +10,7 @@
 	 // 定義時間戳格式
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String formattedTimestamp = sdf.format(currentTimestamp);
+	
 %>
 
 <!DOCTYPE html>
@@ -93,6 +94,16 @@
       color: lightgray;
       padding-top: 25%;
     }
+    .formButton{
+    	display:flex;
+    	justify-content: flex-end;
+        align-items: center;
+         gap: 10px;
+         padding-right: 10px; 
+    }
+    
+
+
   </style>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 </head>
@@ -105,13 +116,13 @@
     <%@ include file="/forum/forumHeader.jsp" %>
   
   <div class="container">
-    <h1>發表新文章</h1>
+    <h1>${empty artTitle ? "發表新文章" : "回覆文章"}</h1>
     <form id="postForm" action="<%=request.getContextPath()%>/post" method="POST" >
       
       
       
-      <label for="title">標題</label>
-      <input type="text" id="title" name="artTitle" required value=${empty artTitle ? '' : artTitle}  <c:if test="${not empty artTitle}">readonly</c:if>  >
+      <label for="title">文章標題</label>
+      <input type="text" id="title" name="artTitle" required title="標題請勿空白" value=${empty artTitle ? '' : artTitle}  <c:if test="${not empty artTitle}">readonly</c:if>  >
 
       <label for="content">內容</label>
       <textarea id="content" name="artContent" ></textarea>
@@ -123,7 +134,10 @@
       <input type="hidden" name="artView" value=${empty artView ? "0" : artView}>
       
       <input type="hidden" name="act" value=${empty artTitle ? 'addArt' : 'addReply'} >
-      <button type="submit" >發佈文章</button>
+      <div class = formButton>
+      <button type="submit" >${empty artTitle ? "發佈文章" : "回覆文章"} </button>
+       <button type="button" id="cancelButton">取消</button>
+       </div>
     </form>
   </div>
   
@@ -132,7 +146,8 @@
 	const content = `${artVO.artContent}`;
 	ClassicEditor
     .create(document.querySelector('#content'), {
-        toolbar: {
+    	
+    	toolbar: {
             items: [
                 'undo', 'redo',
                 '|', 'heading',
@@ -141,11 +156,13 @@
                 '|', 'bulletedList', 'numberedList', 'outdent', 'indent'
             ]
         },
+        placeholder: ' ${empty errorMsg ?"請各位勿發表過激言論" : errorMsg}',
         extraPlugins: [MyCustomUploadAdapterPlugin],
         language: 'zh-tw', 
         cloudServices: {
             uploadUrl:'/oasis/upload' 
-        }
+        },
+        
     })
         .then(editor => {
        	  window.editor = editor;
@@ -157,18 +174,24 @@
         } );
     
     document.getElementById('postForm').addEventListener('submit', function(event) {
-        // 获取 CKEditor 实例
-        var editor = CKEDITOR.instances.content;
-        // 更新 textarea 中的内容
+        
+        var editor =  window.editor;
+        console.log(editor);
+        
         if (!editor.getData().trim()) {
-        // 如果内容为空，阻止表单提交
+        
         event.preventDefault();
-        // 提示用户编辑器内容不能为空
+        
         alert('内容不能为空');
     }	else{
         editor.updateSourceElement();
         }
     });
+	
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        window.history.back();
+    });
+    
 	</script>
 
 </body>
