@@ -2,18 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.shiyen.art.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<%
-ArtService artSvc = new ArtService();
-List<ArtVO> list = artSvc.getAll();
-pageContext.setAttribute("list", list);
-%>
+
+
 
 
 <html>
 <head>
-<title>所有文章 - listAllArt.jsp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<title>所有文章 </title>
 
 <style>
 table#table-1 {
@@ -41,9 +38,10 @@ h4 {
 		margin-top: 5px;
 		margin-bottom: 5px;
 	  }
-	  table, th, td {
-	    border: 1px solid #CCCCFF;
-	  }
+	    table.dataTable th,
+    	table.dataTable td {
+        white-space: nowrap;  
+    }
 	  th, td {
 	    padding: 5px;
 	    text-align: center;
@@ -62,41 +60,36 @@ h4 {
             font-size: 12px;
         }
     	}
-    
+    .artTitle{
+    	color:black;
+	 	text-decoration: none
+    }
 </style>
 
 </head>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-	integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <%@ include file="../home/navbar.jsp"%>
+<%
+ArtService artSvc = new ArtService();
+List<ArtVO> list = artSvc.getAllByUserId(user.getUserId());
+pageContext.setAttribute("list", list);
+%>
 <body bgcolor='white'>
 
 
 	
-	<h3>所有文章 - listAllArt.jsp</h3>
+	<h3>發表文章</h3>
 	
 
 	<table id="artTable">
 		<thead>
 		<tr>
-			<th>文章編號</th>
 			<th>文章標題</th>
-			<th>文章內容</th>
 			<th>發文時間</th>
-			<th>回覆文章編號</th>
-			<th>收藏數</th>
-			<th>瀏覽數</th>
 			<th>修改</th>
-			<th></th>
+			<th>刪除</th>
 
 		</tr>
 		</thead>
@@ -104,27 +97,22 @@ h4 {
 		<c:forEach var="artVO" items="${list}">
 			
 			<tr>
-				<td>${artVO.artId}</td>
-				<td><a href="<%=request.getContextPath()%>/forum/artView.jsp" >${artVO.artTitle}</a></td>
-				<td>${artVO.artContent}</td>
+				<td><a href="<%=request.getContextPath()%>/forum/artView.jsp?art=${empty artVO.artReply ? artVO.artId:artVO.artReply }" >${artVO.artTitle}</a></td>
 				<td>${artVO.artTimestamp}</td>
-				<td>${artVO.artReply}</td>
-				<td>${artVO.artFavor}</td>
-				<td>${artVO.artView}</td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/forum"
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/reurl"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> <input type="hidden"
-							name="artId" value="${artVO.artId}"> <input type="hidden"
-							name="act" value="update">
+						<input type="submit" value="修改"> 
+						<input type="hidden"name="artId" value="${artVO.artId}"> 						
+						<input type="hidden"name="reurl" value="update">
 					</FORM>
 				</td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>//forum"
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden"
-							name="artId" value="${artVO.artId}"> <input type="hidden"
-							name="act" value="delete">
+						<input type="submit" value="刪除"> 
+						<input type="hidden" name="artId" value="${artVO.artId}"> 
+						<input type="hidden" name="act" value="delete">
 					</FORM>
 				</td>
 			</tr>
@@ -142,7 +130,25 @@ h4 {
 		src="https://cdn.datatables.net/v/ju/dt-2.0.7/b-3.0.2/b-colvis-3.0.2/cr-2.0.2/fh-4.0.1/r-3.0.2/rr-1.5.0/sc-2.4.2/sl-2.0.1/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#artTable').DataTable();
+            $('#artTable').DataTable({
+                "columns": [
+                    { "width": "60%" }, 
+                    { "width": "20%" }, 
+                    { "width": "10%" }, 
+                    { "width": "10%" }, 
+                    
+                ],
+            "columnDefs": [{
+                "targets": "_all", 
+                "render": function (data, type, row, meta) {
+                    if (type === 'display' && typeof data === 'string' && data.includes('<a ')) {
+                        return data.replace(/<a /, '<a class="artTitle" ');
+                    }
+                    return data;
+                }
+            }]
+            
+            });
         });
     </script>
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import tool.HibernateUtil;
+import com.lee.waiting.controller.HibernateUtil;
 
 public class WaitingPersonDao implements WaitingPersonInterface {
 
