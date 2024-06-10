@@ -21,7 +21,7 @@ import com.mike.user.model.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
 
 @MultipartConfig
-@WebServlet(name = "UserRegister", urlPatterns = {"/register", "/registering"})
+@WebServlet(name = "userRegister", urlPatterns = {"/register", "/registering"})
 public class UserRegister extends HttpServlet{
 
 	
@@ -31,7 +31,7 @@ public class UserRegister extends HttpServlet{
 	}
 	
 	
-	
+	// /registering
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
@@ -48,9 +48,11 @@ public class UserRegister extends HttpServlet{
 			userSvc.findByEmail(req.getParameter("email"));
 			req.setAttribute("errorMsg", "此信箱已註冊");
 			req.getRequestDispatcher("/user/userRegister.jsp").forward(req,res);
+			return;
 		} catch (SQLException e) {
 			req.setAttribute("errorMsg", "資料庫連線異常");
 			req.getRequestDispatcher("/user/userRegister.jsp").forward(req,res);
+			return;
 		} catch(EmailNotFoundException e) {}
 		
 		
@@ -71,12 +73,14 @@ public class UserRegister extends HttpServlet{
 			}else {
 				req.setAttribute("errorMsg", "兩次密碼不相符");
 				req.getRequestDispatcher("/user/userRegister.jsp").forward(req,res);
+				return;
 			}
 		}else if(bothBlank) {
 		}else {
 			
 			req.setAttribute("errorMsg", "請完整填寫 輸入密碼 及 再次輸入密碼 兩個區塊");
 			req.getRequestDispatcher("/user/userRegister.jsp").forward(req,res);
+			return;
 		}
 		
 		
@@ -88,10 +92,8 @@ public class UserRegister extends HttpServlet{
 		try {
 			userSvc.register(userRegistering);				
 		}catch(SQLException e) {
-			RequestDispatcher dispatcher = req
-					.getRequestDispatcher("/user/userRegister.jsp");
-			
-			dispatcher.forward(req,res);
+			req.getRequestDispatcher("/user/userRegister.jsp").forward(req,res);
+			return;
 		}
 		
 		userRegistering = userSvc.getOneUserByEmail(userRegistering.getUserEmail());
@@ -110,15 +112,16 @@ public class UserRegister extends HttpServlet{
 				part.write(f.toString());
 				imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
 			}
-			userRegistering.setUserAvatar(imgSrcPath);
-			userSvc.userUpdate(userRegistering.getUserId(),userRegistering);				
+//			userRegistering.setUserAvatar(imgSrcPath);
+//			userSvc.userUpdate(userRegistering.getUserId(),userRegistering);
+			userSvc.updateAvatar(userRegistering.getUserId(),imgSrcPath);
 		}
 		
 		UserDTO user = new UserDTO(userRegistering);
 		session.setAttribute("user", user);
 					
-		res.sendRedirect("/oasis");
-		
+//		res.sendRedirect("/oasis");
+		req.getRequestDispatcher("/").forward(req, res);
 		
 		
 	}

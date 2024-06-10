@@ -13,9 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import com.mike.user.model.UserDTO;
 
-/**
- * Servlet Filter implementation class LoginFilter
- */
 @WebFilter("/LoginFilter")
 public class LoginFilter extends HttpFilter implements Filter {
        
@@ -29,7 +26,10 @@ public class LoginFilter extends HttpFilter implements Filter {
 		UserDTO user = (UserDTO)session.getAttribute("user");
 				
 		if(user == null) {
-			session.setAttribute("headingPath", req.getRequestURI());
+			session.setAttribute("headingPath", req.getServletPath());
+//			System.out.println(req.getRequestURI());
+//			System.out.println(req.getRequestURL());
+//			System.out.println(req.getServletPath());
 			req.getRequestDispatcher("/login").forward(req, res);
 		}else {
 			chain.doFilter(req, res);

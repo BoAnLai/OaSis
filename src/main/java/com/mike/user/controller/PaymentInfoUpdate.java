@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
@@ -17,16 +18,12 @@ public class PaymentInfoUpdate extends HttpServlet{
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		
-//		HttpSession session = req.getSession();
+		HttpSession session = req.getSession();
 		
 		int userId = Integer.parseInt(req.getParameter("userId"));
 		String realName = req.getParameter("realName");
 		String cellphone = req.getParameter("cellphone");
 		String address = req.getParameter("address");
-		System.out.println(userId);
-		System.out.println(realName);
-		System.out.println(cellphone);
-		System.out.println(address);
 		
 		UserService userSvc = new UserService();
 		UserVO user = userSvc.getByUserId(userId);
@@ -50,5 +47,7 @@ public class PaymentInfoUpdate extends HttpServlet{
 			}
 		}
 		
+	    session.setAttribute("user",user);
+	    
 	}
 }
