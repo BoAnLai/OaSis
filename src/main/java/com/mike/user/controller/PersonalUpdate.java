@@ -66,12 +66,13 @@ public class PersonalUpdate extends HttpServlet{
 			}else {
 				req.setAttribute("errorMsg", "兩次密碼不相符");
 				req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+				return;
 			}
 		}else if(bothBlank) {
 		}else {
-			
 			req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");
 			req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+			return;
 		}
 		
 		userUpdating.setUserNickname(StringProcessor.blankToNull(req.getParameter("nickname")));
