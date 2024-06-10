@@ -10,19 +10,23 @@ public class ArtDTO {
     private String artTitle;
     private String artContent;
     private Timestamp artTimestamp;
+    private Integer artStatus;
     private String userNickname;
+    private String userAvatar;
     private List<MessageDTO> messageDTO;
     
     public ArtDTO() {
 		
 	}
     
-    public ArtDTO(Integer artId, String artTitle, String artContent, Timestamp artTimestamp, String userNickname,List<MessageDTO> messageDTO) {
+    public ArtDTO(Integer artId, String artTitle, String artContent, Timestamp artTimestamp,Integer artStatus, String userNickname,String userAvatar,List<MessageDTO> messageDTO) {
         this.artId = artId;
         this.artTitle = artTitle;
         this.artContent = artContent;
         this.artTimestamp = artTimestamp;
+        this.artStatus = artStatus;
         this.userNickname = userNickname;
+        this.userAvatar = userAvatar;
         this.messageDTO =  messageDTO;
     }
 
@@ -76,6 +80,23 @@ public class ArtDTO {
 		this.messageDTO = messageDTO;
 	}
 
+	public String getUserAvatar() {
+		return userAvatar;
+	}
+
+	public void setUserAvatar(String userAvatar) {
+		this.userAvatar = userAvatar;
+	}
+
+	public Integer getArtStatus() {
+		return artStatus;
+	}
+
+	public void setArtStatus(Integer artStatus) {
+		this.artStatus = artStatus;
+	}
+	
+	
 	
 
 }

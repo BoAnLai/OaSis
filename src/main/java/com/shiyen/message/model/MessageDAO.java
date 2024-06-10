@@ -19,8 +19,8 @@ private SessionFactory factory;
 	}
 	
 	@Override
-	public Integer insert(MessageVO messageVO) {	
-		return (Integer) getSession().save(messageVO);
+	public void insert(MessageVO messageVO) {	
+		getSession().save(messageVO);
 	}
 
 	@Override
