@@ -168,19 +168,53 @@ CREATE TABLE ART (
 	art_reply INT,
 	art_favor INT,
 	art_view INT,
+    art_status INT,
     art_user_id INT,
     art_game_id INT,
     CONSTRAINT  art_user_id FOREIGN KEY (art_user_id) REFERENCES user (user_id),
     CONSTRAINT  art_game_id FOREIGN KEY (art_game_id) REFERENCES game (game_id),
 	CONSTRAINT art_primary_key PRIMARY KEY (art_id)
 )AUTO_INCREMENT = 1;
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)  VALUES ("生命的超越者 - 杰倫達爾默","大家好，我是來自","2022-05-13 11:15:55",NULL,1,1,1,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("【提醒】5/1開始的手環活動獎勵要記得每天領 - 杰倫達爾默","雖然介面起來就跟普通的每日簽到差不多
-但這次的活動說明有特別提到","2022-05-13 11:15:55",1,3,10,2,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("【情報】【美好祝福福袋】維護完畢公告","親愛的冒險者們：
-感謝冒險者們持續的支持，此段時間若有造成不便，敬請見諒~","2022-05-12 12:16:55",NULL,2,6,3,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("改版後的濃姬 打起來回饋","聽說改版有說變得比較簡單","2024-05-19 10:23:19",NULL,14,30,4,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES("改版後的濃姬 打起來回饋","那五隻對應的是五個職業","2024-05-19 11:25:47",4,2,31,5,1);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)  VALUES ("【問題】大g賽恩思路問題","最近玩了20把左右
+單雙彈性快打都有打
+為什麼十分鐘破了首塔
+隊友還是能崩線
+對面打野都來抓我
+我方打野那時候都不會去拿中立資源
+也不會去幫其他路 就只顧著吃野
+重點是整體經濟打開biltz 插件看 是領先的
+但大概有2/3的局都輸掉
+不太懂輸在哪裡
+對局影片檔只能發YT 看嗎
+還是有什麼方法可以給各位高手解惑嗎", "2024-06-05 22:42:20",NULL,1,2,0,1,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","不是我要嘴
+只要開著這個首頁，我的CPU可以多飆50%
+整體衝上80~100%
+只要開著個人資料什麼的就會降。
+
+我就想說怎麼最近LOL掛著CPU就會急速運轉
+原來是那個新首頁搞的
+
+真的很爛。
+
+上次那個戰魂鬥士吃爆記憶體。
+這次吃爆CPU，都快懷疑首頁在挖礦了。","2024-06-04 11:42:04",Null,1,10,0,2,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","客戶端平台真的需要整個打掉重寫
+
+不然裡面肯定積累了10多年來的垃圾程式語法","2024-06-04 13:36:23",2,2,1,0,8,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","我是舊電腦
+昨天開始開遊戲然後會爆cpu重新開機
+以為電腦真的太舊要換
+原來是這破首頁
+riot真的爛死","2024-06-04 13:41:30",2,14,1,0,10,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES("【心得】這什麼白癡首頁","改成陸配介面 沒煩惱 ..
+
+直接規避掉實際  以前G社時期就是了  每次打開都一堆垃圾網頁
+
+所以我已經養成習慣  直接改掉
+
+","2024-06-04 13:43:21",2,2,1,0,11,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES("【討論】英雄聯盟官方的桌布程式","想問問各位 有沒有人使用官方的桌布程式只停留在薩蜜拉 靈戰的桌布後就沒再更新了 是我的電腦沒辦法再更新了還是就真的官方也沒再用這桌布繼續更新 新的桌布圖呢","2024-06-05 21:00:17",NULL,2,0,0,4,3);
 
 -- favor table -----------------------
 CREATE TABLE favor (
@@ -208,6 +242,7 @@ CREATE TABLE message (
 	message_id INT AUTO_INCREMENT NOT NULL,
     message_content mediumtext,
     message_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    message_status INT,
     message_art_id INT,
     message_user_id INT,
     CONSTRAINT  message_art_id FOREIGN KEY (message_art_id) REFERENCES art (art_id),
@@ -215,16 +250,21 @@ CREATE TABLE message (
 	CONSTRAINT message_primary_key PRIMARY KEY (message_id)
 )AUTO_INCREMENT = 1;
 
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("終於甭反射了，感動","2024-05-19 14:07:57 ",4,1);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("一階不能反射了","2024-05-19 17:17:37",4,5);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("看來有人沒有體驗過最一開始的濃姬才這樣說呢","2024-05-19 17:20:56 ",4,4);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("冰雷單打，第二關就是所有放置技能一頭腦的狂丟","2024-05-19 19:17:43",5,2);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("等起源改版拆段數後","2024-05-19 19:13:30",5,3);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("建議發影片","2024-06-05 23:13:43 ",0,1,2);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("影片只能錄全部發上來嗎","2024-06-05 23:15:43",0,1,1);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("這回老子也深有同感，看到羊頭就來氣","2024-06-05 13:28:56 ",0,2,4);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("R粉快出來叫啊","2024-06-03 16:15:43",0,2,6);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("說不定現在內建挖礦程式，看有沒有哪位大神能拆包解惑","2024-06-04  17:40:30",0,2,8);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("以前CPU不用多好遊戲順順跑，不知道為啥現在這麼卡","2024-06-02  13:20:30",0,4,3);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("我現在可能要等這破活動結束才能玩lol 每次開遊戲都直接重新開機 救我
+","2024-06-05  16:23:30",0,4,9);
 
 -- report table ---------------------------------    
 CREATE TABLE report (
