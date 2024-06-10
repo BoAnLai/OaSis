@@ -34,7 +34,7 @@
             justify-content: flex-end;
 		}
 		#main{
-			height: 400px;
+			min-height: 400px;
 		}
 	</style>
 </head>
@@ -92,6 +92,33 @@
 					}
 				}
 			%>
+			
+			
+			
+			<% 
+				List<String> userMsgList = msgSvc.getMsgListForOneUser(user.getUserId());
+				for(String msg: userMsgList){
+			%>
+				<li class="list-group-item">
+				
+					<div class="card" style="width: 70%;  justify-content: center;">
+					    <div class="card-body">
+					    	<h5 class="card-title">訂閱訊息</h5>
+					    	<hr>
+					    	<p class="card-text"><%= msg %></p>
+					    </div>
+					</div>
+					
+				</li>
+			
+			<%
+				}
+			%>
+			
+			
+			
+			
+			
 			</ul>
 		</div>
 	</div>

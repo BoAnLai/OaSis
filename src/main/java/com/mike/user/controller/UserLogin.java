@@ -68,16 +68,20 @@ public class UserLogin extends HttpServlet {
 					headingPath = (String)session.getAttribute("headingPath");
 					session.removeAttribute("headingPath");
 					
-					if(headingPath != null) {
-						res.sendRedirect(headingPath);
-					}else {	
-						res.sendRedirect("/oasis");
-					}
+//					if(headingPath != null) {
+//						res.sendRedirect(headingPath);
+//					}else {	
+//						res.sendRedirect("/oasis");
+//					}
+					
+					//原本預計經過filter的網址要繼續導向目標，但因架構有問題+時間不夠，先全數導回首頁。
+					res.sendRedirect("/oasis");
 					
 				}else {
 					req.setAttribute("errorMsg", new String("密碼錯誤，請重新輸入"));
 					try {
 						req.getRequestDispatcher("login").forward(req,res);
+						return;
 					} catch (ServletException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -88,6 +92,7 @@ public class UserLogin extends HttpServlet {
 				req.setAttribute("errorMsg", new String("此信箱尚未註冊，請註冊或重新輸入"));
 				try {
 					req.getRequestDispatcher("login").forward(req,res);
+					return;
 				} catch (ServletException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
@@ -97,6 +102,7 @@ public class UserLogin extends HttpServlet {
 				req.setAttribute("errorMsg", new String("資料庫連線異常"));
 				try {
 					req.getRequestDispatcher("login").forward(req,res);
+					return;
 				} catch (ServletException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {

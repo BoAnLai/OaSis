@@ -116,4 +116,25 @@ public class UserDTO {
 		this.userAddress = userAddress;
 	}
 	
+	@Override
+	public String toString() {
+		String outputStr = "UserDTO: [";
+		
+		outputStr += "\r userId="+ this.getUserId();
+		outputStr += "\r userEmail="+ this.getUserEmail();
+		outputStr += "\r userIdentity="+ this.getUserIdentity();
+		outputStr += "\r userCompanyName="+ this.getUserCompanyName();
+		outputStr += "\r userNickname="+ this.getUserNickname();
+		outputStr += "\r userAvatar="+ this.getUserAvatar();
+		outputStr += "\r userIntro="+ this.getUserIntro();
+		outputStr += "\r userRealName="+ this.getUserRealName();
+		outputStr += "\r userCellphone="+ this.getUserCellphone();
+		outputStr += "\r userAddress="+ this.getUserAddress();
+		outputStr += "]\r\r";
+		
+		
+		return outputStr;
+	}
+	
+	
 }
