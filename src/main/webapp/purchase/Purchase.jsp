@@ -47,7 +47,6 @@
                     <p class="card-text">用戶手機: <%= purchase.getPurchaseUserCellphone() %></p>
                     <p class="card-text">用戶地址: <%= purchase.getPurchaseUserAddress() %></p>
                     <p class="card-text">購買時間: <%= purchase.getPurchaseTimestamp() %></p>
-                    <p class="card-text">購買總額: <%= purchase.getPurchaseTotal() %></p>
                     <p class="card-text">購買狀態: <%= purchase.getPurchaseClosed() ? "已關閉" : "未關閉" %></p>
                 </div>
             </div>

@@ -70,7 +70,7 @@
                     </tbody>
                 </table>
 
-                <button type="submit" class="btn btn-primary">完成購買</button>
+                <button type="submit" class="btn btn-primary">全部購買</button>
 
         <form method="post" action="${pageContext.request.contextPath}/ProductServlet">
             <input type="hidden" name="action" value="select_all_product">
