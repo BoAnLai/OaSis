@@ -1,7 +1,8 @@
+<%@page import="com.shiyen.favor.model.FavorService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.shiyen.art.model.*"%>
+<%@ page import="com.shiyen.art.model.*,com.shiyen.favor.model.*"%>
 
 
 
@@ -64,6 +65,15 @@ h4 {
     	color:black;
 	 	text-decoration: none
     }
+    #artTable_wrapper {
+    border: 1px solid #ccc; 
+    overflow: auto; 
+    
+        
+}
+.title{
+margin-top:10px;
+}
 </style>
 
 </head>
@@ -75,6 +85,10 @@ h4 {
 ArtService artSvc = new ArtService();
 List<ArtVO> list = artSvc.getAllByUserId(user.getUserId());
 pageContext.setAttribute("list", list);
+
+FavorService favorSvc = new FavorService();
+List<FavorDTO> favorList = favorSvc.getFavorByuserId(user.getUserId());
+pageContext.setAttribute("favorList", favorList);
 %>
 <body bgcolor='white'>
 
@@ -119,6 +133,40 @@ pageContext.setAttribute("list", list);
 		</c:forEach>
 		</tbody>
 	</table>
+	
+	<h3 class = title>收藏文章</h3>
+	
+
+	<table id="favorTable">
+		<thead>
+		<tr>
+			<th>文章標題</th>
+			<th>收藏時間</th>
+			<th>刪除</th>
+
+		</tr>
+		</thead>
+		<tbody>
+		<c:forEach var="favorDTO" items="${favorList}">
+			
+			<tr>
+				<td><a href="<%=request.getContextPath()%>/forum/artView.jsp?art=${favorDTO.artId}" >${favorDTO.artTitle}</a></td>
+				<td>${favorDTO.favorTimestamp}</td>
+				<td>
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/post"
+						style="margin-bottom: 0px;">
+						<input type="submit" value="刪除"> 
+						<input type="hidden" name="artId" value=" ${favorDTO.artId}"> 
+						<input type="hidden" name="userId" value=" ${sessionScope.user.userId}"> 
+						<input type="hidden" name="act" value="deleteFavor">
+					</FORM>
+				</td>
+			</tr>
+		</c:forEach>
+		</tbody>
+	</table>
+	
+	
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 	<script
@@ -146,7 +194,31 @@ pageContext.setAttribute("list", list);
                     }
                     return data;
                 }
-            }]
+            }],
+            "order": [[1, 'asc']],
+            autoWidth: false
+            
+            });
+        });
+        $(document).ready(function() {
+            $('#favorTable').DataTable({
+                "columns": [
+                    { "width": "70%" }, 
+                    { "width": "15%" }, 
+                    { "width": "15%" },  
+                    
+                ],
+            "columnDefs": [{
+                "targets": "_all", 
+                "render": function (data, type, row, meta) {
+                    if (type === 'display' && typeof data === 'string' && data.includes('<a ')) {
+                        return data.replace(/<a /, '<a class="artTitle" ');
+                    }
+                    return data;
+                }
+            }],
+            "order": [[1, 'asc']],
+            autoWidth: false
             
             });
         });

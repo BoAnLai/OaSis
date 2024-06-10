@@ -93,6 +93,13 @@
       color: lightgray;
       padding-top: 25%;
     }
+    .formButton{
+    	display:flex;
+    	justify-content: flex-end;
+        align-items: center;
+         gap: 10px;
+         padding-right: 10px; 
+    }
   </style>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 </head>
@@ -121,7 +128,10 @@
 	  
       
       <input type="hidden" name="act" value="updateArt" >
-      <button type="submit" >發佈文章</button>
+      <div class = formButton>
+      <button type="submit" >修改文章</button>
+      <button type="button" id="cancelButton">取消</button>
+       </div>
     </form>
   </div>
   
@@ -154,18 +164,22 @@
             console.error( error );
         } );
     
-    document.getElementById('postForm').addEventListener('submit', function(event) {
-        // 获取 CKEditor 实例
-        var editor = CKEDITOR.instances.content;
-        // 更新 textarea 中的内容
+document.getElementById('postForm').addEventListener('submit', function(event) {
+        
+        var editor =  window.editor;
+        console.log(editor);
+        
         if (!editor.getData().trim()) {
-        // 如果内容为空，阻止表单提交
+        
         event.preventDefault();
-        // 提示用户编辑器内容不能为空
+        
         alert('内容不能为空');
     }	else{
         editor.updateSourceElement();
         }
+    });
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        window.history.back();
     });
 	</script>
 
