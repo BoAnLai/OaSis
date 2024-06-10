@@ -1,3 +1,6 @@
+<%@page import="com.mike.user.model.UserClientService"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.mike.user.model.UserDTO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@page import="java.util.List"%>
 <%@page import="com.lee.waiting.model.WaitingService"%>
@@ -17,6 +20,13 @@
 	WaitingService waiSvc = new WaitingService();
 	List<WaitingVO> list = waiSvc.getMyRoom(userID);
 	pageContext.setAttribute("list", list);
+	
+	List<UserDTO> userList = new ArrayList<>();
+    for (WaitingVO waitingVO : list) {
+        UserDTO userDTO = UserClientService.getUserById(waitingVO.getWaitingUserId());
+        userList.add(userDTO);
+    }
+    pageContext.setAttribute("userList", userList);
 %>
 
 
@@ -27,6 +37,13 @@
 	WaitingService waiSvc = new WaitingService();
 	List<WaitingVO> list = waiSvc.getInRoom(userID);
 	pageContext.setAttribute("list", list);
+	
+	List<UserDTO> userList = new ArrayList<>();
+    for (WaitingVO waitingVO : list) {
+        UserDTO userDTO = UserClientService.getUserById(waitingVO.getWaitingUserId());
+        userList.add(userDTO);
+    }
+    pageContext.setAttribute("userList", userList);
 %>
 
 </c:if>
@@ -165,7 +182,8 @@
     
     <c:if test="${list.size() != 0}">
    
-   	<c:if test="${situation eq 'my'}">	
+   	<c:if test="${situation eq 'my'}">
+   		
     <tr>
     <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
     </th>
@@ -198,17 +216,18 @@
 	</c:if>
     <c:if test="${list.size() eq 0}">
    
-   		<img src="lee/images/Empty.png" alt="Centered Image" width="500" height="500" >
+   		<img src="<%=request.getContextPath() %>/waiting/img/size0_type.png" alt="Centered Image" width="500" height="500" >
 	</c:if>
     
-    <c:forEach var="waitingVO" items="${list}" varStatus="loop">
+    <c:forEach var="waitingVO" items="${list}" varStatus="status">
+    	<c:if test="${status.index < userList.size()}">
+    		<c:set var="userDTO" value="${userList[status.index]}" />
+    		
     	<tr>
-    	
-    			
-    	
+    		<!-- *************************************以下為刪除房間按鈕 -->
             <th scope="row" class="ps-4">
             
-            <form method="post" action="<%=request.getContextPath() %>/WaitingServlet">
+            <form method="post" action="<%=request.getContextPath() %>/Waiting.do">
 					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 		  				
 		  				<input type="hidden" name="waiNo"  value="${waitingVO.waitingID}">
@@ -223,7 +242,8 @@
 				</form>	 
               
             </th>
-            <td style="text-align: center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">${waitingVO.waitingUserId}</a></td>
+            <!-- *************************************以上為刪除房間按鈕 -->
+            <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${waitingVO.waitingID}</td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0">${waitingVO.waitingReserve}</td>
             <td style="text-align: center">${waitingVO.waitingMaxPeople}</td>
@@ -231,7 +251,7 @@
             
             <c:if test="${situation eq 'my'}">
    			<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="修改">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="waimax"  value="${waitingVO.waitingMaxPeople}">
@@ -240,7 +260,7 @@
 			
 			
 			<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 			     	<input type="submit"  class="btn btn-secondary" value="查看">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="check"  value="Yes">
@@ -252,7 +272,7 @@
 			<c:if test="${situation eq 'in'}">
 			
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
@@ -261,13 +281,14 @@
 				</td>
 			
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
 			     	<input type="hidden" name="waino"  value="${waitingVO.waitingID}">
 			     	<input type="hidden" name="action"	value="select_waitingPerson">
 			     	<input type="submit" class="btn btn-secondary"  value="查看"></FORM>
 				</td>
+				</c:if>
     		</c:if>
                 
         </tr>

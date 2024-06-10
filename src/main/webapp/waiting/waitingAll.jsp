@@ -1,22 +1,44 @@
+<%@page import="com.mike.user.model.UserDTO"%>
+<%@page import="com.mike.user.model.UserClientService"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@page import="com.lee.waiting.model.WaitingService"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%-- ¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 
-<%
-	WaitingVO waiVO = (WaitingVO) request.getAttribute("waiVO"); //WaitingServlet.java(Concroller), ¦s¤JreqªºwaiVOª«¥ó
+		<%
+    WaitingService waiSvc = new WaitingService();
+    List<WaitingVO> list = waiSvc.getAll();
+    pageContext.setAttribute("list", list);
+
+    List<UserDTO> userList = new ArrayList<>();
+    for (WaitingVO waitingVO : list) {
+        UserDTO userDTO = UserClientService.getUserById(waitingVO.getWaitingUserId());
+        userList.add(userDTO);
+    }
+    pageContext.setAttribute("userList", userList);
 %>
+	
+		<%-- æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼ --%>
+		
 
 <html>
 <head>
-<title>²Õ¶¤¸ê®Æ - listOneEmp.jsp</title>
-
- <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Wait list table - com.Wait</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+  
+    
+    
     <style type="text/css">
     body{margin-top:20px;
     background-color:#eee;
     }
+
     .project-list-table {
         border-collapse: separate;
         border-spacing: 0 12px
@@ -93,8 +115,8 @@
     
     
 </style>
-
 </head>
+    
 <body>
 
 
@@ -109,10 +131,7 @@
 	    				</ul>
     				</div>
     			
-    		
-    
-    
-    
+  
     <table class="table project-list-table table-nowrap align-middle table-borderless">
     <tbody>
     
@@ -121,67 +140,68 @@
     <tr>
     <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
     </th>
-    <th scope="col" style="text-align: center">³Ğ«ØªÌ</th>
-    <th scope="col" style="text-align: center">©Ğ¶¡½s¸¹</th>
-    <th scope="col" style="text-align: center">¥Xµo®É¶¡</th>
-    <th scope="col" style="text-align: center">¤H¼Æ¤W­­</th>
-    <th scope="col" style="text-align: center">¹CÀ¸Ãş«¬</th>
-    <th scope="col" style="text-align: center">¥[¤J</th>
-    <th scope="col" style="text-align: center">¬d¬İ</th>
-    
+    <th scope="col" style="text-align: left">å‰µå»ºè€…</th>
+    <th scope="col" style="text-align: center">æˆ¿é–“ç·¨è™Ÿ</th>
+    <th scope="col" style="text-align: center">å‡ºç™¼æ™‚é–“</th>
+    <th scope="col" style="text-align: center">äººæ•¸ä¸Šé™</th>
+    <th scope="col" style="text-align: center">éŠæˆ²é¡å‹</th>
+    <th scope="col" style="text-align: center">åŠ å…¥</th>
+    <th scope="col" style="text-align: center">æŸ¥çœ‹</th>
     </tr>
     
     
-   
+    <%@ include file="page1.file" %> 
+	<c:forEach var="WaitingVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="status">
+    	 <c:if test="${status.index < userList.size()}">
+                        <c:set var="userDTO" value="${userList[status.index]}" />
     	<tr>
             <th scope="row" class="ps-4">
                 <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" for="contacusercheck7"></label></div>
             </th>
-            <td style="text-align: center"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body"><%=waiVO.getWaitingUserId() %></a></td>
-            <td style="text-align: center"><%=waiVO.getWaitingID() %></td>
-            <td style="text-align: center"><span class="badge badge-soft-success mb-0"><%=waiVO.getWaitingReserve() %></td>
-            <td style="text-align: center"><%=waiVO.getWaitingMaxPeople() %></td>
-            <td style="text-align: center"><%=waiVO.getWaitingGameName() %></td>
             
+			
+            <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
+            <td style="text-align: center">${WaitingVO.waitingID}</td>
+            <td style="text-align: center"><span class="badge badge-soft-success mb-0">${WaitingVO.waitingReserve}</td>
+            <td style="text-align: center">${WaitingVO.waitingMaxPeople}</td>
+            <td style="text-align: center">${WaitingVO.waitingGameName}</td>
             
-            	<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
-			     	<input type="submit"  class="btn btn-secondary" value="¥[¤J">
-			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">
-			     	<input type="hidden" name="waimax"  value="${waiVO.waitingMaxPeople}">
+                
+                <td  style="text-align: center ">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
+			     	<input type="submit"  class="btn btn-secondary" value="åŠ å…¥">
+			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">
+			     	<input type="hidden" name="waimax"  value="${WaitingVO.waitingMaxPeople}">
 			     	<input type="hidden" name="action"	value="add_Person"></FORM>
 				</td>
 				
 				
 				<td  style="text-align: center ">
-			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/WaitingServlet" style="margin-bottom: 0px;">
+			  		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Waiting.do" style="margin-bottom: 0px;">
 	     	
 			     	<input type="hidden" name="check"  value="No">
-			     	<input type="hidden" name="waino"  value="${waiVO.waitingID}">
+			     	<input type="hidden" name="waino"  value="${WaitingVO.waitingID}">
 			     	<input type="hidden" name="action"	value="select_waitingPerson">
-			     	<input type="submit" class="btn btn-secondary"  value="¬d¬İ"></FORM>
+			     	<input type="submit" class="btn btn-secondary"  value="æŸ¥çœ‹"></FORM>
+			     	
 				</td>
-            
-   
-    
-                </ul>
-            </td>
+				
+				  
+         
         </tr>
-   
+       </c:if>
+    </c:forEach>
     
     
     </tbody>
     </table>
-    
-    </div>
-    </div>
-   
-     
-    <div class="float-sm-end">
-    <ul class="pagination mb-sm-0"> </ul>
+
     </div>
     
+    <%@ include file="page2.file" %>
    
 
-</body>
-</html>
+    
+    
+    </body>
+    </html>
