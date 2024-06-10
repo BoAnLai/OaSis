@@ -22,6 +22,8 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();
+		}finally {
+			session.close();
 		}
 
 	}
@@ -44,6 +46,8 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 			if(session!=null) {
 				session.getTransaction().rollback();
 			}
+		}finally {
+			session.close();
 		}
 	}
 
@@ -62,6 +66,8 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		return wpList;// 不要再忘記了!!!
 	}
@@ -79,6 +85,8 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		return wpList;// 不要再忘記了!!!
 	}
@@ -101,6 +109,8 @@ public class WaitingPersonDao implements WaitingPersonInterface {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
+		}finally {
+			session.close();
 		}
 
 		return waitingPersonPK;

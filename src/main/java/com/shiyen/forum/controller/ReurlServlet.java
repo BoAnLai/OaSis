@@ -27,7 +27,7 @@ public class ReurlServlet extends HttpServlet {
 		String reurl = req.getParameter("reurl");
 		if (reurl == null) {
 			reurl = (String) req.getAttribute("reurl");
-		 }
+		}
 		
 		switch(reurl) {
 		case "toPostArt":{

@@ -14,6 +14,16 @@
 		color:black;
 		 text-decoration: none
 	}
+	#artTable_wrapper {
+    border: 1px solid #ccc; 
+ 
+    overflow: auto; 
+}
+ .dataTables_wrapper {
+            width: 80%; 
+            margin: auto; 
+        }
+	
 </style>
 
 </head>
@@ -24,7 +34,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <%@ include file="/home/navbar.jsp" %>
     <%@ include file="/forum/forumHeader.jsp" %>
-	<table id="artTable" class="display">
+	
+	<table id="artTable" class="artTable">
 		 <thead>
 		<tr>
 			<th>標題</th>
@@ -65,7 +76,13 @@
           });
           
           $('#artTable').DataTable({
-              "columnDefs": [{
+        	  "columns": [
+                  { "width": "60%" }, 
+                  { "width": "20%" }, 
+                  { "width": "20%" }, 
+                  
+              ],
+        	  "columnDefs": [{
                   "targets": "_all", 
                   "render": function (data, type, row, meta) {
                       if (type === 'display' && typeof data === 'string' && data.includes('<a ')) {
@@ -73,7 +90,9 @@
                       }
                       return data;
                   }
-              }]
+              }],
+              "order": [[1, 'asc']],
+              autoWidth: false
           });
 
         },

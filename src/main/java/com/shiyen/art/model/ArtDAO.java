@@ -9,6 +9,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
+import com.mike.user.model.UserDTO;
+import com.mike.user.model.UserService;
+import com.mike.user.model.UserVO;
 import com.shiyen.message.model.MessageDTO;
 import com.shiyen.util.HibernateUtil;
 
@@ -101,7 +104,7 @@ public class ArtDAO implements ArtDAO_interface {
     	   }
         }
 		
-			String sql1 = "SELECT a.art_id, a.art_title, a.art_content,a.art_status ,u.user_nickname , u.user_avatar "
+			String sql1 = "SELECT a.art_id, a.art_title, a.art_content,a.art_status ,u.user_id , u.user_avatar "
             		+ " FROM art a "
                     + " LEFT JOIN user u ON a.art_user_id = u.user_id "
                     + " WHERE a.art_id = :artId";
@@ -127,7 +130,11 @@ public class ArtDAO implements ArtDAO_interface {
                 	}
                 }
                 
-                artDTO.setUserNickname((String) result1[4]);
+                UserService userService = new UserService();
+                UserVO userVO=userService.getByUserId((Integer) result1[4]);
+                UserDTO userDTO = new UserDTO(userVO);
+                
+                artDTO.setUserNickname(userDTO.getUserName());
                 artDTO.setUserAvatar((String) result1[5]);
                 artDTO.setMessageDTO(messages);
                 return artDTO;
@@ -170,7 +177,7 @@ public class ArtDAO implements ArtDAO_interface {
 	public List<ArtReplyDTO> getReply(Integer artId) {
 		Session session = getSession();
 		List<ArtReplyDTO> artReply = new ArrayList<>();
-		String sql ="SELECT a.art_Id, a.art_title, a.art_content,a.art_timestamp,a.art_status,u.user_nickname,u.user_avatar "
+		String sql ="SELECT a.art_Id, a.art_title, a.art_content,a.art_timestamp,a.art_status,u.user_id,u.user_avatar "
 				+ " FROM art a "
 				+ " JOIN user u ON a.art_user_id = u.user_id "
 				+ " WHERE a.art_reply = :artId"
@@ -198,8 +205,13 @@ public class ArtDAO implements ArtDAO_interface {
             	break;
             }
             }
+            UserService userService = new UserService();
+            UserVO userVO=userService.getByUserId((Integer) row[5]);
+            UserDTO userDTO = new UserDTO(userVO);
+            
+            artReplyDTO.setUserNickname(userDTO.getUserName());
             artReplyDTO.setArtTimestamp((Timestamp) row[3]);
-            artReplyDTO.setUserNickname((String) row[5]);
+            
             artReplyDTO.setUserAvatar((String) row[6]);
             
             String sql1 ="SELECT m.message_content, m.message_timestamp,m.message_status,u.user_nickname "
