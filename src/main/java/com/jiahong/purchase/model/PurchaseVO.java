@@ -54,10 +54,7 @@ public class PurchaseVO implements java.io.Serializable {
 
     @OneToMany(mappedBy = "purchase", fetch=FetchType.EAGER)
     private List<ItemVO> items;
-    
-    @Column(name = "purchase_product_ids")
-    private List<Integer> purchaseProductIds;
-    
+        
     public PurchaseVO() {
         super();
     }
@@ -145,13 +142,7 @@ public class PurchaseVO implements java.io.Serializable {
         this.items = items;
     }
     
-    public List<Integer> getPurchaseProductIds() { 
-        return purchaseProductIds;
-    }
 
-    public void setPurchaseProductIds(List<Integer> purchaseProductIds) {  
-        this.purchaseProductIds = purchaseProductIds;
-    }
     
     @Override
     public String toString() {

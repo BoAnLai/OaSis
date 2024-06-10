@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.jiahong.product.model.*"%>
+<%@ page import="com.jiahong.purchase.model.*"%>
 <%
 	ProductVO product = (ProductVO)request.getAttribute("product");
-	
+	PurchaseVO purchase = (PurchaseVO)request.getAttribute("purchase");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,20 +58,24 @@
                                 <td>${product.productName}</td>
                                 <td>${product.productPrice}</td>
                                 <td>
-                                    <form method="post" action="${pageContext.request.contextPath}/removeFromCart">
+                                    <form method="post" action="<%=request.getContextPath() %>/PurchaseServlet">
                                         <input type="hidden" name="productId" value="${product.productId}">
-                                        <button type="submit" class="btn btn-danger">移出購物車</button>
-                                    </form>
-                                    <form method="post" action="${pageContext.request.contextPath}/purchaseClosing">
-                                        <input type="hidden" name="productId" value="${product.productId}">
+                                        <input type="hidden" name="purchase" value="${purchase}">
+                                        <input type="hidden" name="action" value="buyPurchase">
                                         <button type="submit" class="btn btn-success">購買</button>
+                                    </form>
+                                    <form method="post" action="<%=request.getContextPath() %>/PurchaseServlet">
+                                        <input type="hidden" name="productId" value="${product.productId}">
+                                        <input type="hidden" name="purchaseId" value="${purchase.purchaseId}">
+                                        <input type="hidden" name="action" value="removePurchase">
+                                        <button type="submit" class="btn btn-danger">移出購物車</button>
                                     </form>
                                 </td>
                             </tr>
                     </tbody>
                 </table>
 
-                <button type="submit" class="btn btn-primary">全部購買</button>
+                <!-- <button type="submit" class="btn btn-primary">全部購買</button> -->
 
         <form method="post" action="${pageContext.request.contextPath}/ProductServlet">
             <input type="hidden" name="action" value="select_all_product">

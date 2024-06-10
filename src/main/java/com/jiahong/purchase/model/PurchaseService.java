@@ -13,7 +13,7 @@ public class PurchaseService {
     }
 
     public void insert(PurchaseVO vo) {
-        Session session = HibernateTool.getSessionFactory().openSession();
+    	Session session = HibernateTool.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.save(vo);
@@ -142,26 +142,6 @@ public class PurchaseService {
                 purchase.setPurchaseProductId(productId);  // 設置 purchase_product_id
                 session.update(purchase);
                 session.getTransaction().commit();
-            } else {
-                throw new IllegalArgumentException("Invalid purchase ID");
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
-    // 新增方法：取得購物車中的所有產品
-    public List<Integer> getProductsInPurchase(Integer purchaseId) {
-        try {
-            Session session = HibernateTool.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            
-            PurchaseVO purchase = session.get(PurchaseVO.class, purchaseId);
-            session.getTransaction().commit();
-            
-            if (purchase != null) {
-                // 這裡假設 purchaseProductId 是一個產品 ID 的集合
-                return purchase.getPurchaseProductIds();  // 取得 purchase_product_id 列表
             } else {
                 throw new IllegalArgumentException("Invalid purchase ID");
             }

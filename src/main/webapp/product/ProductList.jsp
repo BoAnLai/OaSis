@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.jiahong.product.model.*"%>
-
+<%@ page import="com.jiahong.purchase.model.*"%>
 <%
     ProductService productService = new ProductService();
-    List<ProductVO> productList = productService.listAllProducts();
+	List<ProductVO> productList = productService.listAllProducts();
 %>
+
 <style type="text/css">
 	.btn-link {
     	border: none;
@@ -42,7 +43,7 @@
                     <th>產品名稱</th>
                     <th>產品圖片</th>
                     <th>產品價格</th>
-                    <th>下單</th>
+                    <th>加入購物車</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,11 +54,9 @@
 			  				<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/ProductServlet"
 							style="margin-bottom: 0px;">
-							<input type="hidden" name="productId"
-								value=<%=product.getProductId()%>> <input
-								type="hidden" name="action" value="select_product"> <input
-								type="submit" class="btn-link"
-								value=<%=product.getProductName()%>>
+								<input type="hidden" name="productId" value=<%=product.getProductId()%>> 
+								<input type="hidden" name="action" value="select_product"> 
+								<input type="submit" class="btn-link"value=<%=product.getProductName()%>>
 						    </FORM>
 
 					</td>
@@ -72,7 +71,6 @@
 							<input	type="hidden" name="action" value="add_to_cart">
 							<button type="submit" class="btn btn-primary">加入購物車</button>
 						    </form>
-                            <button class="btn btn-success">購買</button>
                         </td>
                     </tr>
                 <% } %>

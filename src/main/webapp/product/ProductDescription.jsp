@@ -127,15 +127,15 @@
 								<%= vo.getProductDescription() %></p>
 						</div>
 						<!-- 加入購物車按鈕 -->
-						<form method="post"
+						<!-- <form method="post"
 							action="${pageContext.request.contextPath}/purchase/myCart.jsp">
 							<input type="hidden" name="productId"
 								value="<%= vo.getProductId() %>"> <input type="hidden"
 								name="action" value="add_to_cart">
 							<button type="submit" class="btn btn-primary">加入購物車</button>
-						</form>
+						</form>-->
 						<!-- 購買按鈕 -->
-						<button class="btn btn-success">購買</button>
+				<!-- <button class="btn btn-success">購買</button>
 						<!-- 回到產品清單按鈕 -->
 						<form method="post"
 							action="<%=request.getContextPath() %>/ProductServlet">

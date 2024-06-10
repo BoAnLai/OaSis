@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.jiahong.product.model.ProductVO;
+import com.jiahong.purchase.model.PurchaseVO;
 
 @MultipartConfig
 public class ProductServlet extends HttpServlet {
