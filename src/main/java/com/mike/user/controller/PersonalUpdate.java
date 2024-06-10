@@ -84,9 +84,10 @@ public class PersonalUpdate extends HttpServlet{
 		try {
 			userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
 		} catch (IllegalArgumentException e) {
-			
+			System.out.println("catching error");
 			req.setAttribute("errorMsg", "手機號碼只接受 09XX-XXX-XXX 或相近的格式");
-			req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
+			req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+			return;
 		}
 		
 		
@@ -113,7 +114,7 @@ public class PersonalUpdate extends HttpServlet{
 		
 		session.setAttribute("user", new UserDTO(userUpdating));
 		
-		res.sendRedirect("/oasis");
-//		req.getRequestDispatcher("/").forward(req, res);
+//		res.sendRedirect("/oasis");
+		req.getRequestDispatcher("/").forward(req, res);
 	}
 }

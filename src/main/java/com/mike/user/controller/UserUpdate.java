@@ -103,16 +103,13 @@ public class UserUpdate extends HttpServlet {
 			userUpdating.setUserAddress(StringProcessor.blankToNull(req.getParameter("address")));
 			
 			UserService userService = new UserService();
-			userService.userUpdate(userUpdating.getUserId(),userUpdating);
-			
-			
 			try {
 		    	userService.userUpdate(userUpdating.getUserId(), userUpdating);
 			} catch (IllegalArgumentException e) {
 				
 				req.setAttribute("errorMsg", "手機號碼只接受 09XX-XXX-XXX 或相近的格式");
 				req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
-				
+				return;
 				
 //				try {
 //					res.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
