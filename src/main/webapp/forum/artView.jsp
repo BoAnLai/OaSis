@@ -111,6 +111,7 @@ body {
 
 .artTitle {
 	margin-top:10px;
+	margin-left:10px;
 }
 
 .artContent {
@@ -419,7 +420,7 @@ width:100%
           type: "POST",
           data: {act:"getFavorStatus",
         	  artId: artFirstId,
-        	  userId:userId
+        	  userId: userId
           },
           dataType: "json",
           success: function(data) {

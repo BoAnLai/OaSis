@@ -90,7 +90,13 @@ public class FavorDAO implements FavorDAO_interface {
 		query.setParameter("favorArtId", artId);
 		query.setParameter("favorUserId", userId);
 		FavorVO favor =  query.uniqueResult();
-		Integer	favorStatus = favor.getFavorStatus();
+		Integer	favorStatus =null;
+		if(favor == null) {
+				favorStatus = 1;
+		}else {
+				favorStatus = favor.getFavorStatus();
+		}
+		
 		return favorStatus;
 	}
 

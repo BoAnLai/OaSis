@@ -147,9 +147,8 @@ public class ArtServlet extends HttpServlet {
 //			查詢資料
 			FavorService favorSvc = new FavorService();
 			Integer favorStatus = favorSvc.getfavorStatus(artId,userId);
-			if(favorStatus == null) {
-				favorStatus = 1;
-			}
+			
+			System.out.println(favorStatus);
 //			傳送資料
 			Gson gson = new Gson();
 			String json = gson.toJson(favorStatus);
