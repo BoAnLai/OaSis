@@ -13,6 +13,7 @@
 	
 	
 	<!-- ====================LEE==================== -->
+
 	
 	
 	<!-- ====================mike==================== -->
@@ -25,12 +26,18 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/list</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>UserUpdate</servlet-name>
+		<servlet-class>com.mike.user.controller.UserUpdate</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/update</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/updating</url-pattern>
 	</servlet-mapping>
 	
@@ -93,4 +100,15 @@
 		<servlet-name>ForumServlet</servlet-name>
 		<url-pattern>/forum</url-pattern>
 	</servlet-mapping>
+	
+	<!-- ===================ryan===================== -->
+	<servlet>
+		<servlet-name>SubsServlet</servlet-name>
+		<servlet-class>com.ryan.subs.controller.SubsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubsServlet</servlet-name>
+		<url-pattern>/subs.do</url-pattern>
+	</servlet-mapping>
+	/oasis/subs
 </web-app>

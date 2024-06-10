@@ -22,22 +22,19 @@ public class AdminFilter extends HttpFilter implements Filter {
 
 	public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-		System.out.println("AdminFilter has been triggered");
-		
 		HttpSession session = req.getSession();
 		UserDTO user = (UserDTO)session.getAttribute("user");
 		
 		if(user !=null) {
 			if(user.getUserIdentity().toString().equals("ADMINISTRATOR")) {				
-				System.out.println("user is admin, allow to proceed");
+				System.out.println("AdminFilter: user is administrator, allow to proceed");
 				chain.doFilter(req, res);
 			}else {
-				System.out.println("user is NOT allow to access this page");
+				System.out.println("AdminFilter: user is NOT allow to access this page");
 				res.sendRedirect("/oasis");
-				System.out.println("code after redirect in AdminFilter still execute");
 			}
 		}else {
-			System.out.println("user in session is NULL");
+			System.out.println("AdminFilter: user in session is NULL");
 			res.sendRedirect("/login");
 		}
 		

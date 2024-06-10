@@ -68,7 +68,7 @@ public class UserService {
 	public void updateAvatar(Integer userId, String avatarPath) {
 		
 		UserVO userUpdating = dao.findById(userId);
-		if(avatarPath != null && avatarPath.equals("")) {
+		if(avatarPath != null && !avatarPath.isBlank()) {
 			userUpdating.setUserAvatar(avatarPath);
 		}
 		dao.update(userId, userUpdating);
@@ -106,6 +106,13 @@ public class UserService {
 		
 		UserVO user = dao.findById(userId);
 		return user;
+	}
+	
+	public Identity applyCompanyIdentity(Integer userId, String companyName) {
+		UserVO user = dao.findById(userId);
+		user.setUserCompanyName(companyName);
+		dao.update(userId, user);
+		return user.getUserIdentity();
 	}
 
 }
