@@ -86,13 +86,13 @@
 				  		
 							<% if (subs.getSubsGameId() == game.getGameId()) {
 								foundSubscription = true;%>
-				  			<button class="subBtn" data-game-id="<%= game.getGameId() %>" data-subs-id="<%= subs.getSubsId() %>" data-type="game">訂閱遊戲</button>
+				  			<button class="subBtn btn btn-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-subs-id="<%= subs.getSubsId() %>" data-type="game">取消訂閱</button>
 				  			<% 
 				  					break;  
 				  			   		}%>
 							<% } %>	
 							<% if (!foundSubscription){ %>
-							<button class="subBtn" data-game-id="<%= game.getGameId() %>" data-type="game">訂閱遊戲</button>
+							<button class="subBtn btn btn-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-type="game">訂閱遊戲</button>
 							<% } %>
 				  			
 				  					  			  		

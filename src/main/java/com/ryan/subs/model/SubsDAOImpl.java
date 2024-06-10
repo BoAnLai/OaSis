@@ -28,6 +28,7 @@ public class SubsDAOImpl implements SubsDAO_interface {
 	private static final String GET_ONE_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_status FROM subs where subs_id = ?";
 	private static final String GET_USERID_SUBS = "SELECT subs_id, subs_user_id, subs_game_id, subs_art_id, subs_status FROM subs where subs_user_id = ?";
 	private static final String UPDATE = "UPDATE subs set subs_status=? where subs_id = ?";
+	private static final String GET_USERID_BY_GAMEID = "SELECT subs_user_id, subs_status FROM subs where subs_game_id = ?";
 	
 	@Override
 	public void insert(SubsVO subsVO) {
@@ -238,6 +239,66 @@ public class SubsDAOImpl implements SubsDAO_interface {
 			}
 		}
 		return subsVO;
+	}
+	
+	@Override
+	public List<SubsVO> findByGameId(Integer subsGameId) {
+		
+		List<SubsVO> subsList = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_USERID_BY_GAMEID);
+
+			pstmt.setInt(1, subsGameId);
+
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				SubsVO subsVO = new SubsVO();
+				
+				
+                subsVO.setSubsUserId(rs.getInt("subs_user_id"));
+                subsVO.setSubsStatus(rs.getBoolean("subs_status"));
+                
+                subsList.add(subsVO);
+                             
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("發生資料庫錯誤! "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return subsList;
 	}
 	
 }

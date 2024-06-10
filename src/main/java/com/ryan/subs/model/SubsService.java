@@ -66,6 +66,9 @@ public class SubsService {
 	public SubsVO findByPrimaryKey(Integer subsId) {
 		return subsDAO.findByPrimaryKey(subsId);
 	}
-
+	
+	public List<SubsVO> findByGameId(Integer subsGameId) {
+		return subsDAO.findByGameId(subsGameId);
+	}
 
 }

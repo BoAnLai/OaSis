@@ -8,5 +8,6 @@ public interface SubsDAO_interface {
     public void update(SubsVO subsVO);
     public List<SubsVO> findByUserId(Integer subsUserId);
     public SubsVO findByPrimaryKey(Integer subsId);
+	public List<SubsVO> findByGameId(Integer subsGameId);
 
 }
