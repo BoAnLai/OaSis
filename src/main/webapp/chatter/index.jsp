@@ -167,7 +167,7 @@
 	
 		
 	
-		let MyPoint = "/lobbyChatterOasis/${user.getUserNickname()}";
+		let MyPoint = "/lobbyChatterOasis/${user.getUserNickname()}/${user.getUserId()}";
 	
 		let host=window.location.host;//8081
 		
@@ -177,7 +177,7 @@
 		
 		
 		let endPointURL= "ws://" + window.location.host+webCtx+MyPoint;
-		console.log(endPointURL);
+		
 	//======================================以上為Socket 1 js動態取得專案路徑===============================
 		
 		
@@ -186,7 +186,7 @@
 		
 		
 		var PsendPointURL = "ws://" + window.location.host + webCtx + PsPoint;
-		console.log(PsendPointURL);
+		
 		
 		
 	//======================================以上為Socket 2 js動態取得專案路徑===============================
@@ -210,9 +210,24 @@
 			};
 			
 			webSocket.onmessage = function(event) {
+							
 			    var messagesArea = document.getElementById("messagesArea");
 			    var jsonObj = JSON.parse(event.data);
+			    console.log("Parsed JSON object:", jsonObj);
 			    var message = jsonObj.userName + ": " + jsonObj.message;
+			    
+			   
+			    
+
+				 // 检查 message 属性是否存在
+				 if ("MATCH" === jsonObj.type) {
+				     var alertMessage = jsonObj.timestamp; // 获取消息内容
+				     alert("房間時間:"+alertMessage+"即將開始!"); // 显示弹出窗口
+				 } else {
+				     console.log("Received: " + jsonObj.message);
+				 }
+			    
+                //以上為推播窗口
 					
 			    if(jsonObj.message!=undefined){
 			    	
@@ -303,7 +318,8 @@
 		
 		        PswebSocket.onmessage = function(event) {
 		            var jsonObj = JSON.parse(event.data);
-
+					
+		            
 		            if ("history" === jsonObj.type) {
 		                PsmessagesArea.innerHTML = '';
 		                var Psul = document.createElement('ul');

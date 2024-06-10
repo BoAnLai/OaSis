@@ -126,19 +126,12 @@
     <div class="container">
     	<div class="row align-items-center">
     		
-	    			<div class="dropdown">
-	    				<ul class="dropdown-menu dropdown-menu-end">
-	    					<li><a class="dropdown-item" href="#">Action</a></li>
-						    <li><a class="dropdown-item" href="#">Another action</a></li>
-						    <li><a class="dropdown-item" href="#">Something else here</a></li>
-	    				</ul>
-    				</div>
+	    			
     			
   
     <table class="table project-list-table table-nowrap align-middle table-borderless">
-    <tbody>
     
-    
+    <thead>
     
     <tr>
     <th scope="col" class="ps-4"  style="width: 50px; text-align: center;">
@@ -152,7 +145,9 @@
     <th scope="col" style="text-align: center">查看</th>
     </tr>
     
+    </thead>
     
+    <tbody>
     <%@ include file="page1.file" %> 
 	<c:forEach var="WaitingVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="status">
     	 <c:if test="${status.index < userList.size()}">
@@ -170,7 +165,7 @@
 			
             <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${WaitingVO.waitingID}</td>
-            <td style="text-align: center"><span class="badge badge-soft-success mb-0">${WaitingVO.waitingReserve}</td>
+            <td style="text-align: center"><span class="badge badge-soft-success mb-0">${WaitingVO.waitingReserve}</span></td>
             <td style="text-align: center">${WaitingVO.waitingMaxPeople}/${a}</td>
             <td style="text-align: center">${WaitingVO.waitingGameName}</td>
             
@@ -204,7 +199,7 @@
     </tbody>
     </table>
 
-    </div>
+    </div></div>
     
     <%@ include file="page2.file" %>
    
