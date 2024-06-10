@@ -47,15 +47,17 @@
 	
 	<%@ include file="/home/navbar.jsp" %>
 	<%
-	//取得 userId
-	Integer userId = user.getUserId();
-
-	//使用方法取得list
-	SubsService subsService = new SubsService();
-
-	List<SubsVO> subsList = subsService.findByUserId(userId);
-
-	
+		
+	List<SubsVO> subsList = new ArrayList<SubsVO>();
+		if(user != null){
+			//取得 userId
+			Integer userId = user.getUserId();
+		
+			//使用方法取得list
+			SubsService subsService = new SubsService();
+		
+			subsList = subsService.findByUserId(userId);
+		}
 	%>
 	
 	<div class="row row-cols-md-4">
@@ -81,19 +83,25 @@
 				  	</div>
 				  	<div id="btn-container" class="mb-1">
 				  		
-				  		<% boolean foundSubscription = false;%>
-				  		<% for(SubsVO subs: subsList) {%>
-				  		
-							<% if (subs.getSubsGameId() == game.getGameId()) {
-								foundSubscription = true;%>
-				  			<button class="subBtn btn btn-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-subs-id="<%= subs.getSubsId() %>" data-type="game">取消訂閱</button>
-				  			<% 
-				  					break;  
-				  			   		}%>
-							<% } %>	
-							<% if (!foundSubscription){ %>
+				  		<% 
+				  		   boolean foundSubscription = false;
+				  		   if(subsList!=null){
+					  		   for(SubsVO subs: subsList) {
+					  		
+							       if (subs.getSubsGameId() == game.getGameId()) {
+									  foundSubscription = true;
+						%>
+				  			<button class="subBtn btn btn-outline-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-subs-id="<%= subs.getSubsId() %>" data-type="game">取消訂閱</button>
+				  		<% 
+					  					break;  
+					  			   }
+							    }
+				  		    }
+							 
+				  		    if (!foundSubscription){ 
+						%>
 							<button class="subBtn btn btn-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-type="game">訂閱遊戲</button>
-							<% } %>
+						<%  } %>
 				  					  			  		
 				  		<form action="/oasis/game/forum/<%= game.getGameId() %>" method="POST">
 						  <button type="submit" class="btn btn-primary">文章列表</button>

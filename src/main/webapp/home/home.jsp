@@ -90,7 +90,7 @@
 			    <p class="card-text">訂閱功能讓您輕鬆追蹤喜愛的文章或遊戲：訂閱您感興趣的文章，第一時間收到最新的更新通知！馬上訂閱，確保您不會錯過任何精彩內容。立即加入我們，享受即時的資訊掌握，讓您的遊戲體驗更加豐富和充實！</p>
 		    </div>
 		    <div class="btn-container">
-			    <a href="#" class="btn btn-primary">Enter</a>
+			    <a href="<%= request.getContextPath() %>/subs/mySubs.jsp" class="btn btn-primary">Enter</a>
 		    </div>
 		  </div>
 		</div>
