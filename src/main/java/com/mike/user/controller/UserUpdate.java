@@ -106,7 +106,21 @@ public class UserUpdate extends HttpServlet {
 			userService.userUpdate(userUpdating.getUserId(),userUpdating);
 			
 			
-			
+			try {
+		    	userService.userUpdate(userUpdating.getUserId(), userUpdating);
+			} catch (IllegalArgumentException e) {
+				
+				req.setAttribute("errorMsg", "手機號碼只接受 09XX-XXX-XXX 或相近的格式");
+				req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
+				
+				
+//				try {
+//					res.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+			}
 			
 			
 			

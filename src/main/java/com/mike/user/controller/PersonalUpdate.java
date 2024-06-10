@@ -78,7 +78,15 @@ public class PersonalUpdate extends HttpServlet{
 		userUpdating.setUserCellphone(StringProcessor.blankToNull(req.getParameter("cellphone")));
 		userUpdating.setUserAddress(StringProcessor.blankToNull(req.getParameter("address")));
 		
-		userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
+		
+		try {
+			userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
+		} catch (IllegalArgumentException e) {
+			
+			req.setAttribute("errorMsg", "手機號碼只接受 09XX-XXX-XXX 或相近的格式");
+			req.getRequestDispatcher("/user/userUpdate.jsp").forward(req,res);
+		}
+		
 		
 		Part part = req.getPart("avatar");
 		if(part.getSize()!=0) {

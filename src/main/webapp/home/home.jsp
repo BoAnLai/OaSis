@@ -57,7 +57,7 @@
 		  <div class="card-body">
 		    <h5 class="card-title">Match Up</h5>
 		    <div class="h-75">
-			    <p class="card-text">我們的配對功能讓您可以輕鬆組隊，提供多種實用功能，包括出發時間、遊戲標籤、大廳聊天和一對一聊天。無論您是想找到合適的遊戲夥伴，還是希望在遊戲開始前討論策略，這個功能都能滿足您的需求，讓您的遊戲體驗更加順暢和愉快。加入我們，立即開始您的遊戲之旅！</p>
+			    <p class="card-text">我們的配對功能讓您可以輕鬆組隊，提供多種實用功能，包括出發時間、遊戲標籤、大廳聊天和一對一聊天。無論您是想找到合適的遊戲夥伴，還是在遊戲開始前討論策略，這個功能都能滿足您的需求，讓您的遊戲體驗更加順暢愉快!</p>
 		    </div>
 		    <div class="btn-container">
 			    <a href="<%=request.getContextPath()%>/waiting/waiting_select.jsp" class="btn btn-primary">Enter</a>
