@@ -137,7 +137,7 @@ public class ArtServlet extends HttpServlet {
 			break;
 			
 		}
-		case "getReplyStatus":{
+		case "getFavorStatus":{
 //			接收參數和錯誤驗證
 			Integer artId = Integer.valueOf(req.getParameter("artId")); 
 			Integer userId = Integer.valueOf(req.getParameter("userId")); 
@@ -147,7 +147,9 @@ public class ArtServlet extends HttpServlet {
 //			查詢資料
 			FavorService favorSvc = new FavorService();
 			Integer favorStatus = favorSvc.getfavorStatus(artId,userId);
-			
+			if(favorStatus == null) {
+				favorStatus = 1;
+			}
 //			傳送資料
 			Gson gson = new Gson();
 			String json = gson.toJson(favorStatus);

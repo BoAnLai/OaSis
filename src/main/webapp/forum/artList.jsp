@@ -158,7 +158,7 @@ pageContext.setAttribute("favorList", favorList);
 						<input type="submit" value="刪除"> 
 						<input type="hidden" name="artId" value=" ${favorDTO.artId}"> 
 						<input type="hidden" name="userId" value=" ${sessionScope.user.userId}"> 
-						<input type="hidden" name="act" value="deleteFavor">
+						<input type="hidden" name="act" value="deleteFavor2">
 					</FORM>
 				</td>
 			</tr>
