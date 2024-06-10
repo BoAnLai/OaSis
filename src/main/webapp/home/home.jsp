@@ -45,7 +45,7 @@
 			    <p class="card-text">我們的論壇讓你輕鬆參與各種遊戲社群的討論:發表文章、留言評論或是針對文章再發表文張進行討論!馬上加入我們，開始分享遊戲心得、吐槽官方或發表最新迷因圖!</p>
 		    </div>
 		    <div class="btn-container">
-			    <a href="#" class="btn btn-primary">Enter</a>
+			    <a href="<%= request.getContextPath()%>/game" class="btn btn-primary">Enter</a>
 		    </div>
 		  </div>
 		</div>

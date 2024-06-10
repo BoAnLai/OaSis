@@ -45,6 +45,8 @@ public class PersonalUpdate extends HttpServlet{
 		
 		
 		UserDTO userClient = (UserDTO)session.getAttribute("user");
+		System.out.println(userClient);
+		
 		UserService userSvc = new UserService();
 		
 		UserVO userUpdating = userSvc.getByUserId(userClient.getUserId());
@@ -109,7 +111,7 @@ public class PersonalUpdate extends HttpServlet{
 			userSvc.updateAvatar(userUpdating.getUserId(),imgSrcPath);				
 		}
 		
-		
+		session.setAttribute("user", new UserDTO(userUpdating));
 		
 		res.sendRedirect("/oasis");
 //		req.getRequestDispatcher("/").forward(req, res);

@@ -68,7 +68,7 @@
 				    </p>
 				  	</div>
 				  	<div id="btn-container" class="mb-1">
-				  		<button hidden=true data-game-id="<%= game.getGameId() %>" class="btn btn-danger mx-3 subBtn">訂閱</button>
+				  		<button data-game-id="<%= game.getGameId() %>" class="btn btn-danger mx-3 subBtn">訂閱</button>
 				  		<form action="/oasis/game/forum/<%= game.getGameId() %>" method="POST">
 						  <button type="submit" class="btn btn-primary">文章列表</button>
 						</form>

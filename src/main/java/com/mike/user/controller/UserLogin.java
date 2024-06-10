@@ -68,11 +68,14 @@ public class UserLogin extends HttpServlet {
 					headingPath = (String)session.getAttribute("headingPath");
 					session.removeAttribute("headingPath");
 					
-					if(headingPath != null) {
-						res.sendRedirect(headingPath);
-					}else {	
-						res.sendRedirect("/oasis");
-					}
+//					if(headingPath != null) {
+//						res.sendRedirect(headingPath);
+//					}else {	
+//						res.sendRedirect("/oasis");
+//					}
+					
+					//原本預計經過filter的網址要繼續導向目標，但因架構有問題+時間不夠，先全數導回首頁。
+					res.sendRedirect("/oasis");
 					
 				}else {
 					req.setAttribute("errorMsg", new String("密碼錯誤，請重新輸入"));

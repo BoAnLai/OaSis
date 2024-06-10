@@ -21,7 +21,7 @@ import com.mike.user.model.UserVO;
 import com.mike.user.model.exception.EmailNotFoundException;
 
 @MultipartConfig
-@WebServlet(name = "UserRegister", urlPatterns = {"/register", "/registering"})
+@WebServlet(name = "userRegister", urlPatterns = {"/register", "/registering"})
 public class UserRegister extends HttpServlet{
 
 	
@@ -31,7 +31,7 @@ public class UserRegister extends HttpServlet{
 	}
 	
 	
-	
+	// /registering
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
@@ -110,15 +110,16 @@ public class UserRegister extends HttpServlet{
 				part.write(f.toString());
 				imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
 			}
-			userRegistering.setUserAvatar(imgSrcPath);
-			userSvc.userUpdate(userRegistering.getUserId(),userRegistering);				
+//			userRegistering.setUserAvatar(imgSrcPath);
+//			userSvc.userUpdate(userRegistering.getUserId(),userRegistering);
+			userSvc.updateAvatar(userRegistering.getUserId(),imgSrcPath);
 		}
 		
 		UserDTO user = new UserDTO(userRegistering);
 		session.setAttribute("user", user);
 					
-		res.sendRedirect("/oasis");
-		
+//		res.sendRedirect("/oasis");
+		req.getRequestDispatcher("/").forward(req, res);
 		
 		
 	}
