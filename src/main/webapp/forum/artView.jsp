@@ -409,16 +409,22 @@ width:100%
       });
   });
   $(document).ready(function () {
+	  const container = document.getElementById("markContainer");
+	  let userId = ${empty sessionScope.user.userId ? "null":sessionScope.user.userId};
+	  if (userId === null){
+		 document.getElementById('markContainer').style.display = 'none';
+	  }
 	  $.ajax({
           url: "/oasis/art",
           type: "POST",
-          data: {act:"getReplyStatus",
+          data: {act:"getFavorStatus",
         	  artId: artFirstId,
-        	  userId:${sessionScope.user.userId}
+        	  userId:userId
           },
           dataType: "json",
           success: function(data) {
-              if(data.favorStatus == 0){
+        	  console.log(data);
+              if(data == 0){
             	  container.classList.remove("unmarked");
     	            container.classList.add("marked");
               }else{
@@ -433,7 +439,10 @@ width:100%
   })
   $(document).ready(function () {
 	  const container = document.getElementById("markContainer");
-
+	  let userId = ${empty sessionScope.user.userId ? "null":sessionScope.user.userId};
+	  if (userId === null){
+		 document.getElementById('markContainer').style.display = 'none';
+	  }
 	    container.addEventListener("click", function() {
 	        
 	        const isMarked = container.classList.contains("marked");
@@ -446,7 +455,7 @@ width:100%
 	            let data = {
 	            	act:"deleteFavor",
 	            	artId:artFirstId,
-	            	userId:${sessionScope.user.userId}
+	            	userId:userId
 	            };
 	            sendAjaxRequest("/oasis/post", data);
 	        } else {
@@ -455,7 +464,7 @@ width:100%
 	            let data = {
 	            	act:"addFavor",
 	            	artId:artFirstId,
-	            	userId:${sessionScope.user.userId},
+	            	userId:userId,
 	            	favorTimestamp : favorTimestamp
 	            }
 	            sendAjaxRequest("/oasis/post",  data );
@@ -466,7 +475,7 @@ width:100%
 	            url: url,
 	            type: "POST",
 	            data: data,
-	            dataType: "json",
+	            dataType: "text",
 	            success: function(response) {
 	                console.log("請求成功");
 	            },

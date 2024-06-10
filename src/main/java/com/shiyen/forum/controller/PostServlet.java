@@ -303,6 +303,27 @@ public class PostServlet extends HttpServlet {
 			successView.forward(req, res);	
 			break;
 		}
+		case "deleteFavor2":{
+			//接收參數
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
+			
+			FavorVO favorVO = new FavorVO();
+			favorVO.setFavorUserId(userId);
+			favorVO.setFavorArtId(artId);
+			
+			
+			
+			FavorService favorSVC = new FavorService();
+			favorSVC.deleteFavor(favorVO);
+			
+			String url = "/forum/artList.jsp";
+			req.setAttribute("userId", userId);
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+		}
 	}	
 		
 		
