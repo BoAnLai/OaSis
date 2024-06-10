@@ -46,7 +46,15 @@ public class StringProcessor {
 		}
 	}
 	
-	public static String EmptyToNull(String input) {
+	public static String blankToNull(String input) {
+		if(input == null) {
+			return input;
+		}else {
+			return emptyToNull(input.trim());
+		}
+	}
+	
+	public static String emptyToNull(String input) {
 		if(input.isEmpty()) {
 			return null;
 		}else {
@@ -66,9 +74,18 @@ public class StringProcessor {
 	}
 	
 	public static String pathAddRandomQueryParams(String path) {
-		
 		String output = path.concat("?").concat(Integer.toString(new Random().nextInt()));
 		return output;
 	}
+	
+	public static boolean isCellphoneNumber(String number) {
+		if (number == null || number.isBlank()) {
+		    return false;
+		}else {
+			String regex = "^09[0-9]{2}(-)?[0-9]{3}(-)?[0-9]{3}$";
+			return number.matches(regex);
+		}
+	}
+	
 
 }

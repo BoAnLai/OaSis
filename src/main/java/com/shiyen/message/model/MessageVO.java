@@ -29,15 +29,20 @@ public class MessageVO implements java.io.Serializable {
 	@Column(name ="message_user_id")
 	private Integer messageUserId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "message_art_id", referencedColumnName = "art_id")
-	private ArtVO artVO ;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "message_art_id", referencedColumnName = "art_id")
+//	private ArtVO artVO ;
+	@Column(name ="message_art_id")
+	private Integer messageArtId;
 	
 	@Column(name ="message_content",columnDefinition = "mediumtext")
 	private String messageContent;
 	
 	@Column(name ="message_timestamp")
 	private Timestamp messageTimestamp;
+	
+	@Column(name ="message_status")
+	private Integer messageStatus;
 
 	public Integer getMessageId() {
 		return messageId;
@@ -55,9 +60,9 @@ public class MessageVO implements java.io.Serializable {
 //		this.userVO = userVO;
 //	}
 	
-	public ArtVO getArtVO() {
-		return artVO;
-	}
+//	public ArtVO getArtVO() {
+//		return artVO;
+//	}
 
 	public Integer getMessageUserId() {
 		return messageUserId;
@@ -67,9 +72,9 @@ public class MessageVO implements java.io.Serializable {
 		this.messageUserId = messageUserId;
 	}
 
-	public void setArtVO(ArtVO artVO) {
-		this.artVO = artVO;
-	}
+//	public void setArtVO(ArtVO artVO) {
+//		this.artVO = artVO;
+//	}
 
 	public String getMessageContent() {
 		return messageContent;
@@ -86,6 +91,23 @@ public class MessageVO implements java.io.Serializable {
 	public void setMessageTimestamp(Timestamp messageTimestamp) {
 		this.messageTimestamp = messageTimestamp;
 	}
+
+	public Integer getMessageArtId() {
+		return messageArtId;
+	}
+
+	public void setMessageArtId(Integer messageArtId) {
+		this.messageArtId = messageArtId;
+	}
+
+	public Integer getMessageStatus() {
+		return messageStatus;
+	}
+
+	public void setMessageStatus(Integer messageStatus) {
+		this.messageStatus = messageStatus;
+	}
+	
 	
 	
 }

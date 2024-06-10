@@ -50,6 +50,9 @@ public class ArtVO implements java.io.Serializable {
 	@Column(name ="art_game_id")
 	private Integer artGameId;
 	
+	@Column(name ="art_status")
+	private Integer artStatus;
+	
 	
 	
 	
@@ -121,6 +124,13 @@ public class ArtVO implements java.io.Serializable {
 	}
 	public void setArtGameId(Integer artGameId) {
 		this.artGameId = artGameId;
+	}
+	
+	public Integer getArtStatus() {
+		return artStatus;
+	}
+	public void setArtStatus(Integer artStatus) {
+		this.artStatus = artStatus;
 	}
 	@Override
 	public String toString() {

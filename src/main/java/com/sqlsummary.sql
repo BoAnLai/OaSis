@@ -1,6 +1,13 @@
 CREATE DATABASE IF NOT EXISTS oasis;
 USE oasis;
 
+
+DROP TABLE IF EXISTS item; -- fk to purchase, product
+DROP TABLE IF EXISTS purchase; -- fk to user
+DROP TABLE IF EXISTS product; -- fk to user, game
+
+DROP TABLE IF EXISTS subs; -- fk to user, game and art
+
 DROP TABLE IF EXISTS WaitingPerson; -- fk to waiting
 DROP TABLE IF EXISTS waiting;
 
@@ -161,19 +168,53 @@ CREATE TABLE ART (
 	art_reply INT,
 	art_favor INT,
 	art_view INT,
+    art_status INT,
     art_user_id INT,
     art_game_id INT,
     CONSTRAINT  art_user_id FOREIGN KEY (art_user_id) REFERENCES user (user_id),
     CONSTRAINT  art_game_id FOREIGN KEY (art_game_id) REFERENCES game (game_id),
 	CONSTRAINT art_primary_key PRIMARY KEY (art_id)
 )AUTO_INCREMENT = 1;
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)  VALUES ("生命的超越者 - 杰倫達爾默","大家好，我是來自","2022-05-13 11:15:55",NULL,1,1,1,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("【提醒】5/1開始的手環活動獎勵要記得每天領 - 杰倫達爾默","雖然介面起來就跟普通的每日簽到差不多
-但這次的活動說明有特別提到","2022-05-13 11:15:55",1,3,10,2,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("【情報】【美好祝福福袋】維護完畢公告","親愛的冒險者們：
-感謝冒險者們持續的支持，此段時間若有造成不便，敬請見諒~","2022-05-12 12:16:55",NULL,2,6,3,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES ("改版後的濃姬 打起來回饋","聽說改版有說變得比較簡單","2024-05-19 10:23:19",NULL,14,30,4,1);
-INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_user_id,art_game_id)   VALUES("改版後的濃姬 打起來回饋","那五隻對應的是五個職業","2024-05-19 11:25:47",4,2,31,5,1);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)  VALUES ("【問題】大g賽恩思路問題","最近玩了20把左右
+單雙彈性快打都有打
+為什麼十分鐘破了首塔
+隊友還是能崩線
+對面打野都來抓我
+我方打野那時候都不會去拿中立資源
+也不會去幫其他路 就只顧著吃野
+重點是整體經濟打開biltz 插件看 是領先的
+但大概有2/3的局都輸掉
+不太懂輸在哪裡
+對局影片檔只能發YT 看嗎
+還是有什麼方法可以給各位高手解惑嗎", "2024-06-05 22:42:20",NULL,1,2,0,1,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","不是我要嘴
+只要開著這個首頁，我的CPU可以多飆50%
+整體衝上80~100%
+只要開著個人資料什麼的就會降。
+
+我就想說怎麼最近LOL掛著CPU就會急速運轉
+原來是那個新首頁搞的
+
+真的很爛。
+
+上次那個戰魂鬥士吃爆記憶體。
+這次吃爆CPU，都快懷疑首頁在挖礦了。","2024-06-04 11:42:04",Null,1,10,0,2,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","客戶端平台真的需要整個打掉重寫
+
+不然裡面肯定積累了10多年來的垃圾程式語法","2024-06-04 13:36:23",2,2,1,0,8,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES ("【心得】這什麼白癡首頁","我是舊電腦
+昨天開始開遊戲然後會爆cpu重新開機
+以為電腦真的太舊要換
+原來是這破首頁
+riot真的爛死","2024-06-04 13:41:30",2,14,1,0,10,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES("【心得】這什麼白癡首頁","改成陸配介面 沒煩惱 ..
+
+直接規避掉實際  以前G社時期就是了  每次打開都一堆垃圾網頁
+
+所以我已經養成習慣  直接改掉
+
+","2024-06-04 13:43:21",2,2,1,0,11,3);
+INSERT INTO art (art_title,art_content,art_timestamp,art_reply,art_favor,art_view,art_status ,art_user_id,art_game_id)   VALUES("【討論】英雄聯盟官方的桌布程式","想問問各位 有沒有人使用官方的桌布程式只停留在薩蜜拉 靈戰的桌布後就沒再更新了 是我的電腦沒辦法再更新了還是就真的官方也沒再用這桌布繼續更新 新的桌布圖呢","2024-06-05 21:00:17",NULL,2,0,0,4,3);
 
 -- favor table -----------------------
 CREATE TABLE favor (
@@ -201,6 +242,7 @@ CREATE TABLE message (
 	message_id INT AUTO_INCREMENT NOT NULL,
     message_content mediumtext,
     message_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    message_status INT,
     message_art_id INT,
     message_user_id INT,
     CONSTRAINT  message_art_id FOREIGN KEY (message_art_id) REFERENCES art (art_id),
@@ -208,16 +250,21 @@ CREATE TABLE message (
 	CONSTRAINT message_primary_key PRIMARY KEY (message_id)
 )AUTO_INCREMENT = 1;
 
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("終於甭反射了，感動","2024-05-19 14:07:57 ",4,1);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("一階不能反射了","2024-05-19 17:17:37",4,5);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("看來有人沒有體驗過最一開始的濃姬才這樣說呢","2024-05-19 17:20:56 ",4,4);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("冰雷單打，第二關就是所有放置技能一頭腦的狂丟","2024-05-19 19:17:43",5,2);
-INSERT INTO message (message_content,message_timestamp, message_art_id,message_user_id)  
-	VALUES ("等起源改版拆段數後","2024-05-19 19:13:30",5,3);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("建議發影片","2024-06-05 23:13:43 ",0,1,2);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("影片只能錄全部發上來嗎","2024-06-05 23:15:43",0,1,1);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("這回老子也深有同感，看到羊頭就來氣","2024-06-05 13:28:56 ",0,2,4);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("R粉快出來叫啊","2024-06-03 16:15:43",0,2,6);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("說不定現在內建挖礦程式，看有沒有哪位大神能拆包解惑","2024-06-04  17:40:30",0,2,8);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("以前CPU不用多好遊戲順順跑，不知道為啥現在這麼卡","2024-06-02  13:20:30",0,4,3);
+INSERT INTO message (message_content,message_timestamp,message_status, message_art_id,message_user_id)  
+	VALUES ("我現在可能要等這破活動結束才能玩lol 每次開遊戲都直接重新開機 救我
+","2024-06-05  16:23:30",0,4,9);
 
 -- report table ---------------------------------    
 CREATE TABLE report (
@@ -258,6 +305,104 @@ waitingPerson_WaitingID int NOT NULL,
 waitingPerson_UserID int NOT NULL,
 CONSTRAINT fk_waitingPerson_WaitingID FOREIGN KEY (waitingPerson_WaitingID) REFERENCES waiting(waiting_id)
 );
-
 INSERT INTO WaitingPerson(waitingPerson_WaitingID,waitingPerson_UserID)
 values(1,3),(2,2);
+
+-- subs table ----------------------
+CREATE TABLE subs (
+    subs_id INT AUTO_INCREMENT PRIMARY KEY not null,
+    subs_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    subs_user_id INT NOT NULL,
+    subs_game_id INT,
+    subs_art_id INT,
+    subs_status boolean,
+    CONSTRAINT fk_user FOREIGN KEY (subs_user_id) REFERENCES user(user_id),
+    CONSTRAINT fk_game FOREIGN KEY (subs_game_id) REFERENCES game(game_id),
+    CONSTRAINT fk_art FOREIGN KEY (subs_art_id) REFERENCES art(art_id) 
+);
+INSERT INTO subs (subs_user_id, subs_game_id, subs_art_id, subs_status) VALUES
+(1, 1, null, TRUE),
+(2, null, 2, FALSE),
+(1, 3, NULL, TRUE),
+(3, NULL, 4, FALSE),
+(2, null, 5, TRUE),
+(4, 6, NULL, FALSE),
+(3, 7, null, TRUE),
+(5, NULL, 3, FALSE),
+(2, 9, NULL, TRUE),
+(4, 10, NULL, FALSE);
+
+
+-- product table ------------------------
+CREATE TABLE product (
+    product_id  INT AUTO_INCREMENT NOT NULL,
+    product_user_id INT NOT NULL,
+    product_user_company_name VARCHAR(255) NOT NULL,
+    product_game_id INT NOT NULL,
+    product_game_name VARCHAR(255) NOT NULL,
+    product_img TINYTEXT,
+    product_name VARCHAR(20),
+    product_description VARCHAR(255),    
+    product_price INT NOT NULL,
+    CONSTRAINT product_primary_key PRIMARY KEY (product_id) 
+);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (16, 'Blizzard',  11, '鬥陣特攻', '/oasis/product/resources/productImg/鬥陣特攻產品圖片.jpg', '鬥陣特攻遊戲主程式', '《鬥陣特攻 2》是一款廣受好評的團隊取向射擊遊戲，故事背景設定在樂觀的未來時代，並且有持續成長的英雄陣容。立即與好友組隊，體驗刺激的戰鬥。', 1249);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (16, 'Blizzard',  11, '鬥陣特攻', '/oasis/product/resources/productImg/鬥陣特攻天照大神霧子造型圖片.jpg', '鬥陣特攻天照大神霧子造型', '《鬥陣特攻2》新賽季也就是第三賽季將在台灣時間 2 月 8 日凌晨登場，本賽季將會新增地圖以及大量更新內容，官方宣布將會啟用舊鬥陣幣並降低造型價格，傳奇造型均 1500 鬥陣幣外，舊鬥陣幣也能直接購買新造型與活動節慶造型，並將讓免費通行證增加共 1500 舊鬥陣幣的獎勵，第三季神話造型為「天照大神」霧子。', 1500);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (16, 'Blizzard',  11, '鬥陣特攻', '/oasis/product/resources/productImg/鬥陣特攻保時捷DVA造型圖片.jpg', '鬥陣特攻保時捷DVA造型', '我們將在第 10 賽季與保時捷合作推出新的遊戲內活動，帶來以全新 Macan Electric 為靈感來源的 D.Va 傳奇造型！', 2500);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (15, 'Nintendo', 10, '動物森友會', '/oasis/product/resources/productImg/動物森友會產品圖片.jpg', '動物森友會遊戲片', '參與無人島移居計畫展開全新的生活\n試試來無人島生活嗎 全新改造系統 讓玩家自己製作各種家具及道具\n園藝釣魚探索環境佈置與可愛動物交流等著你來體驗 生活的記錄就交給Nook Inc.吧', 1290);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (11, 'RIOT', 3, '英雄聯盟', '/oasis/product/resources/productImg/英雄聯盟千古不滅傳奇收藏阿璃造型組合包圖片.jpg', '英雄聯盟千古不滅傳奇收藏阿璃造型組合包', 'Riot Games 表示，Faker 不僅僅是《英雄聯盟》歷史上贏家中的贏家，他是這項競技的代名詞。他們將用量身打造的活動與風格裝飾在遊戲中紀念傳奇殿堂入選者，反映他們在峽谷所留下的成就，今年他們與 Faker 合作，為所有人提供一個記錄他職業生涯的活動通行證，並為鐵粉帶來了 3 種附帶全新效果、從獨特的參與擊殺次數顯示到防禦塔終結動畫的阿璃造型。', 9200);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (11, 'RIOT', 3, '英雄聯盟', '/oasis/product/resources/productImg/英雄聯盟不羈幻晶卡利斯造型圖片.jpg', '英雄聯盟不羈幻晶卡利斯造型', '大家好！我是造型團隊的產品負責人Stephanie Leung（ID：100 pc nuggets）。自從我們在賽季開始影片中公布新的尊爵不凡造型之後，已經過了一段時間了，所以今天我要來公布幾個接下來將登場的新尊爵不凡造型、神話商店輪替，以及新的神話結晶粉末造型主題！', 1487);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (11, 'RIOT', 3, '英雄聯盟', '/oasis/product/resources/productImg/英雄聯盟青花瓷拉克絲公仔產品圖片.jpg', '英雄聯盟青花瓷拉克絲公仔產品', 'RIOT 英雄聯盟 青花瓷 拉克絲公仔 官方限量，絕佳收藏！', 500);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (12, 'gamania', 12, '絕對武力', '/oasis/product/resources/productImg/絕對武力安娜人物模組圖片.jpg', '絕對武力安娜人物模組', '絕對武力安娜人物模組，為遊戲玩家精心設計的高品質角色模組，提升遊戲中的視覺享受與互動體驗，適合收藏與使用。', 520);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (12, 'gamania', 12, '絕對武力', '/oasis/product/resources/productImg/絕對武力安娜女僕造型圖片.jpg', '絕對武力安娜女僕造型', '絕對武力安娜女僕造型，這款精美的遊戲角色模組結合了戰鬥力與可愛女僕風格，為玩家帶來全新視覺享受與互動樂趣，提升遊戲體驗，讓你的戰鬥更加精彩。', 199);
+INSERT INTO product (product_user_id, product_user_company_name, product_game_id, product_game_name, product_img, product_name, product_description, product_price)  
+VALUES (12, 'gamania', 6, '楓之谷', '/oasis/product/resources/productImg/楓之谷專用卡2700點 (菈菈)圖片.jpg', '楓之谷專用卡2700點 (菈菈)點數卡', '購買2700點數儲值序號乙組(買家中心查看)，贈送菈菈數位收藏卡乙張(beanfun!內查看)', 2700);
+
+-- purchase table ------------------------
+CREATE TABLE purchase (
+    purchase_id INT AUTO_INCREMENT NOT NULL,  
+    purchase_user_id INT NOT NULL, 
+    purchase_user_realName VARCHAR(255),  
+    purchase_user_cellphone VARCHAR(255),  
+    purchase_user_address VARCHAR(255),
+    purchase_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    purchase_total INT NOT NULL,
+    purchase_closed boolean NOT NULL DEFAULT false,
+    CONSTRAINT purchase_primary_key PRIMARY KEY (purchase_id)
+);
+INSERT INTO purchase (purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_total)  
+VALUES (1, '賴柏安', '0963929616', '台北市文山區溪州街', 1249);
+INSERT INTO purchase (purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_total, purchase_closed)  
+VALUES (9, 'Peter Parker', '0987654321', '美國紐約市皇后區', 2539, true);
+INSERT INTO purchase (purchase_user_id, purchase_total, purchase_closed)  
+VALUES (8, 1290, false);
+
+-- item table ------------------------
+CREATE TABLE item (
+    item_id INT AUTO_INCREMENT NOT NULL,
+    item_purchase_id INT NOT NULL, 
+    item_product_id INT NOT NULL,
+    item_count INT NOT NULL,
+    item_price INT NOT NULL, 
+    item_total INT NOT NULL,
+    CONSTRAINT item_primary_key PRIMARY KEY (item_id),
+    FOREIGN KEY (item_purchase_id) REFERENCES purchase (purchase_id),
+    FOREIGN KEY (item_product_id) REFERENCES product (product_id)
+);
+INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
+VALUES (1, 1, 1, 1249, 1249);
+INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
+VALUES (2, 1, 1, 1249, 1249);
+INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
+VALUES (2, 4, 1, 1290, 1290);
+INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
+VALUES (3, 4, 1, 1290, 1290);

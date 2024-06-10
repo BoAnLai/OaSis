@@ -4,13 +4,17 @@
 <%@ page import="com.mike.tool.StringProcessor"%>
 
 
+<%
+	String errorMsg = (String) request.getAttribute("errorMsg");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OaSis - User Update</title>
     <link rel="stylesheet" type="text/css" href="css/avatar.css">
     <style>
     	#content{
@@ -43,10 +47,15 @@
 	                  	<input name="email" id="email" class="form-control" type="text" placeholder="必填" required disabled value="<%=userDisplayed.getUserEmail()%>" readonly>
 		        	</div>
 		        	<div class="mb-4">
+		        		<% if(errorMsg != null){ %>
+						<div class="bg-danger-subtle border border-danger-subtle rounded-3 text-danger-emphasis p-3 mb-2">
+						<%= errorMsg %>
+						</div>
+						<% } %>
 	                  	<label for="password" class="form-label fs-4 fw-bold">密碼</label>
 	                  	<input name="password" id="password" class="form-control" type="password" placeholder="必填" value="">
-		                <label for="confirm_password" class="form-label fs-5 mt-1">確認新密碼</label>
-		                <input name="confirm_password" id="password" class="form-control" type="password" placeholder="必填" value="">
+		                <label for="confirmPassword" class="form-label fs-5 mt-3">確認新密碼</label>
+		                <input name="confirmPassword" id="confirmPassword" class="form-control" type="password" placeholder="必填" value="">
 		        	</div>
 		        	<div class="mb-4">
 	                  <label for="nickname" class="form-label fs-4 fw-bold">暱稱</label>
@@ -80,7 +89,7 @@
 	                  <label for="address" class="form-label fs-4 fw-bold">地址</label>
 	                  <textarea name="address" id="address" class="form-control" cols="30" rows="5"><%=StringProcessor.nullToEmpty(userDisplayed.getUserAddress())%></textarea>
 		        	</div>
-		            <input type="submit" value="修改">
+		            <input id="submitBtn" class="btn btn-primary" type="submit" value="修改">
 		        </form>
 		        
 	    	</div>
