@@ -12,10 +12,10 @@
 	</welcome-file-list>
 	
 	
-	<!-- ====================LEE==================== -->
+	<!-- LEE -->
 	
 	
-	<!-- ====================mike=================== -->
+	<!-- Mike -->
 
 	<!-- JNDI work well without this config
 	<resource-ref>
@@ -154,4 +154,5 @@
 		<servlet-name>SubsServlet</servlet-name>
 		<url-pattern>/subs.do</url-pattern>
 	</servlet-mapping>
+	
 </web-app>
