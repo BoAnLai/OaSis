@@ -71,19 +71,19 @@ public class PurchaseServlet extends HttpServlet {
         // 重定向到購物車頁面
         req.getRequestDispatcher("/purchase/myCart.jsp").forward(req, res);
     }
-    private void buyPurchase(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    	HttpSession session = req.getSession();
-        int productId = Integer.parseInt(req.getParameter("productId"));
-        PurchaseService purchaseService = new PurchaseService();
-        PurchaseVO purchase = (PurchaseVO)req.getAttribute("purchase");
-        purchase.setPurchaseClosed(true);
-        purchaseService.updatePurchase(PurchaseVO);
-               
-        req.setAttribute("product", product);
-
-        // 重定向到購物車頁面
-        req.getRequestDispatcher("/purchase/myCart.jsp").forward(req, res);
-    }
+//    private void buyPurchase(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+//    	HttpSession session = req.getSession();
+//        int productId = Integer.parseInt(req.getParameter("productId"));
+//        PurchaseService purchaseService = new PurchaseService();
+//        PurchaseVO purchase = (PurchaseVO)req.getAttribute("purchase");
+//        purchase.setPurchaseClosed(true);
+//        purchaseService.updatePurchase(PurchaseVO);
+//               
+//        req.setAttribute("product", product);
+//
+//        // 重定向到購物車頁面
+//        req.getRequestDispatcher("/purchase/myCart.jsp").forward(req, res);
+//    }
 
     private void closePurchase(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         // 結帳的邏輯...
