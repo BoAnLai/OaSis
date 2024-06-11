@@ -22,8 +22,6 @@ public class AdminFilter extends HttpFilter implements Filter {
 
 	public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 
-		System.out.println("AdminFilter has been triggered");
-		
 		HttpSession session = req.getSession();
 		UserDTO user = (UserDTO)session.getAttribute("user");
 		

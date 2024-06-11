@@ -15,7 +15,7 @@
 	<!-- ====================LEE==================== -->
 	
 	
-	<!-- ====================mike==================== -->
+	<!-- ====================mike=================== -->
 
 	<servlet>
 		<servlet-name>UserServlet</servlet-name>
@@ -25,14 +25,31 @@
 		<servlet-name>UserServlet</servlet-name>
 		<url-pattern>/user/list</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>UserUpdate</servlet-name>
+		<servlet-class>com.mike.user.controller.UserUpdate</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/update</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>UserServlet</servlet-name>
+		<servlet-name>UserUpdate</servlet-name>
 		<url-pattern>/user/updating</url-pattern>
 	</servlet-mapping>
+	
+	
+	<filter>
+	  <filter-name>EncodingFilter</filter-name>
+	  <filter-class>com.mike.home.controller.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	  <filter-name>EncodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	
 	<filter>
 	  <filter-name>LoginFilter</filter-name>
@@ -54,6 +71,31 @@
 	  <filter-name>LoginFilter</filter-name>
 	  <url-pattern>/purchase/myCart.jsp</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/post</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/message</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/subs/mySubs.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/subs</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/subs.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+	  <filter-name>LoginFilter</filter-name>
+	  <url-pattern>/reurl</url-pattern>
+	</filter-mapping>
+	
 	
 	<filter>
 	  <filter-name>AdminFilter</filter-name>
@@ -122,4 +164,15 @@
         <url-pattern>/ItemServlet</url-pattern>
     </servlet-mapping>
 
+	
+	<!-- ===================ryan===================== -->
+	<servlet>
+		<servlet-name>SubsServlet</servlet-name>
+		<servlet-class>com.ryan.subs.controller.SubsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubsServlet</servlet-name>
+		<url-pattern>/subs.do</url-pattern>
+	</servlet-mapping>
+	/oasis/subs
 </web-app>

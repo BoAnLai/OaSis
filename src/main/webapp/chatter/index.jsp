@@ -167,7 +167,7 @@
 	
 		
 	
-		let MyPoint = "/lobbyChatterOasis/${user.getUserNickname()}";
+		let MyPoint = "/lobbyChatterOasis/${user.getUserNickname()}/${user.getUserId()}";
 	
 		let host=window.location.host;//8081
 		
