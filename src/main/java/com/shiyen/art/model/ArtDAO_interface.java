@@ -9,8 +9,11 @@ public interface ArtDAO_interface {
     public Integer delete(Integer artId);
     public ArtDTO getFirstArt(Integer artId);
     public ArtVO getOneArtByArtId(Integer artId);
+    public void updatrArtView(Integer artId,Integer artView);
+    
     public List<ArtVO> getAll();
     public List<ArtVO> getAllByUserId(Integer userId);
     public List<ArtDTO> getAllArtByGameId(Integer gameId);
     public List<ArtReplyDTO> getReply(Integer artId);
+    public List<GameDTO> getFamousForum();
 }

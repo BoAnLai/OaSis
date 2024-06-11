@@ -33,46 +33,63 @@ h4 {
 </style>
 
 <style>
- table {
-		max-width: 100%;
-		background-color: white;
-		margin-top: 5px;
-		margin-bottom: 5px;
-	  }
-	    table.dataTable th,
-    	table.dataTable td {
-        white-space: nowrap;  
-    }
-	  th, td {
-	    padding: 5px;
-	    text-align: center;
-	    max-width: 100px;
-	    max-height: 20px;
-	    overflow: hidden;
-	    text-overflow: ellipsis;
-	    white-space: nowrap;
-	  }
-	  tr th:first-child{
-	  	width: 50px;
-	  }
-	  
-	  @media (max-width: 800px) {
-        table, th, td {
-            font-size: 12px;
-        }
-    	}
-    .artTitle{
-    	color:black;
-	 	text-decoration: none
-    }
-    #artTable_wrapper {
+ .artTitle{
+		color:black;
+		 text-decoration: none
+	}
+	#artTable_wrapper {
     border: 1px solid #ccc; 
+ 
     overflow: auto; 
-    
-        
+}
+ .dataTables_wrapper {
+            width: 80%; 
+            margin: auto; 
+        }
+	.artContainer{
+	width:100%;   
+    height: auto; 
+    margin: 0 auto; 
+    overflow: auto; 
+    border: 1px solid #ccc;
+    padding: 20px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color:#D7D8EF;
+    }
+    .table thead th {
+    background-color: #51A1B4; 
+}
+.dt-layout-row {
+    background-color: #4B92AF; 
+}
+.dt-search-0{
+	background-color: light-gray;
+}
+.table tr:nth-child(even) {
+    background-color: #f2f2f2; 
+}
+
+
+.table tr:hover {
+    background-color: #ddd;
+}
+label{
+	font-size: 20px;
+}
+label[for="dt-length-0"] {
+    display: none;
+}
+select{
+display: none;
+}
+#dt-search-0 {
+	background-color: lightgray;
 }
 .title{
-margin-top:10px;
+	fontsize:30px;
+	 font-weight: bolder;
+	 fpnt-family:Roboto;
+	 color:#660000;
 }
 </style>
 
@@ -93,8 +110,8 @@ pageContext.setAttribute("favorList", favorList);
 <body bgcolor='white'>
 
 
-	
-	<h3>發表文章</h3>
+	<div class="artContainer">
+	<h1 class="title">發表文章</h1>
 	
 
 	<table id="artTable">
@@ -133,8 +150,9 @@ pageContext.setAttribute("favorList", favorList);
 		</c:forEach>
 		</tbody>
 	</table>
-	
-	<h3 class = title>收藏文章</h3>
+	</div>
+	<div class="artContainer">
+	<h1 class = title>收藏文章</h1>
 	
 
 	<table id="favorTable">
@@ -165,7 +183,7 @@ pageContext.setAttribute("favorList", favorList);
 		</c:forEach>
 		</tbody>
 	</table>
-	
+	</div>
 	
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -179,7 +197,9 @@ pageContext.setAttribute("favorList", favorList);
     <script>
         $(document).ready(function() {
             $('#artTable').DataTable({
-                "columns": [
+            	"info": false,
+          	 	 "lengthMenu": [ ] ,
+            	"columns": [
                     { "width": "60%" }, 
                     { "width": "20%" }, 
                     { "width": "10%" }, 
