@@ -84,7 +84,7 @@
 				  		<% boolean foundSubscription = false;%>
 				  		<% for(SubsVO subs: subsList) {%>
 				  		
-							<% if (subs.getSubsGameId() == game.getGameId()) {
+							<% if (subs.getSubsGameId() == game.getGameId() && subs.getSubsStatus() == true) {
 								foundSubscription = true;%>
 				  			<button class="subBtn btn btn-danger mx-3 subBtn" data-game-id="<%= game.getGameId() %>" data-subs-id="<%= subs.getSubsId() %>" data-type="game">取消訂閱</button>
 				  			<% 
