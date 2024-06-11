@@ -1,8 +1,12 @@
 package com.jiahong.purchase.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.Session;
-import com.jiahong.item.model.ItemVO;
+
+import com.jiahong.product.model.ProductService;
+import com.jiahong.product.model.ProductVO;
 import com.mike.tool.HibernateTool;
 import com.mike.tool.StringProcessor;
 
@@ -149,24 +153,51 @@ public class PurchaseService {
             throw e;
         }
     }
-
-    public void addItems(Integer userId, Integer productId, Integer productCount) {}
     
-    public void removeItems(Integer itemId) {
-        
-    }
+    // 新增方法：根據 purchaseId 移除購物車資料
+    public void removePurchase(Integer purchaseId) {
+        try {
+            Session session = HibernateTool.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
 
-    public void updateTotal(Integer purchaseId) {
-        PurchaseVO purchase = getPurchaseByPurchaseId(purchaseId);
-        updateTotal(purchase);
-    }
-    
-    public void updateTotal(PurchaseVO purchase) {
-        List<ItemVO> itemList = purchase.getItems();
-        
-        int total = 0;
-        for (ItemVO item : itemList) {
-            total += item.getItemTotal();
+            PurchaseVO purchase = session.get(PurchaseVO.class, purchaseId);
+            if (purchase != null) {
+                session.delete(purchase); // 刪除對應的 PurchaseVO
+                session.getTransaction().commit();
+            } else {
+                throw new IllegalArgumentException("Invalid purchase ID");
+            }
+        } catch (Exception e) {
+            throw e;
         }
+    }
+   
+    public List<PurchaseWithProductInfo> getAllPurchaseWithProductInfoWithClosedZero() {
+        String hql = "FROM PurchaseVO p WHERE p.purchaseClosed = :closed";
+        
+        try {    
+            Session session = HibernateTool.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            List<PurchaseVO> purchaseList = session.createQuery(hql, PurchaseVO.class)
+                    .setParameter("closed", false)
+                    .getResultList();
+            session.getTransaction().commit();
+            ProductService productService = new ProductService();
+            List<PurchaseWithProductInfo> results = new ArrayList<>();
+            for (PurchaseVO vo : purchaseList) {
+            	PurchaseWithProductInfo info = new PurchaseWithProductInfo();
+            	ProductVO product = productService.getProductById(vo.getPurchaseProductId());
+            	info.setPurchaseId(vo.getPurchaseId());
+            	info.setProductId(product.getProductId());
+            	info.setProductName(product.getProductName());
+            	info.setProductImg(product.getProductImg());
+            	info.setProductPrice(product.getProductPrice());
+            	results.add(info);
+            }
+            
+            return results;
+        } catch (Exception e) {
+            throw e;
+        }    
     }
 }

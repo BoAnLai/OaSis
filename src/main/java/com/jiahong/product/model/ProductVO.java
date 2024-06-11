@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jiahong.item.model.ItemVO;
-
 @Entity
 @Table(name = "product")
 public class ProductVO implements java.io.Serializable {
@@ -44,9 +42,6 @@ public class ProductVO implements java.io.Serializable {
 
     @Column(name = "product_price", nullable = false)
     private Integer productPrice;
-
-    @OneToMany(mappedBy = "product")
-    private List<ItemVO> items;
 
     public ProductVO() {
         super();
@@ -124,14 +119,6 @@ public class ProductVO implements java.io.Serializable {
 
     public void setProductPrice(Integer productPrice) {
         this.productPrice = productPrice;
-    }
-
-    public List<ItemVO> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ItemVO> items) {
-        this.items = items;
     }
 
     @Override

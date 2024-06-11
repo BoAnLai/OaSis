@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-import com.jiahong.item.model.ItemVO;
 import com.jiahong.product.model.ProductVO;
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
@@ -51,9 +50,6 @@ public class PurchaseVO implements java.io.Serializable {
 
     @Column(name = "purchase_closed", insertable = true, updatable = true)
     private Boolean purchaseClosed;
-
-    @OneToMany(mappedBy = "purchase", fetch=FetchType.EAGER)
-    private List<ItemVO> items;
         
     public PurchaseVO() {
         super();
@@ -132,14 +128,6 @@ public class PurchaseVO implements java.io.Serializable {
 
     public void setPurchaseClosed(Boolean purchaseClosed) {
         this.purchaseClosed = purchaseClosed;
-    }
-
-    public List<ItemVO> getItems() {
-        return items;
-    }
-    
-    public void setItems(List<ItemVO> items) {
-        this.items = items;
     }
     
 

@@ -385,25 +385,3 @@ INSERT INTO purchase (purchase_product_id, purchase_user_id, purchase_user_realN
 VALUES (1, 9, 'Peter Parker', '0987654321', '美國紐約市皇后區', true);
 INSERT INTO purchase (purchase_product_id, purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_closed)  
 VALUES (2, 9, 'Peter Parker', '0987654321', '美國紐約市皇后區', true);
-
-
--- item table ------------------------
-CREATE TABLE item (
-    item_id INT AUTO_INCREMENT NOT NULL,
-    item_purchase_id INT NOT NULL, 
-    item_product_id INT NOT NULL,
-    item_count INT NOT NULL,
-    item_price INT NOT NULL, 
-    item_total INT NOT NULL,
-    CONSTRAINT item_primary_key PRIMARY KEY (item_id),
-    FOREIGN KEY (item_purchase_id) REFERENCES purchase (purchase_id),
-    FOREIGN KEY (item_product_id) REFERENCES product (product_id)
-);
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (1, 1, 1, 1249, 1249);
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (2, 1, 1, 1249, 1249);
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (2, 4, 1, 1290, 1290);
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (3, 4, 1, 1290, 1290);
