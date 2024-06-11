@@ -23,7 +23,11 @@ public class ReurlServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
+
 		String reurl = req.getParameter("reurl");
+		if (reurl == null) {
+			reurl = (String) req.getAttribute("reurl");
+		}
 		
 		switch(reurl) {
 		case "toPostArt":{

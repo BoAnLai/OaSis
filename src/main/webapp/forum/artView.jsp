@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.sql.Timestamp,java.util.Date,java.text.SimpleDateFormat"%>
+<%@ page import="java.sql.Timestamp,java.util.Date,java.text.SimpleDateFormat,com.shiyen.favor.model.*"%>
 <%
 //獲取當前時間
 	Date currentDate = new Date();
@@ -10,6 +10,10 @@
 	 // 定義時間戳格式
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String formattedTimestamp = sdf.format(currentTimestamp);
+    
+    
+    
+    
 %>
 
 <!DOCTYPE html>
@@ -107,6 +111,7 @@ body {
 
 .artTitle {
 	margin-top:10px;
+	margin-left:10px;
 }
 
 .artContent {
@@ -160,7 +165,9 @@ body {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-
+#artContent{
+	position:relative;
+}
 .messageContent {
 	display: inline-block;
 	flex-grow: 1;
@@ -188,7 +195,29 @@ input[type="text"] {
 .image img{
 width:100%
 }
-
+#markContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    padding: 10px;
+    width:50px;
+    height:50px;
+}
+#markContainer img{
+	display: block;
+ 	 width: 100%;
+ 	 height: auto;
+ 	 max-width:50px;
+ 	 max-height:50px;
+}
+.unMarked {
+	
+    background-color: transparent;
+}
+.marked {
+    background-color: #ffcc00;
+}
 
 </style>
 </head>
@@ -222,7 +251,11 @@ width:100%
 			<hr>
 			<!-- 文章内容 -->
 			<div>
-				<div id="artContent" class="artContent"></div>
+				<div id="artContent" class="artContent">
+				<div id="markContainer" class="unmarked">
+        		<img id="markImage" src="${pageContext.servletContext.contextPath}/forum/image/favor.png" alt="收藏">
+    			</div>
+				</div>
 			</div>
 			<div id="commentContainer" class="commentContainer">
 				<div id="comment" class="comment"></div>
@@ -285,7 +318,7 @@ width:100%
                 + '</div>';
               $("#comment").prepend(comment);});
        			let input = '<form id="messageForm" action="<%=request.getContextPath()%>/post " method="POST" >' 
-        		+ '<input type=text class = "message" name="messageContent" placeholder="留言...">'
+        		+ '<input type=text class = "message" name="messageContent" required placeholder="留言...">'
         		+ '<input type=hidden name= "artFirstId" value="' + artFirstId + '" >'
         		+ '<input type=hidden name= "artId" value="' + artFirstId + '" >'
         		+ '<input type=hidden name= "userId" value="'+ ${sessionScope.user.userId} + '" >'
@@ -357,7 +390,7 @@ width:100%
                         .append(comment);
                     });
                 let input = '<form id="messageForm" action="<%=request.getContextPath()%>/post " method="POST" >' 
-            		+ '<input type=text class = "message" name="messageContent" placeholder="留言...">'
+            		+ '<input type=text class = "message" name="messageContent" required placeholder="留言...">'
             		+ '<input type=hidden name= "artFirstId" value="' + artFirstId + '" >'
             		+ '<input type=hidden name= "artId" value="' + art.artId + '" >'
             		+ '<input type=hidden name= "userId" value="'+ ${sessionScope.user.userId} + '" >'
@@ -376,7 +409,83 @@ width:100%
         }
       });
   });
-  
+  $(document).ready(function () {
+	  const container = document.getElementById("markContainer");
+	  let userId = ${empty sessionScope.user.userId ? "null":sessionScope.user.userId};
+	  if (userId === null){
+		 document.getElementById('markContainer').style.display = 'none';
+	  }
+	  $.ajax({
+          url: "/oasis/art",
+          type: "POST",
+          data: {act:"getFavorStatus",
+        	  artId: artFirstId,
+        	  userId: userId
+          },
+          dataType: "json",
+          success: function(data) {
+        	  console.log(data);
+              if(data == 0){
+            	  container.classList.remove("unmarked");
+    	            container.classList.add("marked");
+              }else{
+            	  container.classList.remove("marked");
+  	            container.classList.add("unmarked");
+              }
+          },
+          error: function(xhr, status, error) {
+              console.error("請求失敗", status, error);
+          }
+      });
+  })
+  $(document).ready(function () {
+	  const container = document.getElementById("markContainer");
+	  let userId = ${empty sessionScope.user.userId ? "null":sessionScope.user.userId};
+	  if (userId === null){
+		 document.getElementById('markContainer').style.display = 'none';
+	  }
+	    container.addEventListener("click", function() {
+	        
+	        const isMarked = container.classList.contains("marked");
+
+	        let favorTimestamp = getCurrentTimestamp();
+	        if (isMarked) {
+	        	
+	            container.classList.remove("marked");
+	            container.classList.add("unmarked");
+	            let data = {
+	            	act:"deleteFavor",
+	            	artId:artFirstId,
+	            	userId:userId
+	            };
+	            sendAjaxRequest("/oasis/post", data);
+	        } else {
+	        	container.classList.remove("unmarked");
+	            container.classList.add("marked");
+	            let data = {
+	            	act:"addFavor",
+	            	artId:artFirstId,
+	            	userId:userId,
+	            	favorTimestamp : favorTimestamp
+	            }
+	            sendAjaxRequest("/oasis/post",  data );
+	        }
+	    });
+	    function sendAjaxRequest(url, data) {
+	        $.ajax({
+	            url: url,
+	            type: "POST",
+	            data: data,
+	            dataType: "text",
+	            success: function(response) {
+	                console.log("請求成功");
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("請求失敗", status, error);
+	            }
+	        });
+	    }
+  })
 </script>
 </body>
 </html>

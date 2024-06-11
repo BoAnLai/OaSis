@@ -31,6 +31,8 @@ public class WaitingDaoImpl implements WaitingInterface {
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 
 	}
@@ -45,13 +47,17 @@ public class WaitingDaoImpl implements WaitingInterface {
 			session.beginTransaction();
 			// 這邊我嘗試用createNativeQuery，效果:速度較快(因Hibernate還是需要將HQL轉換成SQL給資料庫，直接給SQL會執行效率更好!-----應公司不同使用作練習)
 			NativeQuery<WaitingVO> query = session.createNativeQuery(
-					"SELECT * FROM waiting where waiting_reserve > NOW() ORDER BY waiting_Reserve", WaitingVO.class);
+					"SELECT * FROM waiting \r\n"
+					+ "WHERE DATE_FORMAT(waiting_reserve, '%Y-%m-%d %H:%i') >= DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i') \r\n"
+					+ "ORDER BY waiting_reserve;", WaitingVO.class);
 			wtList = query.list();
 
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 
 		return wtList;
@@ -68,6 +74,8 @@ public class WaitingDaoImpl implements WaitingInterface {
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		return wat;
 	}
@@ -83,6 +91,8 @@ public class WaitingDaoImpl implements WaitingInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 	}
 
@@ -99,6 +109,8 @@ public class WaitingDaoImpl implements WaitingInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		return wtList;
 	}
@@ -118,6 +130,8 @@ public class WaitingDaoImpl implements WaitingInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 		return wtList;
 	}
@@ -131,12 +145,20 @@ public class WaitingDaoImpl implements WaitingInterface {
 		try {
 			session.beginTransaction();
 			NativeQuery<WaitingVO> query = session.createNativeQuery(
-					"SELECT waiting.* FROM waiting INNER JOIN waitingPerson B ON waiting.waiting_id = B.waitingperson_waitingID WHERE B.waitingperson_userID =:waitingUserID AND waiting.waiting_reserve > NOW() ORDER BY waiting.waiting_reserve",
+					"SELECT waiting.*\r\n"
+					+ "FROM waiting\r\n"
+					+ "INNER JOIN waitingPerson B ON waiting.waiting_id = B.waitingperson_waitingID\r\n"
+					+ "WHERE B.waitingperson_userID = :waitingUserID\r\n"
+					+ "AND DATE_FORMAT(waiting.waiting_reserve, '%Y-%m-%d %H:%i') >= DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i')\r\n"
+					+ "ORDER BY waiting.waiting_reserve;\r\n"
+					+ "",
 					WaitingVO.class).setParameter("waitingUserID",waitingUserID);
 			wtList = query.list();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
 
 		return wtList;

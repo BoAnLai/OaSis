@@ -1,7 +1,6 @@
 package com.shiyen.forum.controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,13 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 import com.google.gson.Gson;
 import com.shiyen.art.model.ArtDTO;
 import com.shiyen.art.model.ArtReplyDTO;
 import com.shiyen.art.model.ArtService;
-import com.shiyen.art.model.ArtVO;
+import com.shiyen.favor.model.FavorService;
 
 @WebServlet("/art")
 public class ArtServlet extends HttpServlet {
@@ -140,6 +137,26 @@ public class ArtServlet extends HttpServlet {
 			break;
 			
 		}
+		case "getFavorStatus":{
+//			接收參數和錯誤驗證
+			Integer artId = Integer.valueOf(req.getParameter("artId")); 
+			Integer userId = Integer.valueOf(req.getParameter("userId")); 
+			
+			
+			
+//			查詢資料
+			FavorService favorSvc = new FavorService();
+			Integer favorStatus = favorSvc.getfavorStatus(artId,userId);
+			
+			System.out.println(favorStatus);
+//			傳送資料
+			Gson gson = new Gson();
+			String json = gson.toJson(favorStatus);
+			System.out.println(json);
+			res.getWriter().write(json);
+			
+			break;
+			}
 	}	
   }
 

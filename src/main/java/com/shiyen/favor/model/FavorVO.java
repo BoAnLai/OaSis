@@ -29,12 +29,14 @@ public class FavorVO implements java.io.Serializable {
 	@Column(name ="favor_user_id")
 	private Integer favorUserId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "favor_art_id", referencedColumnName = "art_id")
-	private ArtVO artVO ;
+	@Column(name ="favor_art_id")
+	private Integer favorArtId;
 	
 	@Column(name ="favor_timestamp")
 	private Timestamp favorTimestamp ;
+	
+	@Column(name ="favor_status")
+	private Integer favorStatus ;
 
 	public Integer getFavorId() {
 		return favorId;
@@ -52,16 +54,18 @@ public class FavorVO implements java.io.Serializable {
 //		this.userVO = userVO;
 //	}
 
-	public ArtVO getArtVO() {
-		return artVO;
-	}
-
-	public void setArtVO(ArtVO artVO) {
-		this.artVO = artVO;
-	}
+	
 
 	public Timestamp getFavorTimestamp() {
 		return favorTimestamp;
+	}
+
+	public Integer getFavorArtId() {
+		return favorArtId;
+	}
+
+	public void setFavorArtId(Integer favorArtId) {
+		this.favorArtId = favorArtId;
 	}
 
 	public void setFavorTimestamp(Timestamp favorTimestamp) {
@@ -74,6 +78,14 @@ public class FavorVO implements java.io.Serializable {
 
 	public void setFavorUserId(Integer favorUserId) {
 		this.favorUserId = favorUserId;
+	}
+
+	public Integer getFavorStatus() {
+		return favorStatus;
+	}
+
+	public void setFavorStatus(Integer favorStatus) {
+		this.favorStatus = favorStatus;
 	}
 	
 	

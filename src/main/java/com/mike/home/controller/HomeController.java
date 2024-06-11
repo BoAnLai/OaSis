@@ -36,11 +36,20 @@ public class HomeController extends HttpServlet{
 			
 			req.setAttribute("reurl", "toArtList");
 			try {
-				res.sendRedirect("/oasis/reurl");
+				req.getRequestDispatcher("/reurl").forward(req, res);
+			} catch (ServletException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
+			
+			//			try {
+//				res.sendRedirect("/oasis/reurl");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 		}
 	}

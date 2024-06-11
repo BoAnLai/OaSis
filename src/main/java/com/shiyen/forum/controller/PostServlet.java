@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.plaf.ViewportUI;
+import javax.swing.plaf.synth.Region;
 
 import com.shiyen.art.model.ArtService;
 import com.shiyen.art.model.ArtVO;
+import com.shiyen.favor.model.FavorService;
+import com.shiyen.favor.model.FavorVO;
 import com.shiyen.message.model.MessageService;
 import com.shiyen.message.model.MessageVO;
 
@@ -56,6 +59,8 @@ public class PostServlet extends HttpServlet {
 	        if (messageContent == null || messageContent.trim().length() == 0) {
 				errorMsgs.add("內容請勿空白");
 			}	
+	       
+	        
 	        Integer messageStatus = 0;
 	        
 	        MessageVO messageVO = new MessageVO();
@@ -78,16 +83,14 @@ public class PostServlet extends HttpServlet {
 //		新增文章
 		case "addArt":{
 			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			
 //			接收參數和錯誤驗證
 			Integer gameId = Integer.valueOf(req.getParameter("gameId").trim());
 			if (gameId == null)  {
 				errorMsgs.add("遊戲編號錯誤");
 			}
 			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
-			if (userId == null)  {
-				errorMsgs.add("遊戲編號錯誤");
-			}
+			
 			String artTitle = req.getParameter("artTitle");
 			
 			if (artTitle == null || artTitle.trim().length() == 0) {
@@ -128,7 +131,8 @@ public class PostServlet extends HttpServlet {
 			artVO.setArtGameId(gameId);
 			
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("artVO", artVO); // 含有輸入格式錯誤的ArtVO物件,也存入req
+				req.setAttribute("artVO", artVO);
+				req.setAttribute("errorMsgs", errorMsgs); 
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/forum/postArt.jsp");
 				failureView.forward(req, res);
@@ -146,35 +150,28 @@ public class PostServlet extends HttpServlet {
 			successView.forward(req, res);	
 			break;
 		}
-//		新增回覆內容
+		
+		//新增回覆內容
 		case "addReply":{
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+			
 //			接收參數和錯誤驗證
 			Integer gameId = Integer.valueOf(req.getParameter("gameId").trim());
-			if (gameId == null)  {
-				errorMsgs.add("遊戲編號錯誤");
-			}
+			
 			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
 			if (userId == null)  {
-				errorMsgs.add("遊戲編號錯誤");
+				String url = "/login";
+				
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
 			}
 			String artTitle = req.getParameter("artTitle");
 			
-			if (artTitle == null || artTitle.trim().length() == 0) {
-				errorMsgs.add("文章標題: 請勿空白");
-			}
+			
 			String artContent = req.getParameter("artContent").trim();
-			if (artContent == null || artContent.trim().length() == 0) {
-				errorMsgs.add("內容請勿空白");
-			}	
-			Timestamp artTimestamp = null;
-			try {
-				artTimestamp = Timestamp.valueOf(req.getParameter("artTimestamp").trim());
-			} catch (IllegalArgumentException e) {
-				artTimestamp = new java.sql.Timestamp(System.currentTimeMillis());
-				errorMsgs.add("請輸入日期!");
-			}
+			
+			Timestamp artTimestamp = Timestamp.valueOf(req.getParameter("artTimestamp"));
+			
 			
 			Integer	artReply = Integer.valueOf(req.getParameter("artReply").trim());
 
@@ -196,14 +193,7 @@ public class PostServlet extends HttpServlet {
 			artVO.setArtUserId(userId);
 			artVO.setArtGameId(gameId);
 			
-			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("artVO", artVO);// 含有輸入格式錯誤的ArtVO物件,也存入req
-				req.setAttribute("artId", artVO.getArtReply() );
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/forum/artView.jsp");
-				failureView.forward(req, res);
-				return;
-			}
+			
 			
 //		     新增資料
 				ArtService artSvc = new ArtService();
@@ -268,7 +258,74 @@ public class PostServlet extends HttpServlet {
 			successView.forward(req, res);	
 			break;
 		}
+		//新增收藏
+		case "addFavor":{
+			//接收參數
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
+			
+			Timestamp favorTimestamp = Timestamp.valueOf(req.getParameter("favorTimestamp"));
+			FavorVO favorVO = new FavorVO();
+			favorVO.setFavorUserId(userId);
+			favorVO.setFavorArtId(artId);
+			favorVO.setFavorTimestamp(favorTimestamp);
+			favorVO.setFavorStatus(0);
+			
+			
+			FavorService favorSVC = new FavorService();
+			favorSVC.addFavor(favorVO);
+			
+			String url = "/forum/artView.jsp";
+			req.setAttribute("artId", artId);
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
 		}
+		case "deleteFavor":{
+			//接收參數
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
+			
+			FavorVO favorVO = new FavorVO();
+			favorVO.setFavorUserId(userId);
+			favorVO.setFavorArtId(artId);
+			
+			
+			
+			FavorService favorSVC = new FavorService();
+			favorSVC.deleteFavor(favorVO);
+			
+			String url = "/forum/artView.jsp";
+			req.setAttribute("artId", artId);
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+		}
+		case "deleteFavor2":{
+			//接收參數
+			Integer artId = Integer.valueOf(req.getParameter("artId").trim());
+			
+			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
+			
+			FavorVO favorVO = new FavorVO();
+			favorVO.setFavorUserId(userId);
+			favorVO.setFavorArtId(artId);
+			
+			
+			
+			FavorService favorSVC = new FavorService();
+			favorSVC.deleteFavor(favorVO);
+			
+			String url = "/forum/artList.jsp";
+			req.setAttribute("userId", userId);
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);	
+			break;
+		}
+	}	
+		
 		
 	}
 }
