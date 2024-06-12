@@ -8,53 +8,49 @@ import com.mike.tool.HibernateTool;
 public class ProductService {
     
     public List<ProductVO> listAllProducts() {
-        Transaction transaction = null;
-        List<ProductVO> products = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            products = session.createQuery("FROM ProductVO", ProductVO.class).list();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return products;
-    }
-
-    public ProductVO getProductById(Integer productId) {
-        Transaction transaction = null;
-        ProductVO product = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            product = session.get(ProductVO.class, productId);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        return product;
-    }
-
+    
+	        Session session = HibernateTool.getSessionFactory().openSession();
+	        List<ProductVO> productList = null;
+	        try {
+	            productList = session.createQuery("from ProductVO", ProductVO.class).list();
+	        } catch (RuntimeException ex) {
+	            ex.printStackTrace();
+	            throw ex;
+	        } finally {
+	            session.close();
+	        }
+	        return productList;
+	    }
+    
     public void deleteProduct(Integer productId) {
-        Transaction transaction = null;
-        try (Session session = HibernateTool.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
+        Session session = HibernateTool.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
             ProductVO product = session.get(ProductVO.class, productId);
             if (product != null) {
                 session.delete(product);
-                System.out.println("Product is deleted");
+                tx.commit();
             }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        } catch (RuntimeException ex) {
+            if (tx != null) tx.rollback();
+            throw ex;
+        } finally {
+            session.close();
         }
     }
-
+    
+    public ProductVO getProductById(Integer productId) {
+        Session session = HibernateTool.getSessionFactory().openSession();
+        ProductVO product = null;
+        try {
+            product = session.get(ProductVO.class, productId);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            throw ex;
+        } finally {
+            session.close();
+        }
+        return product;
+    }
 }

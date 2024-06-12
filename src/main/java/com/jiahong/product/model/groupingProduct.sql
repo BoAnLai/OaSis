@@ -1,9 +1,8 @@
 CREATE DATABASE IF NOT EXISTS oasis;
 USE oasis;
 
-DROP TABLE IF EXISTS product; 
 DROP TABLE IF EXISTS purchase;
-DROP TABLE IF EXISTS item; 
+DROP TABLE IF EXISTS product;
 
 set auto_increment_offset=1;
 set auto_increment_increment=1; 
@@ -57,50 +56,24 @@ VALUES (12, 'gamania', 6, '楓之谷', '/oasis/product/resources/productImg/楓�
 -- purchase table ------------------------
 CREATE TABLE purchase (
     purchase_id INT AUTO_INCREMENT NOT NULL,  
+    purchase_product_id  INT NOT NULL,
     purchase_user_id INT NOT NULL, 
-    purchase_user_realName VARCHAR(255) NOT NULL,  
-    purchase_user_cellphone VARCHAR(255) NOT NULL,  
-    purchase_user_address VARCHAR(255) NOT NULL,
+    purchase_user_realName VARCHAR(255),  
+    purchase_user_cellphone VARCHAR(255),  
+    purchase_user_address VARCHAR(255),
     purchase_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    purchase_total INT NOT NULL,
-    purchase_closed boolean NOT NULL,
+    purchase_closed boolean NOT NULL DEFAULT false,
     CONSTRAINT purchase_primary_key PRIMARY KEY (purchase_id)
 );
 
-INSERT INTO purchase (purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_total)  
-VALUES (1, '賴柏安', '0963929616', '台北市文山區溪州街', 1249);
+INSERT INTO purchase (purchase_product_id, purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address)  
+VALUES (1, 1, '賴柏安', '0963929616', '台北市文山區溪州街');
+INSERT INTO purchase (purchase_product_id, purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_closed)  
+VALUES (1, 9, 'Peter Parker', '0987654321', '美國紐約市皇后區', true);
+INSERT INTO purchase (purchase_product_id, purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_closed)  
+VALUES (2, 9, 'Peter Parker', '0987654321', '美國紐約市皇后區', true);
 
-INSERT INTO purchase (purchase_user_id, purchase_user_realName, purchase_user_cellphone, purchase_user_address, purchase_total)  
-VALUES (9, 'Peter Parker', '0987654321', '美國紐約市皇后區', 2539);
-
--- item table ------------------------
-CREATE TABLE item (
-    item_id INT AUTO_INCREMENT NOT NULL,
-    item_purchase_id INT NOT NULL, 
-    item_product_id INT NOT NULL,
-    item_count INT NOT NULL,
-    item_price INT NOT NULL, 
-    item_total INT NOT NULL,
-    CONSTRAINT item_primary_key PRIMARY KEY (item_id),
-    FOREIGN KEY (item_purchase_id) REFERENCES purchase (purchase_id),
-    FOREIGN KEY (item_product_id) REFERENCES product (product_id)
-    
-);
-
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (1, 1, 1, 1249, 1249);
-
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (2, 1, 1, 1249, 2539);
-
-INSERT INTO item (item_purchase_id, item_product_id, item_count, item_price, item_total)  
-VALUES (2, 4, 1, 1290, 2539);
-
--- spec table ------------------------
--- comment table ------------------------
--- description table ------------------------
 
 USE oasis;
 SELECT * FROM product;
 SELECT * FROM purchase;
-SELECT * FROM item;

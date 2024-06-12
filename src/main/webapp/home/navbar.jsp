@@ -55,7 +55,7 @@
                                 <a class="nav-link" href="<%= request.getContextPath()%>/waiting/waiting_select.jsp">組隊聊天</a>
                             </li>
                             <li class="nav-item mx-3">
-                                <a class="nav-link" href="<%= request.getContextPath()%>/product/resources/productList.jsp">瀏覽商品</a>
+                                <a class="nav-link" href="<%= request.getContextPath()%>/product/ProductList.jsp">瀏覽商品</a>
                             </li>
                             <li class="nav-item mx-3">
                                 <a class="nav-link" href="<%= request.getContextPath()%>/subs/mySubs.jsp">訂閱訊息</a>
