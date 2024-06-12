@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mike.msg.model.MsgService;
+import com.mike.msg.model.MsgUserService;
 import com.mike.user.model.UserService;
 
 @MultipartConfig
@@ -28,8 +28,8 @@ public class UserApplyForCompanyIdentity extends HttpServlet {
 		UserService userSvc = new UserService();
 		userSvc.applyCompanyIdentity(userId, companyName);
 		
-		MsgService msgService = new MsgService();
-		msgService.applyForCompany(userId);
+		MsgUserService msgUserSvc = new MsgUserService();
+		msgUserSvc.regularApplyForCompany(userId);
 	}
 	
 }

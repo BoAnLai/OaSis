@@ -21,6 +21,7 @@
     		margin: 30px 150px;
     	}
     </style>
+    <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>
@@ -38,7 +39,7 @@
 	    <h1 class="mx-5 my-2 fw-bold">修改使用者資料 - <span><%=userDisplayed.getUserEmail()%></span></h1>
 	    	<div class="mx-5">
 	    	
-		        <form action="updating" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
+		        <form action="updating" method="POST" enctype="multipart/form-data" class="card border border-primary border-2 rounded p-4">
 		        	<div class="mb-3" hidden>
 		      			<input name="id" type="number" class="form-control" value="<%=userDisplayed.getUserId()%>">
 		        	</div>

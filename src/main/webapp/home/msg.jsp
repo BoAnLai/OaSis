@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.mike.game.model.*"%>
@@ -37,6 +38,7 @@
 			min-height: 400px;
 		}
 	</style>
+	<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>
@@ -46,13 +48,15 @@
 	
 	<%@ include file="/home/navbar.jsp" %>
 	
-	<% 
-		MsgService msgSvc = new MsgService(); 
+	<%
+		MsgAdminService msgAdminSvc = new MsgAdminService();
+		MsgUserService msgUserSvc = new MsgUserService();
+		int userId = user.getUserId();
 	%>
 	
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">系統訊息</h1>
-    	<div id="main" class="mx-5 border border-primary border-2 rounded p-4">
+    	<div id="main" class="mx-5 border border-primary border-2 rounded p-4 bg-white">
 	    	
 	
 	
@@ -68,7 +72,7 @@
 			
 			<%
 				if(user.getUserIdentity().toString().equals("ADMINISTRATOR")){
-					List<Msg> adminMsgList = msgSvc.getAdminMsg();
+					List<Msg> adminMsgList = msgAdminSvc.getMsgListForAdmin(Msg.TYPE_REGULAR_APPLY_FOR_COMPANY);
 					if(adminMsgList.size() >0){
 						for(int i = 0; i<adminMsgList.size();i++){
 							Msg msg = adminMsgList.get(i);
@@ -81,7 +85,7 @@
 					    	<h5 class="card-title">申請廠商身份</h5>
 					    	<hr>
 					    	<p class="card-text"><%= msg.getContent() %></p>
-					    	<button href="#" data-msg-id="<%= i %>" class="card-link del-msg btn btn-outline-danger">刪除訊息</button>
+					    	<button href="#" data-msg-id="<%= i %>" data-msg-type="<%= msg.getType() %>" class="del-msg card-link btn btn-outline-danger">刪除訊息</button>
 					    </div>
 					</div>
 					
@@ -94,28 +98,41 @@
 			%>
 			
 			
+			<%
 			
-			<% 
-				List<String> userMsgList = msgSvc.getMsgListForOneUser(user.getUserId());
-				for(String msg: userMsgList){
-			%>
+				List<String> redisKeys = msgUserSvc.getExistingRedisKeyForOneUser(userId);
+				System.out.println("line 104");
+				for(String redisKey:redisKeys){
+					System.out.println(redisKey);
+					System.out.println("line 107");
+					List<Msg> msgList = msgUserSvc.getMsgListByRedisKey(redisKey);
+					if(msgList.size() >0){
+						System.out.println("line 111");
+						for(int i = 0; i<msgList.size();i++){
+							System.out.println("line 113");
+							Msg msg = msgList.get(i);
+							System.out.println(msg);
+							if(msg!=null){
+								System.out.println("line 116");
+			%>			
 				<li class="list-group-item">
 				
 					<div class="card" style="width: 70%;  justify-content: center;">
 					    <div class="card-body">
-					    	<h5 class="card-title">訂閱訊息</h5>
+					    	<h5 class="card-title">訂閱通知</h5>
 					    	<hr>
-					    	<p class="card-text"><%= msg %></p>
+					    	<p class="card-text"><%= msg.getContent() %></p>
+					    	<button href="#" data-msg-id="<%= i %>" data-msg-type="<%= msg.getType() %>" class="card-link del-msg btn btn-outline-danger">刪除訊息</button>
 					    </div>
 					</div>
 					
 				</li>
-			
-			<%
+			<%			
+							}
+						}
+					}
 				}
 			%>
-			
-			
 			
 			
 			
@@ -133,6 +150,7 @@
 			  const parentLi = $(this).closest('li');
 		    let data = {
 				  			"msgId": $(this).data("msg-id"),
+				  			"msgType": $(this).data("msg-type")
 		    			};
 		
 		    $.ajax({

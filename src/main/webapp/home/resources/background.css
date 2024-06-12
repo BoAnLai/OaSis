@@ -1,0 +1,17 @@
+body {
+     margin-top: 20px;
+     background-color: #eee;
+     background-image: url('/oasis/home/resources/background-zelda.jpg');
+    background-size: cover; /* 使圖片覆蓋整個背景 */
+     background-position: center; /* 使圖片居中 */
+     background-repeat: no-repeat; /* 禁止圖片重複 */
+     z-index: -2,147,483,648;
+     object-fit: contain;
+}
+
+.not-covered {
+    position: absolute; /* Position the elements absolutely */
+    top: 0; /* Set their top position to 0 */
+    left: 0; /* Set their left position to 0 */
+    margin-top: 20px; /* Use negative margin to offset them back */
+}

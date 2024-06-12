@@ -188,6 +188,7 @@ pageContext.setAttribute("userList", userList);
             font-size: 24px;
         }
             </style>
+            <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 
