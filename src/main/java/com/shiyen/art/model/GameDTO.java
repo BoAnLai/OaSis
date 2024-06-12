@@ -6,6 +6,7 @@ import java.util.List;
 import com.shiyen.message.model.MessageDTO;
 
 public class GameDTO {
+	private Integer gameId;
 	private String gameName;
     private String gameImg;
     private Long artCounts;
@@ -13,11 +14,18 @@ public class GameDTO {
     public GameDTO() {
 		
 	}
-    public GameDTO(String gameName, String gameImg, Long artCounts) {
+    public GameDTO(int gameId, String gameName, String gameImg, Long artCounts) {
+    	this.gameId = gameId;
         this.gameName = gameName;
         this.gameImg= gameImg;
         this.artCounts = artCounts;
         
+    }
+    public Integer getGameId() {
+    	return gameId;
+    }
+    public void setGameId(Integer gameId) {
+    	this.gameId = gameId;
     }
 	public String getGameName() {
 		return gameName;

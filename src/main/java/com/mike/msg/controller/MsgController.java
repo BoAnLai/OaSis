@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mike.msg.model.MsgService;
+import com.mike.msg.model.MsgAdminService;
 
 @MultipartConfig
 @WebServlet(name = "MsgController", urlPatterns = {"/msg", "/deleteMsg"})
 public class MsgController extends HttpServlet {
 
+	// /msg
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			req.getRequestDispatcher("/home/msg.jsp").forward(req, res);
@@ -28,12 +29,12 @@ public class MsgController extends HttpServlet {
 	}
 	
 	
-	
+	// /deleteMsg
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 
 		int msgId = Integer.parseInt(req.getParameter("msgId"));
 		
-		MsgService msgSvc = new MsgService();
+		MsgAdminService msgSvc = new MsgAdminService();
 		msgSvc.removeMsgFromApplyForCompany(msgId);
 		
 	}

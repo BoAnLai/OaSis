@@ -350,6 +350,7 @@ public class ArtDAO implements ArtDAO_interface {
 			}
 			if (game != null) { 
 			GameDTO gameDTO = new GameDTO();
+			gameDTO.setGameId(game.getGameId());
 			gameDTO.setGameName(game.getGameName());
 			gameDTO.setGameImg(game.getGameImg());
 			gameDTO.setArtCounts(artCount);

@@ -158,13 +158,7 @@ public class PostServlet extends HttpServlet {
 			Integer gameId = Integer.valueOf(req.getParameter("gameId").trim());
 			
 			Integer userId = Integer.valueOf(req.getParameter("userId").trim());
-			if (userId == null)  {
-				String url = "/login";
-				
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				return;
-			}
+			
 			String artTitle = req.getParameter("artTitle");
 			
 			
