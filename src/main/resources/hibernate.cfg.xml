@@ -28,10 +28,9 @@
         <mapping class="com.mike.game.model.GameVO"/>
         <mapping class="com.mike.genre.model.GenreVO"/>
         <mapping class="com.mike.label.model.LabelVO"/>
-        <mapping class="com.mike.item.model.ItemVO"/> 
-        <mapping class="com.mike.purchase.model.PurchaseVO"/>
 
         <mapping class="com.jiahong.product.model.ProductVO"/>
+        <mapping class="com.jiahong.purchase.model.PurchaseVO"/>
 
     </session-factory>
 </hibernate-configuration>

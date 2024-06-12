@@ -7,8 +7,6 @@
 <%
     PurchaseService purchaseService = new PurchaseService();
     List<PurchaseWithProductInfo> purchases = purchaseService.getAllPurchaseWithProductInfoWithClosedZero();
-    for (PurchaseWithProductInfo info : purchases)
-    	System.out.println(info.getProductImg());
 %>
 
 <!DOCTYPE html>
