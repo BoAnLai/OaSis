@@ -64,6 +64,7 @@
     	}
     
 	</style>
+	<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>
@@ -113,7 +114,7 @@
 	    	</tbody>				
 	    </table>
 	    <div class="mx-5">
-	    <form action="/oasis" method="POST" enctype="multipart/form-data" class="border border-primary-subtle border-2 rounded p-4 mb-3">
+	    <form action="/oasis" method="POST" enctype="multipart/form-data" class="border border-primary-subtle border-2 rounded p-4 mb-3 card">
 		    
 		    <input name="userId" class="form-control" value="<%= user.getUserId() %>" hidden=true></input>
 		    <input name="purchaseId" class="form-control" value="<%= purchase.getPurchaseId() %>" hidden=true></input>

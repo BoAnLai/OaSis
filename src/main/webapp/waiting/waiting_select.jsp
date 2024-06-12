@@ -80,7 +80,7 @@ h4 {
 	display: inline;
 }
 </style>
-
+<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>

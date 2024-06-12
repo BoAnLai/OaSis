@@ -12,7 +12,9 @@
 <link href="https://cdn.datatables.net/v/ju/dt-2.0.7/b-3.0.2/b-colvis-3.0.2/cr-2.0.2/fh-4.0.1/r-3.0.2/rr-1.5.0/sc-2.4.2/sl-2.0.1/datatables.min.css"
 		rel="stylesheet">
 <style>
-	
+	html{
+		height:100%;
+	}
 	.artTitle{
 		color:black;
 		 text-decoration: none
@@ -66,7 +68,7 @@ display: none;
 	background-color: lightgray;
 }
 </style>
-
+<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>

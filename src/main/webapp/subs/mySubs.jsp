@@ -22,6 +22,9 @@
 	crossorigin="anonymous">
 
 <style>
+html{
+	height: 100%;
+}
 body {
 	padding: 20px;
 }
@@ -80,6 +83,7 @@ body {
             color: red;
         }
 </style>
+<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 <body>
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -95,7 +99,6 @@ body {
 		crossorigin="anonymous"></script>
 
 	<%@ include file="../home/navbar.jsp"%>
-
 	<%
 	//取得 userId
 	Integer userId = user.getUserId();
@@ -118,6 +121,7 @@ body {
 
 	<%} else { %>
 	
+	<div class="card">
 <div class="container">
 	<div class="left">
 	<h2>遊戲訂閱</h2>
@@ -248,5 +252,6 @@ body {
 		<% } %>
 	 -->
 
+	</div>
 </body>
 </html>
