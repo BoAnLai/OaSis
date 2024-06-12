@@ -163,15 +163,6 @@
         <servlet-name>PurchaseServlet</servlet-name>
         <url-pattern>/PurchaseServlet</url-pattern>
     </servlet-mapping>
-    
-    <servlet>
-        <servlet-name>ItemServlet</servlet-name>
-        <servlet-class>com.jiahong.item.controller.ItemServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ItemServlet</servlet-name>
-        <url-pattern>/ItemServlet</url-pattern>
-    </servlet-mapping>
 
 	
 	<!-- ===================ryan===================== -->
