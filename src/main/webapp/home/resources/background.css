@@ -9,9 +9,3 @@ body {
      object-fit: contain;
 }
 
-.not-covered {
-    position: absolute; /* Position the elements absolutely */
-    top: 0; /* Set their top position to 0 */
-    left: 0; /* Set their left position to 0 */
-    margin-top: 20px; /* Use negative margin to offset them back */
-}
