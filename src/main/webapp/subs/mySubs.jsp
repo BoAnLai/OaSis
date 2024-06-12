@@ -103,12 +103,10 @@ body {
 	//取得 userId
 	Integer userId = user.getUserId();
 
-
 	//使用方法取得list
 	SubsService subsService = new SubsService();
 
 	List<SubsVO> subsList = subsService.findByUserId(userId);
-
 	%>
 	
 
@@ -235,6 +233,9 @@ body {
 
 	</div>
 </div>
+
+
+
 <%-- 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/subs.do" > --%>
    
 <!--         <input type="hidden" name="action" value="mysubs"> -->
