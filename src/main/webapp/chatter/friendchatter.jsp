@@ -11,6 +11,7 @@
 <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
 <title>LobbyChatter</title>
+<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body onload="connectPrivate();" onunload="disconnectPrivate();">

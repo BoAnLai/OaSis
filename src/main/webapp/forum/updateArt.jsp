@@ -102,6 +102,7 @@
     }
   </style>
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>

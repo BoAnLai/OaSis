@@ -18,6 +18,7 @@
     		margin: 30px 150px;
     	}
     </style>
+    <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>
@@ -30,7 +31,7 @@
 
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">新使用者註冊</h1>
-	    <div class="mx-5">
+	    <div class="mx-5 card">
 	        <form action="/oasis/registering" method="POST" enctype="multipart/form-data" class="border border-primary border-2 rounded p-4">
 	        	<div class="mb-4">
 			        <label for="email" class="form-label fs-4 fw-bold">輸入信箱</label>

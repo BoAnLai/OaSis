@@ -17,12 +17,16 @@
 	rel="stylesheet"
 	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
 	crossorigin="anonymous">
+	<style>
+		form{
+			width: 400px;
+		}
+		html{
+			height: 100%;
+		}
+	</style>
+	<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
-<style>
-	form{
-		width: 400px;
-	}
-</style>
 
 <body>
 
@@ -34,7 +38,7 @@
 
 	<div id="login-form-container"
 		class="container w-100 h-50 d-flex justify-content-center">
-		<form class="border border-primary border-2 rounded p-4"
+		<form class="border border-primary border-2 rounded p-4 card"
 			action="/oasis/logging" method="post">
 			
 			<% if(errorMsg != null){ %>
