@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.shiyen.art.model.ArtDTO;
 import com.shiyen.art.model.ArtReplyDTO;
 import com.shiyen.art.model.ArtService;
+import com.shiyen.art.model.GameDTO;
 import com.shiyen.favor.model.FavorService;
 
 @WebServlet("/art")
@@ -152,6 +153,21 @@ public class ArtServlet extends HttpServlet {
 //			傳送資料
 			Gson gson = new Gson();
 			String json = gson.toJson(favorStatus);
+			System.out.println(json);
+			res.getWriter().write(json);
+			
+			break;
+			}
+		case "getFamousForum":{
+//			查詢資料
+			ArtService artSVC= new ArtService();
+			  List<GameDTO> gameDTO = artSVC.getFamousForum();
+			
+			
+			
+//			傳送資料
+			Gson gson = new Gson();
+			String json = gson.toJson(gameDTO);
 			System.out.println(json);
 			res.getWriter().write(json);
 			

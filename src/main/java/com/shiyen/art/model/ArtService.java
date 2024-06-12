@@ -130,4 +130,19 @@ public class ArtService {
 			return null;
 		}
 	}
+	public List<GameDTO> getFamousForum(){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		try {
+			session.beginTransaction();
+			List<GameDTO> gameDTO = dao.getFamousForum();
+			session.getTransaction().commit();
+			return gameDTO;
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
+

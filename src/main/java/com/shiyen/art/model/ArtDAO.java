@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
+import com.mike.game.model.GameService;
+import com.mike.game.model.GameVO;
 import com.mike.user.model.UserDTO;
 import com.mike.user.model.UserService;
 import com.mike.user.model.UserVO;
@@ -313,5 +315,52 @@ public class ArtDAO implements ArtDAO_interface {
 		ArtVO artVO =  query.uniqueResult();
 		return artVO;
 	}
+	public void updatrArtView(Integer artId,Integer artView) {
+		Session session = getSession();
+		String hql = "FROM ArtVO WHERE artId = :artId";
+		Query<ArtVO> query = session.createQuery(hql, ArtVO.class);
+		query.setParameter("artId", artId);
+		ArtVO artVO =  query.uniqueResult();
+		artVO.setArtView(artView);
+		getSession().saveOrUpdate(artVO);
+		
+	}
 
+	@Override
+	public List<GameDTO> getFamousForum() {
+		Session session = getSession(); 
+		List<GameDTO> gameList = new ArrayList<>();
+		String sql = "SELECT art_game_id, COUNT(*) AS artCount"
+				+ " FROM art "
+				+ " GROUP BY art_game_id"
+				+ " ORDER BY artCount DESC"
+				+ " LIMIT 3";
+		List<Object[]> result = null;
+		NativeQuery<Object[]> query = session.createNativeQuery(sql);
+		result = query.getResultList();
+		for(Object[] row:result) {
+			Integer gameId = (Integer)row[0];
+			Long artCount =((Number) row[1]).longValue();
+			GameVO game = null;
+			try {
+				game = GameService.getGameByGameId(gameId);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			if (game != null) { 
+			GameDTO gameDTO = new GameDTO();
+			gameDTO.setGameId(game.getGameId());
+			gameDTO.setGameName(game.getGameName());
+			gameDTO.setGameImg(game.getGameImg());
+			gameDTO.setArtCounts(artCount);
+			gameList.add(gameDTO);
+			}
+		}
+		
+		
+		 
+		return gameList;
+	}
+	
 }

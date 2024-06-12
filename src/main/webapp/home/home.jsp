@@ -6,23 +6,71 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>OaSis Home</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-	<style type="text/css">
-		.card{
-			max-width: 250px;
+	<style>
+        html, body {
+            height: 85%;
+            margin: 0;
+        }
+        .full-height {
+            height: 100%;
+        }
+        .left-column{
+        	padding: 0px 10px;
+        }
+        .half-height {
+            height: calc(50% - 12px); /* Adjust for gaps */
+        }
+        .gap {
+            margin-bottom: 20px; /* Adjust for gaps */
+        }
+        
+        .card{
+			overflow: hidden;
 		}
-		div.card-body{
-			height:300px;
+		.card-img{
+			height:100%;
+			width:100%;
+			max-height:100%;
+			max-width:100%;
+			object-fit: contain;
 		}
+		.card-img-top, .card-img-left{
+			height:100%;
+			width:100%;
+			max-height:100%;
+			max-width:100%;
+			object-fit: contain;
+		}
+		#cardImgContainer{
+			width: 100%;
+			height: 280px;
+		   	overflow: hidden;
+		   	background-color: LightGray;
+		}
+		.cardImgContainer-hr{
+		   	overflow: hidden;
+		   	background-color: LightGray;
+		   	text-align: center;
+		}
+		h5{
+			text-align: center;
+		}
+		p{
+			text-align: right;
+		}
+		
+		.image-container{
+			height: 100%;
+		}
+		
 		#btn-container{
 			display: flex;
             justify-content: flex-end;
 		}
-		p{
-			height:100%;
-			overflow: hidden;
-			text-overflow: ellipsis;
+		.card-right{
+			min-width: 510px;
 		}
-	</style>
+    </style>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -31,73 +79,137 @@
 
 	<%@ include file="/home/navbar.jsp" %>
 	
-	<div class="container mt-5">
-      <div class="d-flex justify-content-between">	
-      
-      
-      	<div class="card">
-		  <div class="card-header">
-		    Featured
-		  </div>
-		  <div class="card-body">
-		    <h5 class="card-title">Discuss</h5>
-		    <div class="h-75">
-			    <p class="card-text">我們的論壇讓你輕鬆參與各種遊戲社群的討論:發表文章、留言評論或是針對文章再發表文張進行討論!馬上加入我們，開始分享遊戲心得、吐槽官方或發表最新迷因圖!</p>
-		    </div>
-		    <div class="btn-container">
-			    <a href="<%= request.getContextPath()%>/game" class="btn btn-primary">Enter</a>
-		    </div>
-		  </div>
-		</div>
+    <div class="container full-height">
+        <div class="row full-height">
+            <!-- Left part -->
+            <div class="col-md-6 d-flex align-items-center justify-content-center full-height left-column">
+            
+	            <div class="col mb-3 first-container">
+				<div class="card h-100">
+					<div id="cardImgContainer" class="col-md-4">
+					  <img src="" class="card-img-top famous-img" alt="...">
+					</div>
+				  <div class="card-body">
+				  	<div class="h-75">
+					    <h5 class="card-title fw-bold famous-title">gamename</h5>
+					    <p class="card-text famous-article-count">
+			    			genre<br>
+			    			genre<br>
+				    	</p>
+				  	</div>
+				  	<div id="btn-container" class="mb-1">
+				  		
+				  					  			  		
+				  		<form action="/oasis/game/forum/3" method="POST" class="famous-path">
+						  <button type="submit" class="btn btn-primary">文章列表</button>
+						</form>
+				  	</div>
+				  </div>
+				  
+				</div>
+			</div>
+			
+			
+            </div>
+            <!-- Right part -->
+            <div class="col-md-6 full-height right-column">
+                <div class="row full-height">
+                    <div class="col-12 half-height d-flex align-items-center justify-content-center mb-4">
+                        <!-- <p>Top Right Block</p>  -->
+                        
+                        
+                        <div class="second-container card mb-3" style="max-width: 540px; max-height:200px;">
+						  <div class="card-right row g-0">
+						    <div class="col-md-8 cardImgContainer-hr">
+						      <img src="" class="famous-img img-fluid rounded-start" alt="">
+						    </div>
+						    <div class="col-md-4">
+						      <div class="card-body">
+						        <h5 class="famous-title card-title">Card title</h5>
+						        <p class="card-text famous-article-count"></p>
+						        <div id="btn-container" class="mb-1">
+							  		<form action="/oasis/game/forum/3" method="POST" class="famous-path">
+									  <button type="submit" class="btn btn-primary">文章列表</button>
+									</form>
+							  	</div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    <div class="col-12 half-height d-flex align-items-center justify-content-center">
+                        <!-- <p>Bottom Right Block</p> -->
+                        
+                        <div class="third-container card mb-3" style="max-width: 540px; max-height:200px;">
+						  <div class="card-right row g-0">
+						    <div class="col-md-8 cardImgContainer-hr">
+						      <img src="" class="famous-img img-fluid rounded-start" alt="">
+						    </div>
+						    <div class="col-md-4">
+						      <div class="card-body">
+						        <h5 class="famous-title card-title">Card title</h5>
+						        <p class="card-text famous-article-count"></p>
+						        <div id="btn-container" class="mb-1">
+							  		<form action="/oasis/game/forum/3" method="POST" class="famous-path">
+									  <button type="submit" class="btn btn-primary">文章列表</button>
+									</form>
+							  	</div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 		
-      	<div class="card" style=" background-size: cover; background-position: center;">
-		  <div class="card-header">
-		    Featured
-		  </div>
-		  <div class="card-body">
-		    <h5 class="card-title">Match Up</h5>
-		    <div class="h-75">
-			    <p class="card-text">我們的配對功能讓您可以輕鬆組隊，提供多種實用功能，包括出發時間、遊戲標籤、大廳聊天和一對一聊天。無論您是想找到合適的遊戲夥伴，還是在遊戲開始前討論策略，這個功能都能滿足您的需求，讓您的遊戲體驗更加順暢愉快!</p>
-		    </div>
-		    <div class="btn-container">
-			    <a href="<%=request.getContextPath()%>/waiting/waiting_select.jsp" class="btn btn-primary">Enter</a>
-		    </div>
-		  </div>
-		</div>
-		
-      	<div class="card">
-		  <div class="card-header">
-		    Featured
-		  </div>
-		  <div class="card-body">
-		    <h5 class="card-title">Shopping</h5>
-		    <div class="h-75">
-			    <p class="card-text">荷包裡錢太多沒地方花嗎?購物車功能讓你從此不需煩惱!把太多的錢錢轉換成自己喜歡的形狀!</p>
-		    </div>
-		    <div class="btn-container">
-			    <a href="#" class="btn btn-primary">Enter</a>
-		    </div>
-		  </div>
-		</div>
-		
-      	<div class="card">
-		  <div class="card-header">
-		    Featured
-		  </div>
-		  <div class="card-body">
-		    <h5 class="card-title">Subscribe</h5>
-		    <div class="h-75">
-			    <p class="card-text">訂閱功能讓您輕鬆追蹤喜愛的文章或遊戲：訂閱您感興趣的文章，第一時間收到最新的更新通知！馬上訂閱，確保您不會錯過任何精彩內容。立即加入我們，享受即時的資訊掌握，讓您的遊戲體驗更加豐富和充實！</p>
-		    </div>
-		    <div class="btn-container">
-			    <a href="<%= request.getContextPath() %>/subs/mySubs.jsp" class="btn btn-primary">Enter</a>
-		    </div>
-		  </div>
-		</div>
-		
-		
-      </div>
-  </div>
+	
+	
+	<script>
+   $(document).ready(function () {
+	   $.ajax({
+	        url: "/oasis/art",
+	        type: "POST",
+	        data: { act: "getFamousForum" },
+	        dataType: "json",
+	        success: function (data) { 
+	        	console.log(data);
+	        	const containers = $('.first-container, .second-container, .third-container');
+
+            containers.each(function(index) {
+                if (index < data.length) {
+                    const container = $(this);
+                    const img = container.find('.famous-img');
+                    const title = container.find('.famous-title');
+                    const articleCount = container.find('.famous-article-count');
+                    const form = container.find('.famous-path');
+
+                    img.attr('src', data[index].gameImg);
+                    title.text(data[index].gameName);
+                    articleCount.text("文章數: " + data[index].artCounts);
+                    form.attr('action', "/oasis/game/forum/"+data[index].gameId)
+                }
+            });
+        },
+	        error: function (xhr, status, error) {
+	          console.error('AJAX request failed:', error);
+	        }
+	      });
+	    });
+
+   </script> 	
   
 </body>
 </html>
