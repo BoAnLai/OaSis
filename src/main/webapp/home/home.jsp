@@ -8,7 +8,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<style>
         html, body {
-            height: 85%;
+            height: 100%%;
             margin: 0;
         }
         .full-height {
@@ -71,6 +71,7 @@
 			min-width: 510px;
 		}
     </style>
+    <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -198,7 +199,7 @@
 
                     img.attr('src', data[index].gameImg);
                     title.text(data[index].gameName);
-                    articleCount.text("文章數: " + data[index].artCounts);
+                    articleCount.text("文章數(含回文): " + data[index].artCounts);
                     form.attr('action', "/oasis/game/forum/"+data[index].gameId)
                 }
             });

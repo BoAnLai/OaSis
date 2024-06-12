@@ -38,6 +38,7 @@
 			min-height: 400px;
 		}
 	</style>
+	<link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
 <body>
@@ -55,7 +56,7 @@
 	
 	<div id="content">
 	    <h1 class="mx-5 my-2 fw-bold">系統訊息</h1>
-    	<div id="main" class="mx-5 border border-primary border-2 rounded p-4">
+    	<div id="main" class="mx-5 border border-primary border-2 rounded p-4 bg-white">
 	    	
 	
 	
