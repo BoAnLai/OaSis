@@ -109,7 +109,7 @@
 
 
 <table class="table project-list-table table-nowrap align-middle table-borderless">
-<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/WaitingServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/WaitingS.do" name="form1">
 
 
  <div class="container text-center">

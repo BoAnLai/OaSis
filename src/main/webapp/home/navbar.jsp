@@ -45,25 +45,20 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
                                 <a class="nav-link active" aria-current="page" href="<%= request.getContextPath()%>">首頁</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mx-3">
                                 <a class="nav-link" href="<%= request.getContextPath()%>/game">論壇入口</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="<%= request.getContextPath()%>/waiting/waiting_select.jsp">組隊聊天</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="<%= request.getContextPath()%>/product/resources/productList.jsp">瀏覽商品</a>
+                            </li>
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="<%= request.getContextPath()%>/subs/mySubs.jsp">訂閱訊息</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -78,6 +73,11 @@
 								
 								  <ul class="dropdown-menu dropdown-menu-end">
 								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/personalUpdate">修改個人資料</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/msg">系統訊息</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/home/article">我的文章</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/myCart">我的購物車</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/subs/mySubs.jsp">我的訂閱</a></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/loggingout">登出</a></li>
 								    
 								    <%
 								    String identity = "REGULAR";
@@ -87,6 +87,7 @@
 								    switch(identity) { 
 								     	case "ADMINISTRATOR": 
 								    %>
+								    <li><hr class="dropdown-divider"></li>
 								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/user/list">會員列表</a></li>
 								    <%
 								    		break; 
@@ -94,13 +95,12 @@
 								    		break; 
 								     	case "REGULAR": 
 								    %>
-								    <li><a class="dropdown-item" href="">申請廠商身份</a></li>
+								    <li><hr class="dropdown-divider"></li>
+								    <li><a class="dropdown-item" href="<%= request.getContextPath()%>/user/applyForCompanyIdentity">申請廠商身份</a></li>
 								    <% 
 								    		break; 
 								    } 
 								    %>
-								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/myCart">購物車</a></li>
-								    <li><a class="dropdown-item" href="<%= request.getContextPath() %>/loggingout">登出</a></li>
 								  </ul>
 								</div>
 							</li>

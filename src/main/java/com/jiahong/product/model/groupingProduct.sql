@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS oasis;
 USE oasis;
 
-DROP TABLE IF EXISTS item; 
 DROP TABLE IF EXISTS purchase;
 DROP TABLE IF EXISTS product;
 
@@ -78,4 +77,3 @@ VALUES (2, 9, 'Peter Parker', '0987654321', '美國紐約市皇后區', true);
 USE oasis;
 SELECT * FROM product;
 SELECT * FROM purchase;
-SELECT * FROM item;

@@ -1,6 +1,6 @@
 package com.ryan.subs.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class SubsVO implements java.io.Serializable{
 	
@@ -8,9 +8,11 @@ public class SubsVO implements java.io.Serializable{
 	private Integer subsUserId;
 	private Integer subsGameId;
 	private Integer subsArtId;
-	private Date subsDate;
+//	private Timestamp subsTimestamp;
 	private Boolean subsStatus;
 	
+	
+
 	public SubsVO() {
 		
 	}
@@ -39,12 +41,14 @@ public class SubsVO implements java.io.Serializable{
 	public void setSubsArtId(Integer subsArtId) {
 		this.subsArtId = subsArtId;
 	}
-	public Date getSubsDate() {
-		return subsDate;
-	}
-	public void setSubsDate(Date subsDate) {
-		this.subsDate = subsDate;
-	}
+	
+//	public Timestamp getSubsTimestamp() {
+//		return subsTimestamp;
+//	}
+//
+//	public void setSubsTimestamp(Timestamp subsTimestamp) {
+//		this.subsTimestamp = subsTimestamp;
+//	}
 	
 	public Boolean getSubsStatus() {
 		return subsStatus;
@@ -53,10 +57,11 @@ public class SubsVO implements java.io.Serializable{
 	public void setSubsStatus(Boolean subsStatus) {
 		this.subsStatus = subsStatus;
 	}
+	
 	@Override
 	public String toString() {
 		return "SubsVO [subsId=" + subsId + ", subsUserId=" + subsUserId + 
-				", subsGameId=" + subsGameId + ", subsArtId=" + subsArtId + ", subsDate=" + subsDate + "]";
+				", subsGameId=" + subsGameId + ", subsArtId=" + subsArtId + ", subsstatus=" + subsStatus +"]";
 	}
 
 	

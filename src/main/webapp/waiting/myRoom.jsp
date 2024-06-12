@@ -6,7 +6,7 @@
 <%@page import="com.lee.waiting.model.WaitingService"%>
 <%@page import="com.lee.waiting.model.WaitingVO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
@@ -190,7 +190,7 @@
     <th scope="col" style="text-align: center">創建者</th>
     <th scope="col" style="text-align: center">房間編號</th>
     <th scope="col" style="text-align: center">出發時間</th>
-    <th scope="col" style="text-align: center">人數上限</th>
+    <th scope="col" style="text-align: center">人數上限/房內人數</th>
     <th scope="col" style="text-align: center">遊戲類型</th>
     <th scope="col" style="text-align: center">修改內容</th>
     <th scope="col" style="text-align: center">查看玩家</th>
@@ -205,7 +205,7 @@
     <th scope="col" style="text-align: center">創建者</th>
     <th scope="col" style="text-align: center">房間編號</th>
     <th scope="col" style="text-align: center">出發時間</th>
-    <th scope="col" style="text-align: center">人數上限</th>
+    <th scope="col" style="text-align: center">人數上限/房內人數</th>
     <th scope="col" style="text-align: center">遊戲類型</th>
     <th scope="col" style="text-align: center">離開房間</th>
     <th scope="col" style="text-align: center">查看玩家</th>
@@ -243,10 +243,16 @@
               
             </th>
             <!-- *************************************以上為刪除房間按鈕 -->
+            
+            <c:set var="waitingID" value="${waitingVO.waitingID}" />
+			<jsp:useBean id="wapSVC" class="com.lee.waitingperson.model.WaitingPersonService" scope="page" />
+			<c:set var="wpList" value="${wapSVC.getAll(waitingID)}" />
+			<c:set var="a" value="${fn:length(wpList)}" />
+            
             <td style="text-align: left;width:80px;"><img src="${userDTO.userAvatar}" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body" style="text-decoration: none;">${userDTO.userNickname}</a></td>
             <td style="text-align: center">${waitingVO.waitingID}</td>
             <td style="text-align: center"><span class="badge badge-soft-success mb-0">${waitingVO.waitingReserve}</td>
-            <td style="text-align: center">${waitingVO.waitingMaxPeople}</td>
+            <td style="text-align: center">${waitingVO.waitingMaxPeople}/${a}</td>
             <td style="text-align: center">${waitingVO.waitingGameName}</td>
             
             <c:if test="${situation eq 'my'}">

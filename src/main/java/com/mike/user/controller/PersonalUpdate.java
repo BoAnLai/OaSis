@@ -45,6 +45,8 @@ public class PersonalUpdate extends HttpServlet{
 		
 		
 		UserDTO userClient = (UserDTO)session.getAttribute("user");
+		System.out.println(userClient);
+		
 		UserService userSvc = new UserService();
 		
 		UserVO userUpdating = userSvc.getByUserId(userClient.getUserId());
@@ -64,12 +66,13 @@ public class PersonalUpdate extends HttpServlet{
 			}else {
 				req.setAttribute("errorMsg", "兩次密碼不相符");
 				req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+				return;
 			}
 		}else if(bothBlank) {
 		}else {
-			
 			req.setAttribute("errorMsg", "若要更改密碼，請完整填寫 密碼 及 確認密碼 兩個區塊");
 			req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+			return;
 		}
 		
 		userUpdating.setUserNickname(StringProcessor.blankToNull(req.getParameter("nickname")));
@@ -78,13 +81,22 @@ public class PersonalUpdate extends HttpServlet{
 		userUpdating.setUserCellphone(StringProcessor.blankToNull(req.getParameter("cellphone")));
 		userUpdating.setUserAddress(StringProcessor.blankToNull(req.getParameter("address")));
 		
-		userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
+		
+		try {
+			userSvc.userUpdate(userUpdating.getUserId(),userUpdating);
+		} catch (IllegalArgumentException e) {
+			System.out.println("catching error");
+			req.setAttribute("errorMsg", "手機號碼只接受 09XX-XXX-XXX 或相近的格式");
+			req.getRequestDispatcher("/user/personalUpdate.jsp").forward(req,res);
+			return;
+		}
+		
 		
 		Part part = req.getPart("avatar");
 		if(part.getSize()!=0) {
 			String filename;
-			if(userUpdating.getUserAvatar()!=null) {				
-				filename = StringProcessor.getFilename(((UserDTO)session.getAttribute("userDisplayed")).getUserAvatar());
+			if(userUpdating.getUserAvatar()!=null && !(userUpdating.getUserAvatar().isBlank())) {				
+				filename = StringProcessor.getFilename(((UserDTO)session.getAttribute("user")).getUserAvatar());
 			}else {
 				String submittedFilename = part.getSubmittedFileName();
 				String submittedFileExtension = StringProcessor.getFileExtension(submittedFilename);
@@ -98,13 +110,12 @@ public class PersonalUpdate extends HttpServlet{
 				part.write(f.toString());
 				imgSrcPath = req.getContextPath()+saveDirectory + "/" + filename;
 			}
-			userUpdating.setUserAvatar(imgSrcPath);
-			userSvc.userUpdate(userUpdating.getUserId(),userUpdating);				
+			userSvc.updateAvatar(userUpdating.getUserId(),imgSrcPath);				
 		}
 		
+		session.setAttribute("user", new UserDTO(userUpdating));
 		
-		
-		res.sendRedirect("/oasis");
-//		req.getRequestDispatcher("/").forward(req, res);
+//		res.sendRedirect("/oasis");
+		req.getRequestDispatcher("/").forward(req, res);
 	}
 }
