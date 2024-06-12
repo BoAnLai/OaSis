@@ -31,24 +31,32 @@ public class MsgAdminService {
 	
 	public List<Msg> getMsgListForAdmin(String type){
 		
-		String redisKey = "user:admin" + type;
+		String redisKey = "user:admin:" + type;
 		
 		List<String> list = jedis.lrange(redisKey, 0, -1);
-		List<Msg> outputList = new ArrayList<Msg>();
+		List<Msg> msgList = new ArrayList<Msg>();
 		Msg msg = null;
+		
 		for(String str : list) {
 			try {
 				msg = gson.fromJson(str, Msg.class);
 			}catch(JsonSyntaxException e) {
 				msg = null;
 			}
-			outputList.add(msg);
+			msgList.add(msg);
 		}
 		
-		return outputList;
+		return msgList;
 	}
 	
-	public void removeMsgFromApplyForCompany(int index) {
-		jedis.lset("user:admin:applyForCompany",index,"__DELETED__");
+//	public void removeMsgFromApplyForCompany(int index) {
+//		jedis.lset("user:admin:applyForCompany",index,"__DELETED__");
+//	}
+	
+	public void removeMsgFromAdmin(int index, String type) {
+		String redisKey = "user:admin:" + type;
+		jedis.lset(redisKey,index,"__DELETED__");
 	}
+	
+	
 }
