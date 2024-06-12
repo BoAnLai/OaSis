@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.mike.tool.JedisTool;
 import com.mike.user.model.UserService;
 
@@ -55,15 +56,27 @@ public class MsgUserService {
 	}
 	
 	
-	public List<Msg> getMsgListByRedisKeyForOneUser(int userId, String redisKey) {
+	public List<Msg> getMsgListByRedisKey(String redisKey) {
+		
+		List<String> msgInJsonStringList = jedis.lrange(redisKey, 0, -1);
+
+		System.out.println("=== in getMsgListByRedisKey ===");
 		
 		List<Msg> msgList = new ArrayList<Msg>();
-		List<String> msgInJsonStringList = new ArrayList<String>();
+		Msg msg = null;
 		
-		msgInJsonStringList = jedis.lrange(redisKey, 0, -1);
+		
 		for(String msgInJsonString:msgInJsonStringList) {
-			msgList.add(gson.fromJson(msgInJsonString, Msg.class));
+			try {
+				msg = gson.fromJson(msgInJsonString, Msg.class);
+			}catch(JsonSyntaxException e){
+				msg = null;
+			}
+			msgList.add(msg);
 		}
+		
+		System.out.println("=== end of getMsgListByRedisKey ===");
+		
 		return msgList;
 	}
 	
@@ -75,6 +88,12 @@ public class MsgUserService {
 		String msg = gson.toJson(new Msg(msgRecipient, type, content));
 		jedis.rpush(keyForRedis, msg);
 	}
+	
+	public void removeMsgFromUser(int userId, int msgIndex, String type) {
+		String redisKey = "user:" + userId + ":" + type;
+		jedis.lset(redisKey,msgIndex,"__DELETED__");
+	}
+	
 	
 	
 //	public void addMsgWhenGameSubsTriggered(List<Integer> userIdList, ) {
@@ -94,22 +113,23 @@ public class MsgUserService {
 		
 //		msgUserSvc.regularApplyForCompany(7);
 		
-		msgUserSvc.addMsgForOneUser(1,Msg.TYPE_GAME_SUBSCRIBE_NOTIFY,"78行的方法");
-		msgUserSvc.addMsgForOneUser(1,"subsArt","79行的方法");
-		msgUserSvc.addMsgForOneUser(1,"subsGame","80行的方法");
+		msgUserSvc.addMsgForOneUser(1,Msg.TYPE_GAME_SUBSCRIBE_NOTIFY,"222");
+		msgUserSvc.addMsgForOneUser(1,Msg.TYPE_GAME_SUBSCRIBE_NOTIFY,"333");
+		msgUserSvc.addMsgForOneUser(1,Msg.TYPE_GAME_SUBSCRIBE_NOTIFY,"444");
+		msgUserSvc.addMsgForOneUser(1,Msg.TYPE_GAME_SUBSCRIBE_NOTIFY,"555");
 		
-		List<String> keys = msgUserSvc.getExistingRedisKeyForOneUser(1);
-		for(String key:keys) {
-			
-			System.out.println("==========");
-			System.out.print("key: ");
-			System.out.println(key);
-			
-			List<Msg> msgList = msgUserSvc.getMsgListByRedisKeyForOneUser(1,key);
-			for(Msg msg : msgList) {
-				System.out.println(msg);
-			}
-		}
+//		List<String> keys = msgUserSvc.getExistingRedisKeyForOneUser(1);
+//		for(String key:keys) {
+//			
+//			System.out.println("==========");
+//			System.out.print("key: ");
+//			System.out.println(key);
+//			
+//			List<Msg> msgList = msgUserSvc.getMsgListByRedisKeyForOneUser(1,key);
+//			for(Msg msg : msgList) {
+//				System.out.println(msg);
+//			}
+//		}
 		
 		System.out.println("main executed!");
 	}
