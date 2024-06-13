@@ -105,7 +105,7 @@
 
 
   </style>
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script src="/oasis/forum/ckeditor5-41.4.2-su4uf9wef5a7/build/ckeditor.js"></script>
 <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
@@ -163,7 +163,35 @@
         cloudServices: {
             uploadUrl:'/oasis/upload' 
         },
-        
+        image: {
+            toolbar: [
+                'imageStyle:inline', 'imageStyle:block', 'imageStyle:side',
+                '|',
+                'toggleImageCaption', 'imageTextAlternative', 'resizeImage'
+            ],
+            styles: [
+                'inline',
+                'block',
+                'side'
+            ],
+            resizeOptions: [
+                {
+                    name: 'resizeImage:original',
+                    label: 'Original',
+                    value: null
+                },
+                {
+                    name: 'resizeImage:50',
+                    label: '50%',
+                    value: '50'
+                },
+                {
+                    name: 'resizeImage:75',
+                    label: '75%',
+                    value: '75'
+                }
+            ]
+        }
     })
         .then(editor => {
        	  window.editor = editor;

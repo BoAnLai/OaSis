@@ -33,6 +33,11 @@ h4 {
 </style>
 
 <style>
+body{
+	background:url("${pageContext.servletContext.contextPath}/forum/image/background.jpg")
+		no-repeat center center;
+	background-size: cover;
+}
  .artTitle{
 		color:black;
 		 text-decoration: none
