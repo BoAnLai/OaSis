@@ -101,7 +101,7 @@
          padding-right: 10px; 
     }
   </style>
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script src="/oasis/forum/ckeditor5-41.4.2-su4uf9wef5a7/build/ckeditor.js"></script>
 <link rel="stylesheet" href="/oasis/home/resources/background.css">
 </head>
 
